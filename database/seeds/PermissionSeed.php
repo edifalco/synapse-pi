@@ -29,6 +29,11 @@ class PermissionSeed extends Seeder
             ['id' => 14, 'title' => 'user_edit',],
             ['id' => 15, 'title' => 'user_view',],
             ['id' => 16, 'title' => 'user_delete',],
+            ['id' => 17, 'title' => 'acronym_project_access',],
+            ['id' => 18, 'title' => 'acronym_project_create',],
+            ['id' => 19, 'title' => 'acronym_project_edit',],
+            ['id' => 20, 'title' => 'acronym_project_view',],
+            ['id' => 21, 'title' => 'acronym_project_delete',],
 
         ];
 
