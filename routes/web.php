@@ -19,12 +19,6 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@index');
     
-    Route::resource('permissions', 'Admin\PermissionsController');
-    Route::post('permissions_mass_destroy', ['uses' => 'Admin\PermissionsController@massDestroy', 'as' => 'permissions.mass_destroy']);
-    Route::resource('roles', 'Admin\RolesController');
-    Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
-    Route::resource('users', 'Admin\UsersController');
-    Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
     Route::resource('acronym_projects', 'Admin\AcronymProjectsController');
     Route::post('acronym_projects_mass_destroy', ['uses' => 'Admin\AcronymProjectsController@massDestroy', 'as' => 'acronym_projects.mass_destroy']);
     Route::post('acronym_projects_restore/{id}', ['uses' => 'Admin\AcronymProjectsController@restore', 'as' => 'acronym_projects.restore']);
@@ -217,6 +211,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('workpackages_mass_destroy', ['uses' => 'Admin\WorkpackagesController@massDestroy', 'as' => 'workpackages.mass_destroy']);
     Route::post('workpackages_restore/{id}', ['uses' => 'Admin\WorkpackagesController@restore', 'as' => 'workpackages.restore']);
     Route::delete('workpackages_perma_del/{id}', ['uses' => 'Admin\WorkpackagesController@perma_del', 'as' => 'workpackages.perma_del']);
+    Route::resource('permissions', 'Admin\PermissionsController');
+    Route::post('permissions_mass_destroy', ['uses' => 'Admin\PermissionsController@massDestroy', 'as' => 'permissions.mass_destroy']);
+    Route::resource('roles', 'Admin\RolesController');
+    Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
+    Route::resource('users', 'Admin\UsersController');
+    Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
 
 
 
