@@ -19,7 +19,6 @@
                         <tr>
                             <th>@lang('global.posts.fields.iduser')</th>
                             <td field-key='idUser'>{{ $post->idUser->name ?? '' }}</td>
-<td field-key='name'>{{ isset($post->idUser) ? $post->idUser->name : '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.posts.fields.description')</th>
@@ -28,7 +27,6 @@
                         <tr>
                             <th>@lang('global.posts.fields.idproject')</th>
                             <td field-key='idProject'>{{ $post->idProject->name ?? '' }}</td>
-<td field-key='name'>{!! isset($post->idProject) ? $post->idProject->name : '' !!}</td>
                         </tr>
                     </table>
                 </div>

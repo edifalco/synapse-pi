@@ -15,12 +15,10 @@
                         <tr>
                             <th>@lang('global.project-users.fields.userid')</th>
                             <td field-key='userID'>{{ $project_user->userID->name ?? '' }}</td>
-<td field-key='name'>{{ isset($project_user->userID) ? $project_user->userID->name : '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.project-users.fields.projectid')</th>
                             <td field-key='projectID'>{{ $project_user->projectID->name ?? '' }}</td>
-<td field-key='name'>{!! isset($project_user->projectID) ? $project_user->projectID->name : '' !!}</td>
                         </tr>
                     </table>
                 </div>
