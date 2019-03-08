@@ -23,6 +23,10 @@ class Publication extends Model
     protected $fillable = ['title', 'year', 'month', 'abbr', 'link', 'authors', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'title',
+        'abbr',
+        'link',
+        'authors',
     ];
     
     public static function boot()

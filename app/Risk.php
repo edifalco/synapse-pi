@@ -36,6 +36,14 @@ class Risk extends Model
     protected $fillable = ['code', 'version', 'parent_id', 'description', 'score', 'flag', 'impact', 'probability', 'proximity', 'title', 'contingency', 'mitigation', 'triggerevents', 'resolved', 'risk_date', 'version_date', 'type', 'notes', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'code',
+        'description',
+        'flag',
+        'title',
+        'contingency',
+        'mitigation',
+        'triggerevents',
+        'notes',
     ];
     
     public static function boot()

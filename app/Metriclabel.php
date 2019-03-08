@@ -19,6 +19,7 @@ class Metriclabel extends Model
     protected $fillable = ['label', 'metric_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'label',
     ];
     
     public static function boot()
