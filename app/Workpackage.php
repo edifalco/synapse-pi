@@ -20,6 +20,8 @@ class Workpackage extends Model
     protected $fillable = ['wp_id', 'name', 'order', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'wp_id',
+        'name',
     ];
     
     public static function boot()

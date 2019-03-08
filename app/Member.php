@@ -22,6 +22,11 @@ class Member extends Model
     protected $fillable = ['name', 'surname', 'email', 'phone', 'notes', 'partner_id'];
     protected $hidden = [];
     public static $searchable = [
+        'name',
+        'surname',
+        'email',
+        'phone',
+        'notes',
     ];
     
     public static function boot()

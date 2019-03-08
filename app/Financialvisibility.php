@@ -19,6 +19,7 @@ class Financialvisibility extends Model
     protected $fillable = ['type', 'status', 'id_project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'type',
     ];
     
     public static function boot()

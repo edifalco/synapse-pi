@@ -27,6 +27,9 @@ class Agenda extends Model
     protected $fillable = ['date', 'hour', 'minute', 'title', 'description', 'category', 'duration', 'meeting_type', 'date_creation', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'title',
+        'description',
+        'category',
     ];
     
     public static function boot()

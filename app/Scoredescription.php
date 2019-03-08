@@ -19,6 +19,7 @@ class Scoredescription extends Model
     protected $fillable = ['description', 'score_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
+        'description',
     ];
     
     public static function boot()
