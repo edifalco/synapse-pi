@@ -120,11 +120,11 @@ class UsersController extends Controller
         }
         
         $roles = \App\Role::get()->pluck('title', 'id');
-$project_users = \App\ProjectUser::where('userID_id', $id)->get();$posts = \App\Post::where('idUser_id', $id)->get();
+$project_users = \App\ProjectUser::where('userID_id', $id)->get();$user_actions = \App\UserAction::where('user_id', $id)->get();$posts = \App\Post::where('idUser_id', $id)->get();
 
         $user = User::findOrFail($id);
 
-        return view('admin.users.show', compact('user', 'project_users', 'posts'));
+        return view('admin.users.show', compact('user', 'project_users', 'user_actions', 'posts'));
     }
 
 

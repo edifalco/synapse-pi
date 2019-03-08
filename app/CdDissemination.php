@@ -20,6 +20,12 @@ class CdDissemination extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        CdDissemination::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

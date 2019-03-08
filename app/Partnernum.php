@@ -20,6 +20,12 @@ class Partnernum extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Partnernum::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

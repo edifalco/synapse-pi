@@ -23,6 +23,12 @@ class Member extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Member::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

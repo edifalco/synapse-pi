@@ -217,8 +217,17 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
     Route::resource('users', 'Admin\UsersController');
     Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
+    Route::resource('user_actions', 'Admin\UserActionsController');
+    Route::resource('faq_categories', 'Admin\FaqCategoriesController');
+    Route::post('faq_categories_mass_destroy', ['uses' => 'Admin\FaqCategoriesController@massDestroy', 'as' => 'faq_categories.mass_destroy']);
+    Route::resource('faq_questions', 'Admin\FaqQuestionsController');
+    Route::post('faq_questions_mass_destroy', ['uses' => 'Admin\FaqQuestionsController@massDestroy', 'as' => 'faq_questions.mass_destroy']);
 
 
+    Route::post('csv_parse', 'Admin\CsvImportController@parse')->name('csv_parse');
+    Route::post('csv_process', 'Admin\CsvImportController@process')->name('csv_process');
 
- 
-});
+    Route::get('search', 'MegaSearchController@search')->name('mega-search');
+    Route::get('language/{lang}', function ($lang) {
+        return redirect()->back()->withCookie(cookie()->forever('language', $lang));
+    })->name('language');});

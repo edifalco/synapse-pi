@@ -19,6 +19,12 @@ class MemberPartner extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        MemberPartner::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

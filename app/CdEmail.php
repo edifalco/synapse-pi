@@ -17,6 +17,12 @@ class CdEmail extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        CdEmail::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

@@ -55,6 +55,10 @@ return [
 		'threshold-deliverables' => [		'title' => 'Threshold deliverables',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
 		'threshold-risks' => [		'title' => 'Threshold risks',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
 		'workpackages' => [		'title' => 'Workpackages',		'fields' => [			'wp-id' => 'Wp',			'name' => 'Name',			'project' => 'Project',			'order' => 'Order',		],	],
+		'user-actions' => [		'title' => 'User actions',		'created_at' => 'Time',		'fields' => [			'user' => 'User',			'action' => 'Action',			'action-model' => 'Action model',			'action-id' => 'Action id',		],	],
+		'faq-management' => [		'title' => 'FAQ Management',		'fields' => [		],	],
+		'faq-categories' => [		'title' => 'Categories',		'fields' => [			'title' => 'Category',		],	],
+		'faq-questions' => [		'title' => 'Questions',		'fields' => [			'category' => 'Category',			'question-text' => 'Question',			'answer-text' => 'Answer',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

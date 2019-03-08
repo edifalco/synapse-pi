@@ -28,6 +28,12 @@ class Agenda extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Agenda::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to date format

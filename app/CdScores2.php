@@ -17,6 +17,12 @@ class CdScores2 extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        CdScores2::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

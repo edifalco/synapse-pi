@@ -20,6 +20,12 @@ class CdIntranetAccess extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        CdIntranetAccess::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

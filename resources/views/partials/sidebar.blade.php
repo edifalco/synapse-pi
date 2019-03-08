@@ -5,7 +5,9 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
 
-             
+            <li>
+                <select class="searchable-field form-control"></select>
+            </li>
 
             <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
                 <a href="{{ url('/') }}">
@@ -445,6 +447,43 @@
                         <a href="{{ route('admin.users.index') }}">
                             <i class="fa fa-user"></i>
                             <span>@lang('global.users.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('user_action_access')
+                    <li>
+                        <a href="{{ route('admin.user_actions.index') }}">
+                            <i class="fa fa-th-list"></i>
+                            <span>@lang('global.user-actions.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                </ul>
+            </li>@endcan
+            
+            @can('faq_management_access')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-question"></i>
+                    <span>@lang('global.faq-management.title')</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('faq_category_access')
+                    <li>
+                        <a href="{{ route('admin.faq_categories.index') }}">
+                            <i class="fa fa-briefcase"></i>
+                            <span>@lang('global.faq-categories.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('faq_question_access')
+                    <li>
+                        <a href="{{ route('admin.faq_questions.index') }}">
+                            <i class="fa fa-question"></i>
+                            <span>@lang('global.faq-questions.title')</span>
                         </a>
                     </li>@endcan
                     
