@@ -32,9 +32,7 @@
                         @endcan
 
                         <th>@lang('global.project-users.fields.userid')</th>
-                        <th>@lang('global.users.fields.name')</th>
                         <th>@lang('global.project-users.fields.projectid')</th>
-                        <th>@lang('global.projects.fields.name')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -52,9 +50,7 @@
                                 @endcan
 
                                 <td field-key='userID'>{{ $project_user->userID->name ?? '' }}</td>
-<td field-key='name'>{{ isset($project_user->userID) ? $project_user->userID->name : '' }}</td>
                                 <td field-key='projectID'>{{ $project_user->projectID->name ?? '' }}</td>
-<td field-key='name'>{!! isset($project_user->projectID) ? $project_user->projectID->name : '' !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

@@ -118,9 +118,13 @@ class UsersController extends Controller
         if (! Gate::allows('user_view')) {
             return abort(401);
         }
+        
+        $roles = \App\Role::get()->pluck('title', 'id');
+$project_users = \App\ProjectUser::where('userID_id', $id)->get();$posts = \App\Post::where('idUser_id', $id)->get();
+
         $user = User::findOrFail($id);
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'project_users', 'posts'));
     }
 
 

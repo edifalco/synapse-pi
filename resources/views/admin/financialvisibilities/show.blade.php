@@ -23,7 +23,6 @@
                         <tr>
                             <th>@lang('global.financialvisibilities.fields.id-project')</th>
                             <td field-key='id_project'>{{ $financialvisibility->id_project->name ?? '' }}</td>
-<td field-key='name'>{!! isset($financialvisibility->id_project) ? $financialvisibility->id_project->name : '' !!}</td>
                         </tr>
                     </table>
                 </div>

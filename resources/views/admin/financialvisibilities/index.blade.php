@@ -34,7 +34,6 @@
                         <th>@lang('global.financialvisibilities.fields.type')</th>
                         <th>@lang('global.financialvisibilities.fields.status')</th>
                         <th>@lang('global.financialvisibilities.fields.id-project')</th>
-                        <th>@lang('global.projects.fields.name')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -54,7 +53,6 @@
                                 <td field-key='type'>{{ $financialvisibility->type }}</td>
                                 <td field-key='status'>{{ $financialvisibility->status }}</td>
                                 <td field-key='id_project'>{{ $financialvisibility->id_project->name ?? '' }}</td>
-<td field-key='name'>{!! isset($financialvisibility->id_project) ? $financialvisibility->id_project->name : '' !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

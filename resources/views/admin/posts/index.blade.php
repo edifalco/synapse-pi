@@ -33,10 +33,8 @@
 
                         <th>@lang('global.posts.fields.created')</th>
                         <th>@lang('global.posts.fields.iduser')</th>
-                        <th>@lang('global.users.fields.name')</th>
                         <th>@lang('global.posts.fields.description')</th>
                         <th>@lang('global.posts.fields.idproject')</th>
-                        <th>@lang('global.projects.fields.name')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -55,10 +53,8 @@
 
                                 <td field-key='created'>{{ $post->created }}</td>
                                 <td field-key='idUser'>{{ $post->idUser->name ?? '' }}</td>
-<td field-key='name'>{{ isset($post->idUser) ? $post->idUser->name : '' }}</td>
                                 <td field-key='description'>{!! $post->description !!}</td>
                                 <td field-key='idProject'>{{ $post->idProject->name ?? '' }}</td>
-<td field-key='name'>{!! isset($post->idProject) ? $post->idProject->name : '' !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
