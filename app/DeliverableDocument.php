@@ -17,7 +17,8 @@ class DeliverableDocument extends Model
 
     protected $fillable = ['deliverable_id', 'document_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

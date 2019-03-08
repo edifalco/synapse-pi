@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverableStatusesRequest;
 use App\Http\Requests\Admin\UpdateDeliverableStatusesRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverableStatusesController extends Controller
 {
@@ -23,9 +24,35 @@ class DeliverableStatusesController extends Controller
         }
 
 
-                $deliverable_statuses = DeliverableStatus::all();
+        
+        if (request()->ajax()) {
+            $query = DeliverableStatus::query();
+            $template = 'actionsTemplate';
+            
+            $query->select([
+                'deliverable_statuses.id',
+                'deliverable_statuses.label',
+            ]);
+            $table = Datatables::of($query);
 
-        return view('admin.deliverable_statuses.index', compact('deliverable_statuses'));
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_status_';
+                $routeKey = 'admin.deliverable_statuses';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.deliverable_statuses.index');
     }
 
     /**

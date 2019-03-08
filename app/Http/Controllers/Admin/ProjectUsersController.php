@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProjectUsersRequest;
 use App\Http\Requests\Admin\UpdateProjectUsersRequest;
+use Yajra\DataTables\DataTables;
 
 class ProjectUsersController extends Controller
 {
@@ -23,16 +24,51 @@ class ProjectUsersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('project_user_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = ProjectUser::query();
+            $query->with("userID");
+            $query->with("projectID");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('project_user_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $project_users = ProjectUser::onlyTrashed()->get();
-        } else {
-            $project_users = ProjectUser::all();
+            $query->select([
+                'project_users.id',
+                'project_users.userID_id',
+                'project_users.projectID_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'project_user_';
+                $routeKey = 'admin.project_users';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('userID.name', function ($row) {
+                return $row->userID ? $row->userID->name : '';
+            });
+            $table->editColumn('projectID.name', function ($row) {
+                return $row->projectID ? $row->projectID->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.project_users.index', compact('project_users'));
+        return view('admin.project_users.index');
     }
 
     /**

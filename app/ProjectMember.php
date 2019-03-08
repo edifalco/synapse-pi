@@ -18,7 +18,8 @@ class ProjectMember extends Model
 
     protected $fillable = ['project_id', 'member_id', 'partner_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

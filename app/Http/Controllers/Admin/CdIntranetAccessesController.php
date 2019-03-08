@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCdIntranetAccessesRequest;
 use App\Http\Requests\Admin\UpdateCdIntranetAccessesRequest;
+use Yajra\DataTables\DataTables;
 
 class CdIntranetAccessesController extends Controller
 {
@@ -23,16 +24,48 @@ class CdIntranetAccessesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('cd_intranet_access_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = CdIntranetAccess::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('cd_intranet_access_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $cd_intranet_accesses = CdIntranetAccess::onlyTrashed()->get();
-        } else {
-            $cd_intranet_accesses = CdIntranetAccess::all();
+            $query->select([
+                'cd_intranet_accesses.id',
+                'cd_intranet_accesses.month',
+                'cd_intranet_accesses.value',
+                'cd_intranet_accesses.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'cd_intranet_access_';
+                $routeKey = 'admin.cd_intranet_accesses';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.cd_intranet_accesses.index', compact('cd_intranet_accesses'));
+        return view('admin.cd_intranet_accesses.index');
     }
 
     /**

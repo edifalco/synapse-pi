@@ -26,7 +26,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($project_users) > 0 ? 'datatable' : '' }} @can('project_user_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped ajaxTable @can('project_user_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
                         @can('project_user_delete')
@@ -42,61 +42,6 @@
                         @endif
                     </tr>
                 </thead>
-                
-                <tbody>
-                    @if (count($project_users) > 0)
-                        @foreach ($project_users as $project_user)
-                            <tr data-entry-id="{{ $project_user->id }}">
-                                @can('project_user_delete')
-                                    @if ( request('show_deleted') != 1 )<td></td>@endif
-                                @endcan
-
-                                <td field-key='userID'>{{ $project_user->userID->name ?? '' }}</td>
-                                <td field-key='projectID'>{{ $project_user->projectID->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_users.restore', $project_user->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_users.perma_del', $project_user->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('project_user_view')
-                                    <a href="{{ route('admin.project_users.show',[$project_user->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('project_user_edit')
-                                    <a href="{{ route('admin.project_users.edit',[$project_user->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('project_user_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_users.destroy', $project_user->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="7">@lang('global.app_no_entries_in_table')</td>
-                        </tr>
-                    @endif
-                </tbody>
             </table>
         </div>
     </div>
@@ -107,6 +52,18 @@
         @can('project_user_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.project_users.mass_destroy') }}'; @endif
         @endcan
-
+        $(document).ready(function () {
+            window.dtDefaultOptions.ajax = '{!! route('admin.project_users.index') !!}?show_deleted={{ request('show_deleted') }}';
+            window.dtDefaultOptions.columns = [@can('project_user_delete')
+                @if ( request('show_deleted') != 1 )
+                    {data: 'massDelete', name: 'id', searchable: false, sortable: false},
+                @endif
+                @endcan{data: 'userID.name', name: 'userID.name'},
+                {data: 'projectID.name', name: 'projectID.name'},
+                
+                {data: 'actions', name: 'actions', searchable: false, sortable: false}
+            ];
+            processAjaxTables();
+        });
     </script>
 @endsection

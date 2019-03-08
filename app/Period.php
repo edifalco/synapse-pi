@@ -18,7 +18,8 @@ class Period extends Model
 
     protected $fillable = ['date', 'period_num', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

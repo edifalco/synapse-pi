@@ -26,7 +26,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($metriclabels) > 0 ? 'datatable' : '' }} @can('metriclabel_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped ajaxTable @can('metriclabel_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
                         @can('metriclabel_delete')
@@ -43,62 +43,6 @@
                         @endif
                     </tr>
                 </thead>
-                
-                <tbody>
-                    @if (count($metriclabels) > 0)
-                        @foreach ($metriclabels as $metriclabel)
-                            <tr data-entry-id="{{ $metriclabel->id }}">
-                                @can('metriclabel_delete')
-                                    @if ( request('show_deleted') != 1 )<td></td>@endif
-                                @endcan
-
-                                <td field-key='label'>{{ $metriclabel->label }}</td>
-                                <td field-key='project'>{{ $metriclabel->project->name ?? '' }}</td>
-                                <td field-key='metric_id'>{{ $metriclabel->metric_id }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.metriclabels.restore', $metriclabel->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.metriclabels.perma_del', $metriclabel->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('metriclabel_view')
-                                    <a href="{{ route('admin.metriclabels.show',[$metriclabel->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('metriclabel_edit')
-                                    <a href="{{ route('admin.metriclabels.edit',[$metriclabel->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('metriclabel_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.metriclabels.destroy', $metriclabel->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="8">@lang('global.app_no_entries_in_table')</td>
-                        </tr>
-                    @endif
-                </tbody>
             </table>
         </div>
     </div>
@@ -109,6 +53,19 @@
         @can('metriclabel_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.metriclabels.mass_destroy') }}'; @endif
         @endcan
-
+        $(document).ready(function () {
+            window.dtDefaultOptions.ajax = '{!! route('admin.metriclabels.index') !!}?show_deleted={{ request('show_deleted') }}';
+            window.dtDefaultOptions.columns = [@can('metriclabel_delete')
+                @if ( request('show_deleted') != 1 )
+                    {data: 'massDelete', name: 'id', searchable: false, sortable: false},
+                @endif
+                @endcan{data: 'label', name: 'label'},
+                {data: 'project.name', name: 'project.name'},
+                {data: 'metric_id', name: 'metric_id'},
+                
+                {data: 'actions', name: 'actions', searchable: false, sortable: false}
+            ];
+            processAjaxTables();
+        });
     </script>
 @endsection

@@ -18,7 +18,8 @@ class Financial extends Model
 
     protected $fillable = ['document', 'title', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

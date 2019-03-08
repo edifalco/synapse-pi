@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePartnersRequest;
 use App\Http\Requests\Admin\UpdatePartnersRequest;
+use Yajra\DataTables\DataTables;
 
 class PartnersController extends Controller
 {
@@ -23,16 +24,45 @@ class PartnersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('partner_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Partner::query();
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('partner_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $partners = Partner::onlyTrashed()->get();
-        } else {
-            $partners = Partner::all();
+            $query->select([
+                'partners.id',
+                'partners.name',
+                'partners.acronym',
+                'partners.image',
+                'partners.country',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'partner_';
+                $routeKey = 'admin.partners';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.partners.index', compact('partners'));
+        return view('admin.partners.index');
     }
 
     /**

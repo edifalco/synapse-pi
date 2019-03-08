@@ -17,7 +17,8 @@ class ProjectUser extends Model
 
     protected $fillable = ['userid_id', 'projectid_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

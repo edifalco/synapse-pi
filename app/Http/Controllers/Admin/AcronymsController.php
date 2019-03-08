@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAcronymsRequest;
 use App\Http\Requests\Admin\UpdateAcronymsRequest;
+use Yajra\DataTables\DataTables;
 
 class AcronymsController extends Controller
 {
@@ -23,16 +24,47 @@ class AcronymsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('acronym_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Acronym::query();
+            $query->with("partner");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('acronym_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $acronyms = Acronym::onlyTrashed()->get();
-        } else {
-            $acronyms = Acronym::all();
+            $query->select([
+                'acronyms.id',
+                'acronyms.acronym',
+                'acronyms.partner_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'acronym_';
+                $routeKey = 'admin.acronyms';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.acronyms.index', compact('acronyms'));
+        return view('admin.acronyms.index');
     }
 
     /**

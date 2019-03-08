@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRiskHighlightsRequest;
 use App\Http\Requests\Admin\UpdateRiskHighlightsRequest;
+use Yajra\DataTables\DataTables;
 
 class RiskHighlightsController extends Controller
 {
@@ -23,16 +24,51 @@ class RiskHighlightsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('risk_highlight_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = RiskHighlight::query();
+            $query->with("risk");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('risk_highlight_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $risk_highlights = RiskHighlight::onlyTrashed()->get();
-        } else {
-            $risk_highlights = RiskHighlight::all();
+            $query->select([
+                'risk_highlights.id',
+                'risk_highlights.risk_id',
+                'risk_highlights.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'risk_highlight_';
+                $routeKey = 'admin.risk_highlights';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('risk.code', function ($row) {
+                return $row->risk ? $row->risk->code : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.risk_highlights.index', compact('risk_highlights'));
+        return view('admin.risk_highlights.index');
     }
 
     /**

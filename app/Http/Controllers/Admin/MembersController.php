@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreMembersRequest;
 use App\Http\Requests\Admin\UpdateMembersRequest;
+use Yajra\DataTables\DataTables;
 
 class MembersController extends Controller
 {
@@ -23,16 +24,51 @@ class MembersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('member_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Member::query();
+            $query->with("partner");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('member_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $members = Member::onlyTrashed()->get();
-        } else {
-            $members = Member::all();
+            $query->select([
+                'members.id',
+                'members.name',
+                'members.surname',
+                'members.partner_id',
+                'members.email',
+                'members.phone',
+                'members.notes',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'member_';
+                $routeKey = 'admin.members';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.members.index', compact('members'));
+        return view('admin.members.index');
     }
 
     /**

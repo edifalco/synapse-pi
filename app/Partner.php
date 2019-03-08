@@ -19,7 +19,8 @@ class Partner extends Model
 
     protected $fillable = ['name', 'acronym', 'image', 'country'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

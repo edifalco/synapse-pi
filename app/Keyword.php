@@ -16,7 +16,8 @@ class Keyword extends Model
 
     protected $fillable = ['word'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

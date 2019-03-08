@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDocumentsRequest;
 use App\Http\Requests\Admin\UpdateDocumentsRequest;
+use Yajra\DataTables\DataTables;
 
 class DocumentsController extends Controller
 {
@@ -23,16 +24,54 @@ class DocumentsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('document_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Document::query();
+            $query->with("project");
+            $query->with("deliverable");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('document_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $documents = Document::onlyTrashed()->get();
-        } else {
-            $documents = Document::all();
+            $query->select([
+                'documents.id',
+                'documents.title',
+                'documents.folder',
+                'documents.document',
+                'documents.project_id',
+                'documents.deliverable_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'document_';
+                $routeKey = 'admin.documents';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+            $table->editColumn('deliverable.label_identification', function ($row) {
+                return $row->deliverable ? $row->deliverable->label_identification : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.documents.index', compact('documents'));
+        return view('admin.documents.index');
     }
 
     /**

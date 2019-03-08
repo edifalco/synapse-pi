@@ -20,7 +20,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($cd_scores2s) > 0 ? 'datatable' : '' }} @can('cd_scores2_delete') dt-select @endcan">
+            <table class="table table-bordered table-striped ajaxTable @can('cd_scores2_delete') dt-select @endcan">
                 <thead>
                     <tr>
                         @can('cd_scores2_delete')
@@ -34,44 +34,6 @@
 
                     </tr>
                 </thead>
-                
-                <tbody>
-                    @if (count($cd_scores2s) > 0)
-                        @foreach ($cd_scores2s as $cd_scores2)
-                            <tr data-entry-id="{{ $cd_scores2->id }}">
-                                @can('cd_scores2_delete')
-                                    <td></td>
-                                @endcan
-
-                                <td field-key='month'>{{ $cd_scores2->month }}</td>
-                                <td field-key='value'>{{ $cd_scores2->value }}</td>
-                                <td field-key='project'>{{ $cd_scores2->project->name ?? '' }}</td>
-                                                                <td>
-                                    @can('cd_scores2_view')
-                                    <a href="{{ route('admin.cd_scores2s.show',[$cd_scores2->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('cd_scores2_edit')
-                                    <a href="{{ route('admin.cd_scores2s.edit',[$cd_scores2->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('cd_scores2_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.cd_scores2s.destroy', $cd_scores2->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="8">@lang('global.app_no_entries_in_table')</td>
-                        </tr>
-                    @endif
-                </tbody>
             </table>
         </div>
     </div>
@@ -82,6 +44,17 @@
         @can('cd_scores2_delete')
             window.route_mass_crud_entries_destroy = '{{ route('admin.cd_scores2s.mass_destroy') }}';
         @endcan
-
+        $(document).ready(function () {
+            window.dtDefaultOptions.ajax = '{!! route('admin.cd_scores2s.index') !!}';
+            window.dtDefaultOptions.columns = [@can('cd_scores2_delete')
+                    {data: 'massDelete', name: 'id', searchable: false, sortable: false},
+                @endcan{data: 'month', name: 'month'},
+                {data: 'value', name: 'value'},
+                {data: 'project.name', name: 'project.name'},
+                
+                {data: 'actions', name: 'actions', searchable: false, sortable: false}
+            ];
+            processAjaxTables();
+        });
     </script>
 @endsection

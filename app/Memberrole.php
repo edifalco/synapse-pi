@@ -19,7 +19,8 @@ class Memberrole extends Model
 
     protected $fillable = ['role', 'member_id', 'project_id', 'partner_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

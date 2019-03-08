@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverablesRequest;
 use App\Http\Requests\Admin\UpdateDeliverablesRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverablesController extends Controller
 {
@@ -23,16 +24,59 @@ class DeliverablesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('deliverable_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Deliverable::query();
+            $query->with("idStatus");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('deliverable_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $deliverables = Deliverable::onlyTrashed()->get();
-        } else {
-            $deliverables = Deliverable::all();
+            $query->select([
+                'deliverables.id',
+                'deliverables.label_identification',
+                'deliverables.title',
+                'deliverables.short_title',
+                'deliverables.date',
+                'deliverables.idStatus_id',
+                'deliverables.notes',
+                'deliverables.project_id',
+                'deliverables.confidentiality',
+                'deliverables.submission_date',
+                'deliverables.due_date_months',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_';
+                $routeKey = 'admin.deliverables';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('idStatus.label', function ($row) {
+                return $row->idStatus ? $row->idStatus->label : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.deliverables.index', compact('deliverables'));
+        return view('admin.deliverables.index');
     }
 
     /**

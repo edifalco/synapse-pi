@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreEffortsRequest;
 use App\Http\Requests\Admin\UpdateEffortsRequest;
+use Yajra\DataTables\DataTables;
 
 class EffortsController extends Controller
 {
@@ -23,16 +24,58 @@ class EffortsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('effort_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Effort::query();
+            $query->with("project");
+            $query->with("workpackage");
+            $query->with("partner");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('effort_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $efforts = Effort::onlyTrashed()->get();
-        } else {
-            $efforts = Effort::all();
+            $query->select([
+                'efforts.id',
+                'efforts.project_id',
+                'efforts.workpackage_id',
+                'efforts.partner_id',
+                'efforts.value',
+                'efforts.period',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'effort_';
+                $routeKey = 'admin.efforts';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+            $table->editColumn('workpackage.wp_id', function ($row) {
+                return $row->workpackage ? $row->workpackage->wp_id : '';
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.efforts.index', compact('efforts'));
+        return view('admin.efforts.index');
     }
 
     /**

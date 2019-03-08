@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRisksRequest;
 use App\Http\Requests\Admin\UpdateRisksRequest;
+use Yajra\DataTables\DataTables;
 
 class RisksController extends Controller
 {
@@ -23,16 +24,64 @@ class RisksController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('risk_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Risk::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('risk_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $risks = Risk::onlyTrashed()->get();
-        } else {
-            $risks = Risk::all();
+            $query->select([
+                'risks.id',
+                'risks.code',
+                'risks.version',
+                'risks.parent_id',
+                'risks.description',
+                'risks.score',
+                'risks.flag',
+                'risks.project_id',
+                'risks.impact',
+                'risks.probability',
+                'risks.proximity',
+                'risks.title',
+                'risks.contingency',
+                'risks.mitigation',
+                'risks.triggerevents',
+                'risks.resolved',
+                'risks.risk_date',
+                'risks.version_date',
+                'risks.type',
+                'risks.notes',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'risk_';
+                $routeKey = 'admin.risks';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.risks.index', compact('risks'));
+        return view('admin.risks.index');
     }
 
     /**

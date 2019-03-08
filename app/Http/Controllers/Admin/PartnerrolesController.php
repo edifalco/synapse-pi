@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePartnerrolesRequest;
 use App\Http\Requests\Admin\UpdatePartnerrolesRequest;
+use Yajra\DataTables\DataTables;
 
 class PartnerrolesController extends Controller
 {
@@ -23,16 +24,52 @@ class PartnerrolesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('partnerrole_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Partnerrole::query();
+            $query->with("partner");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('partnerrole_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $partnerroles = Partnerrole::onlyTrashed()->get();
-        } else {
-            $partnerroles = Partnerrole::all();
+            $query->select([
+                'partnerroles.id',
+                'partnerroles.partner_id',
+                'partnerroles.role_id',
+                'partnerroles.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'partnerrole_';
+                $routeKey = 'admin.partnerroles';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.partnerroles.index', compact('partnerroles'));
+        return view('admin.partnerroles.index');
     }
 
     /**

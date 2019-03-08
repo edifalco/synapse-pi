@@ -20,7 +20,8 @@ class Post extends Model
 
     protected $fillable = ['created', 'description', 'iduser_id', 'idproject_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

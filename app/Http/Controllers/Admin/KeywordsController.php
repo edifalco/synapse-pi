@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreKeywordsRequest;
 use App\Http\Requests\Admin\UpdateKeywordsRequest;
+use Yajra\DataTables\DataTables;
 
 class KeywordsController extends Controller
 {
@@ -23,16 +24,42 @@ class KeywordsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('keyword_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Keyword::query();
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('keyword_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $keywords = Keyword::onlyTrashed()->get();
-        } else {
-            $keywords = Keyword::all();
+            $query->select([
+                'keywords.id',
+                'keywords.word',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'keyword_';
+                $routeKey = 'admin.keywords';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.keywords.index', compact('keywords'));
+        return view('admin.keywords.index');
     }
 
     /**

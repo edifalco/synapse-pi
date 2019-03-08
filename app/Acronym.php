@@ -17,7 +17,8 @@ class Acronym extends Model
 
     protected $fillable = ['acronym', 'partner_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

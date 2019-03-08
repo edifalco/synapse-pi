@@ -17,7 +17,8 @@ class Alternativescore extends Model
 
     protected $fillable = ['show', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

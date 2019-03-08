@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAgendasRequest;
 use App\Http\Requests\Admin\UpdateAgendasRequest;
+use Yajra\DataTables\DataTables;
 
 class AgendasController extends Controller
 {
@@ -23,16 +24,55 @@ class AgendasController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('agenda_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Agenda::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('agenda_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $agendas = Agenda::onlyTrashed()->get();
-        } else {
-            $agendas = Agenda::all();
+            $query->select([
+                'agendas.id',
+                'agendas.date',
+                'agendas.hour',
+                'agendas.minute',
+                'agendas.title',
+                'agendas.description',
+                'agendas.project_id',
+                'agendas.category',
+                'agendas.duration',
+                'agendas.meeting_type',
+                'agendas.date_creation',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'agenda_';
+                $routeKey = 'admin.agendas';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.agendas.index', compact('agendas'));
+        return view('admin.agendas.index');
     }
 
     /**

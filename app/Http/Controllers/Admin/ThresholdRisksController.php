@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreThresholdRisksRequest;
 use App\Http\Requests\Admin\UpdateThresholdRisksRequest;
+use Yajra\DataTables\DataTables;
 
 class ThresholdRisksController extends Controller
 {
@@ -23,16 +24,47 @@ class ThresholdRisksController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('threshold_risk_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = ThresholdRisk::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('threshold_risk_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $threshold_risks = ThresholdRisk::onlyTrashed()->get();
-        } else {
-            $threshold_risks = ThresholdRisk::all();
+            $query->select([
+                'threshold_risks.id',
+                'threshold_risks.value',
+                'threshold_risks.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'threshold_risk_';
+                $routeKey = 'admin.threshold_risks';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.threshold_risks.index', compact('threshold_risks'));
+        return view('admin.threshold_risks.index');
     }
 
     /**

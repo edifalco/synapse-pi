@@ -17,7 +17,8 @@ class ThresholdDeliverable extends Model
 
     protected $fillable = ['value', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

@@ -17,7 +17,8 @@ class DeliverableWorkpackage extends Model
 
     protected $fillable = ['deliverable_id', 'workpackage_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

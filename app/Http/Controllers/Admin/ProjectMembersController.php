@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProjectMembersRequest;
 use App\Http\Requests\Admin\UpdateProjectMembersRequest;
+use Yajra\DataTables\DataTables;
 
 class ProjectMembersController extends Controller
 {
@@ -23,16 +24,56 @@ class ProjectMembersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('project_member_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = ProjectMember::query();
+            $query->with("project");
+            $query->with("member");
+            $query->with("partner");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('project_member_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $project_members = ProjectMember::onlyTrashed()->get();
-        } else {
-            $project_members = ProjectMember::all();
+            $query->select([
+                'project_members.id',
+                'project_members.project_id',
+                'project_members.member_id',
+                'project_members.partner_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'project_member_';
+                $routeKey = 'admin.project_members';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+            $table->editColumn('member.name', function ($row) {
+                return $row->member ? $row->member->name : '';
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.project_members.index', compact('project_members'));
+        return view('admin.project_members.index');
     }
 
     /**

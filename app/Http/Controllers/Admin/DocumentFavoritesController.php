@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDocumentFavoritesRequest;
 use App\Http\Requests\Admin\UpdateDocumentFavoritesRequest;
+use Yajra\DataTables\DataTables;
 
 class DocumentFavoritesController extends Controller
 {
@@ -23,16 +24,51 @@ class DocumentFavoritesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('document_favorite_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = DocumentFavorite::query();
+            $query->with("document");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('document_favorite_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $document_favorites = DocumentFavorite::onlyTrashed()->get();
-        } else {
-            $document_favorites = DocumentFavorite::all();
+            $query->select([
+                'document_favorites.id',
+                'document_favorites.document_id',
+                'document_favorites.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'document_favorite_';
+                $routeKey = 'admin.document_favorites';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('document.title', function ($row) {
+                return $row->document ? $row->document->title : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.document_favorites.index', compact('document_favorites'));
+        return view('admin.document_favorites.index');
     }
 
     /**

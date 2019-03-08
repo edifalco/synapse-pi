@@ -13,7 +13,8 @@ class DeliverableStatus extends Model
 {
     protected $fillable = ['label'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {
