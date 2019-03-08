@@ -15,7 +15,8 @@ class CdScores2 extends Model
 {
     protected $fillable = ['month', 'value', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

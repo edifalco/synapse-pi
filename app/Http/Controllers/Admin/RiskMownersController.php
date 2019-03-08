@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRiskMownersRequest;
 use App\Http\Requests\Admin\UpdateRiskMownersRequest;
+use Yajra\DataTables\DataTables;
 
 class RiskMownersController extends Controller
 {
@@ -23,16 +24,51 @@ class RiskMownersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('risk_mowner_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = RiskMowner::query();
+            $query->with("member");
+            $query->with("risk");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('risk_mowner_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $risk_mowners = RiskMowner::onlyTrashed()->get();
-        } else {
-            $risk_mowners = RiskMowner::all();
+            $query->select([
+                'risk_mowners.id',
+                'risk_mowners.member_id',
+                'risk_mowners.risk_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'risk_mowner_';
+                $routeKey = 'admin.risk_mowners';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('member.name', function ($row) {
+                return $row->member ? $row->member->name : '';
+            });
+            $table->editColumn('risk.code', function ($row) {
+                return $row->risk ? $row->risk->code : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.risk_mowners.index', compact('risk_mowners'));
+        return view('admin.risk_mowners.index');
     }
 
     /**

@@ -17,7 +17,8 @@ class RiskHighlight extends Model
 
     protected $fillable = ['risk_id', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

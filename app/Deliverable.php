@@ -26,7 +26,8 @@ class Deliverable extends Model
 
     protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'idstatus_id', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

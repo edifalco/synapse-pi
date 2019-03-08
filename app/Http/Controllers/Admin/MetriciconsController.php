@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreMetriciconsRequest;
 use App\Http\Requests\Admin\UpdateMetriciconsRequest;
+use Yajra\DataTables\DataTables;
 
 class MetriciconsController extends Controller
 {
@@ -23,16 +24,48 @@ class MetriciconsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('metricicon_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Metricicon::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('metricicon_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $metricicons = Metricicon::onlyTrashed()->get();
-        } else {
-            $metricicons = Metricicon::all();
+            $query->select([
+                'metricicons.id',
+                'metricicons.metric_id',
+                'metricicons.icon_id',
+                'metricicons.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'metricicon_';
+                $routeKey = 'admin.metricicons';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.metricicons.index', compact('metricicons'));
+        return view('admin.metricicons.index');
     }
 
     /**

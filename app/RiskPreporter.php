@@ -17,7 +17,8 @@ class RiskPreporter extends Model
 
     protected $fillable = ['partner_id', 'risk_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

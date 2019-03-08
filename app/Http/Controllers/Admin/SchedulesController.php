@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSchedulesRequest;
 use App\Http\Requests\Admin\UpdateSchedulesRequest;
+use Yajra\DataTables\DataTables;
 
 class SchedulesController extends Controller
 {
@@ -23,16 +24,50 @@ class SchedulesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('schedule_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Schedule::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('schedule_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $schedules = Schedule::onlyTrashed()->get();
-        } else {
-            $schedules = Schedule::all();
+            $query->select([
+                'schedules.id',
+                'schedules.date',
+                'schedules.description',
+                'schedules.status',
+                'schedules.project_id',
+                'schedules.highlight',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'schedule_';
+                $routeKey = 'admin.schedules';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.schedules.index', compact('schedules'));
+        return view('admin.schedules.index');
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverableReviewersRequest;
 use App\Http\Requests\Admin\UpdateDeliverableReviewersRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverableReviewersController extends Controller
 {
@@ -23,16 +24,51 @@ class DeliverableReviewersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('deliverable_reviewer_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = DeliverableReviewer::query();
+            $query->with("deliverable");
+            $query->with("member");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('deliverable_reviewer_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $deliverable_reviewers = DeliverableReviewer::onlyTrashed()->get();
-        } else {
-            $deliverable_reviewers = DeliverableReviewer::all();
+            $query->select([
+                'deliverable_reviewers.id',
+                'deliverable_reviewers.deliverable_id',
+                'deliverable_reviewers.member_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_reviewer_';
+                $routeKey = 'admin.deliverable_reviewers';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('deliverable.label_identification', function ($row) {
+                return $row->deliverable ? $row->deliverable->label_identification : '';
+            });
+            $table->editColumn('member.name', function ($row) {
+                return $row->member ? $row->member->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.deliverable_reviewers.index', compact('deliverable_reviewers'));
+        return view('admin.deliverable_reviewers.index');
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreThresholdDeliverablesRequest;
 use App\Http\Requests\Admin\UpdateThresholdDeliverablesRequest;
+use Yajra\DataTables\DataTables;
 
 class ThresholdDeliverablesController extends Controller
 {
@@ -23,16 +24,47 @@ class ThresholdDeliverablesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('threshold_deliverable_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = ThresholdDeliverable::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('threshold_deliverable_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $threshold_deliverables = ThresholdDeliverable::onlyTrashed()->get();
-        } else {
-            $threshold_deliverables = ThresholdDeliverable::all();
+            $query->select([
+                'threshold_deliverables.id',
+                'threshold_deliverables.value',
+                'threshold_deliverables.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'threshold_deliverable_';
+                $routeKey = 'admin.threshold_deliverables';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.threshold_deliverables.index', compact('threshold_deliverables'));
+        return view('admin.threshold_deliverables.index');
     }
 
     /**

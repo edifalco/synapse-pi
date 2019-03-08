@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBudgetsRequest;
 use App\Http\Requests\Admin\UpdateBudgetsRequest;
+use Yajra\DataTables\DataTables;
 
 class BudgetsController extends Controller
 {
@@ -23,9 +24,46 @@ class BudgetsController extends Controller
         }
 
 
-                $budgets = Budget::all();
+        
+        if (request()->ajax()) {
+            $query = Budget::query();
+            $query->with("partner");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            
+            $query->select([
+                'budgets.id',
+                'budgets.partner_id',
+                'budgets.value',
+                'budgets.period',
+                'budgets.project_id',
+            ]);
+            $table = Datatables::of($query);
 
-        return view('admin.budgets.index', compact('budgets'));
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'budget_';
+                $routeKey = 'admin.budgets';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.budgets.index');
     }
 
     /**

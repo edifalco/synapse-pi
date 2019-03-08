@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePeriodsRequest;
 use App\Http\Requests\Admin\UpdatePeriodsRequest;
+use Yajra\DataTables\DataTables;
 
 class PeriodsController extends Controller
 {
@@ -23,16 +24,48 @@ class PeriodsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('period_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Period::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('period_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $periods = Period::onlyTrashed()->get();
-        } else {
-            $periods = Period::all();
+            $query->select([
+                'periods.id',
+                'periods.date',
+                'periods.period_num',
+                'periods.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'period_';
+                $routeKey = 'admin.periods';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.periods.index', compact('periods'));
+        return view('admin.periods.index');
     }
 
     /**

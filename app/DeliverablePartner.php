@@ -17,7 +17,8 @@ class DeliverablePartner extends Model
 
     protected $fillable = ['partner_id', 'deliverable_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

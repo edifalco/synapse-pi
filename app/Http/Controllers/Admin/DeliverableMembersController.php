@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverableMembersRequest;
 use App\Http\Requests\Admin\UpdateDeliverableMembersRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverableMembersController extends Controller
 {
@@ -23,16 +24,51 @@ class DeliverableMembersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('deliverable_member_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = DeliverableMember::query();
+            $query->with("member");
+            $query->with("deliverable");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('deliverable_member_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $deliverable_members = DeliverableMember::onlyTrashed()->get();
-        } else {
-            $deliverable_members = DeliverableMember::all();
+            $query->select([
+                'deliverable_members.id',
+                'deliverable_members.member_id',
+                'deliverable_members.deliverable_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_member_';
+                $routeKey = 'admin.deliverable_members';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('member.name', function ($row) {
+                return $row->member ? $row->member->name : '';
+            });
+            $table->editColumn('deliverable.label_identification', function ($row) {
+                return $row->deliverable ? $row->deliverable->label_identification : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.deliverable_members.index', compact('deliverable_members'));
+        return view('admin.deliverable_members.index');
     }
 
     /**

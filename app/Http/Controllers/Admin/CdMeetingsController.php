@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCdMeetingsRequest;
 use App\Http\Requests\Admin\UpdateCdMeetingsRequest;
+use Yajra\DataTables\DataTables;
 
 class CdMeetingsController extends Controller
 {
@@ -23,16 +24,48 @@ class CdMeetingsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('cd_meeting_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = CdMeeting::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('cd_meeting_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $cd_meetings = CdMeeting::onlyTrashed()->get();
-        } else {
-            $cd_meetings = CdMeeting::all();
+            $query->select([
+                'cd_meetings.id',
+                'cd_meetings.month',
+                'cd_meetings.value',
+                'cd_meetings.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'cd_meeting_';
+                $routeKey = 'admin.cd_meetings';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.cd_meetings.index', compact('cd_meetings'));
+        return view('admin.cd_meetings.index');
     }
 
     /**

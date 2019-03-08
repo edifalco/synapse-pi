@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreWorkpackagesRequest;
 use App\Http\Requests\Admin\UpdateWorkpackagesRequest;
+use Yajra\DataTables\DataTables;
 
 class WorkpackagesController extends Controller
 {
@@ -23,16 +24,49 @@ class WorkpackagesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('workpackage_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Workpackage::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('workpackage_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $workpackages = Workpackage::onlyTrashed()->get();
-        } else {
-            $workpackages = Workpackage::all();
+            $query->select([
+                'workpackages.id',
+                'workpackages.wp_id',
+                'workpackages.name',
+                'workpackages.project_id',
+                'workpackages.order',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'workpackage_';
+                $routeKey = 'admin.workpackages';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.workpackages.index', compact('workpackages'));
+        return view('admin.workpackages.index');
     }
 
     /**

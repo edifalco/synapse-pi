@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreScoredescriptionsRequest;
 use App\Http\Requests\Admin\UpdateScoredescriptionsRequest;
+use Yajra\DataTables\DataTables;
 
 class ScoredescriptionsController extends Controller
 {
@@ -23,16 +24,48 @@ class ScoredescriptionsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('scoredescription_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Scoredescription::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('scoredescription_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $scoredescriptions = Scoredescription::onlyTrashed()->get();
-        } else {
-            $scoredescriptions = Scoredescription::all();
+            $query->select([
+                'scoredescriptions.id',
+                'scoredescriptions.description',
+                'scoredescriptions.project_id',
+                'scoredescriptions.score_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'scoredescription_';
+                $routeKey = 'admin.scoredescriptions';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.scoredescriptions.index', compact('scoredescriptions'));
+        return view('admin.scoredescriptions.index');
     }
 
     /**

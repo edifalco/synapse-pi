@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProjectPartnersRequest;
 use App\Http\Requests\Admin\UpdateProjectPartnersRequest;
+use Yajra\DataTables\DataTables;
 
 class ProjectPartnersController extends Controller
 {
@@ -23,16 +24,51 @@ class ProjectPartnersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('project_partner_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = ProjectPartner::query();
+            $query->with("project");
+            $query->with("partner");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('project_partner_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $project_partners = ProjectPartner::onlyTrashed()->get();
-        } else {
-            $project_partners = ProjectPartner::all();
+            $query->select([
+                'project_partners.id',
+                'project_partners.project_id',
+                'project_partners.partner_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'project_partner_';
+                $routeKey = 'admin.project_partners';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.project_partners.index', compact('project_partners'));
+        return view('admin.project_partners.index');
     }
 
     /**

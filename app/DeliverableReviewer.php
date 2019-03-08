@@ -17,7 +17,8 @@ class DeliverableReviewer extends Model
 
     protected $fillable = ['deliverable_id', 'member_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

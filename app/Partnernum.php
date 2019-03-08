@@ -18,7 +18,8 @@ class Partnernum extends Model
 
     protected $fillable = ['value', 'partner_id', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

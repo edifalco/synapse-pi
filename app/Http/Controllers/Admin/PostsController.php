@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePostsRequest;
 use App\Http\Requests\Admin\UpdatePostsRequest;
+use Yajra\DataTables\DataTables;
 
 class PostsController extends Controller
 {
@@ -23,16 +24,53 @@ class PostsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('post_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Post::query();
+            $query->with("idUser");
+            $query->with("idProject");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('post_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $posts = Post::onlyTrashed()->get();
-        } else {
-            $posts = Post::all();
+            $query->select([
+                'posts.id',
+                'posts.created',
+                'posts.idUser_id',
+                'posts.description',
+                'posts.idProject_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'post_';
+                $routeKey = 'admin.posts';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('idUser.name', function ($row) {
+                return $row->idUser ? $row->idUser->name : '';
+            });
+            $table->editColumn('idProject.name', function ($row) {
+                return $row->idProject ? $row->idProject->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index');
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCdScores2sRequest;
 use App\Http\Requests\Admin\UpdateCdScores2sRequest;
+use Yajra\DataTables\DataTables;
 
 class CdScores2sController extends Controller
 {
@@ -23,9 +24,41 @@ class CdScores2sController extends Controller
         }
 
 
-                $cd_scores2s = CdScores2::all();
+        
+        if (request()->ajax()) {
+            $query = CdScores2::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            
+            $query->select([
+                'cd_scores2s.id',
+                'cd_scores2s.month',
+                'cd_scores2s.value',
+                'cd_scores2s.project_id',
+            ]);
+            $table = Datatables::of($query);
 
-        return view('admin.cd_scores2s.index', compact('cd_scores2s'));
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'cd_scores2_';
+                $routeKey = 'admin.cd_scores2s';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.cd_scores2s.index');
     }
 
     /**

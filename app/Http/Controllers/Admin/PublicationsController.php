@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePublicationsRequest;
 use App\Http\Requests\Admin\UpdatePublicationsRequest;
+use Yajra\DataTables\DataTables;
 
 class PublicationsController extends Controller
 {
@@ -23,16 +24,52 @@ class PublicationsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('publication_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Publication::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('publication_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $publications = Publication::onlyTrashed()->get();
-        } else {
-            $publications = Publication::all();
+            $query->select([
+                'publications.id',
+                'publications.title',
+                'publications.year',
+                'publications.month',
+                'publications.abbr',
+                'publications.link',
+                'publications.project_id',
+                'publications.authors',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'publication_';
+                $routeKey = 'admin.publications';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.publications.index', compact('publications'));
+        return view('admin.publications.index');
     }
 
     /**

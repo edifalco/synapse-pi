@@ -18,7 +18,8 @@ class Partnerrole extends Model
 
     protected $fillable = ['role_id', 'partner_id', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

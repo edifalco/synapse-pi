@@ -18,7 +18,8 @@ class Metricicon extends Model
 
     protected $fillable = ['metric_id', 'icon_id', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

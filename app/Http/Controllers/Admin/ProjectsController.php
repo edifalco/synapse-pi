@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProjectsRequest;
 use App\Http\Requests\Admin\UpdateProjectsRequest;
+use Yajra\DataTables\DataTables;
 
 class ProjectsController extends Controller
 {
@@ -23,16 +24,46 @@ class ProjectsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('project_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Project::query();
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('project_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $projects = Project::onlyTrashed()->get();
-        } else {
-            $projects = Project::all();
+            $query->select([
+                'projects.id',
+                'projects.name',
+                'projects.description',
+                'projects.date',
+                'projects.duration',
+                'projects.image',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'project_';
+                $routeKey = 'admin.projects';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.projects.index', compact('projects'));
+        return view('admin.projects.index');
     }
 
     /**

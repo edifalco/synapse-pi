@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAcronymProjectsRequest;
 use App\Http\Requests\Admin\UpdateAcronymProjectsRequest;
+use Yajra\DataTables\DataTables;
 
 class AcronymProjectsController extends Controller
 {
@@ -23,16 +24,56 @@ class AcronymProjectsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('acronym_project_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = AcronymProject::query();
+            $query->with("acronym");
+            $query->with("partner");
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('acronym_project_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $acronym_projects = AcronymProject::onlyTrashed()->get();
-        } else {
-            $acronym_projects = AcronymProject::all();
+            $query->select([
+                'acronym_projects.id',
+                'acronym_projects.acronym_id',
+                'acronym_projects.partner_id',
+                'acronym_projects.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'acronym_project_';
+                $routeKey = 'admin.acronym_projects';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('acronym.acronym', function ($row) {
+                return $row->acronym ? $row->acronym->acronym : '';
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.acronym_projects.index', compact('acronym_projects'));
+        return view('admin.acronym_projects.index');
     }
 
     /**

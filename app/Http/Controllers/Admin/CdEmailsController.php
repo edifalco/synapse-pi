@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCdEmailsRequest;
 use App\Http\Requests\Admin\UpdateCdEmailsRequest;
+use Yajra\DataTables\DataTables;
 
 class CdEmailsController extends Controller
 {
@@ -23,9 +24,41 @@ class CdEmailsController extends Controller
         }
 
 
-                $cd_emails = CdEmail::all();
+        
+        if (request()->ajax()) {
+            $query = CdEmail::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            
+            $query->select([
+                'cd_emails.id',
+                'cd_emails.month',
+                'cd_emails.value',
+                'cd_emails.project_id',
+            ]);
+            $table = Datatables::of($query);
 
-        return view('admin.cd_emails.index', compact('cd_emails'));
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'cd_email_';
+                $routeKey = 'admin.cd_emails';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.cd_emails.index');
     }
 
     /**

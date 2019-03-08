@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRiskPreportersRequest;
 use App\Http\Requests\Admin\UpdateRiskPreportersRequest;
+use Yajra\DataTables\DataTables;
 
 class RiskPreportersController extends Controller
 {
@@ -23,16 +24,51 @@ class RiskPreportersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('risk_preporter_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = RiskPreporter::query();
+            $query->with("partner");
+            $query->with("risk");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('risk_preporter_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $risk_preporters = RiskPreporter::onlyTrashed()->get();
-        } else {
-            $risk_preporters = RiskPreporter::all();
+            $query->select([
+                'risk_preporters.id',
+                'risk_preporters.partner_id',
+                'risk_preporters.risk_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'risk_preporter_';
+                $routeKey = 'admin.risk_preporters';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('risk.code', function ($row) {
+                return $row->risk ? $row->risk->code : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.risk_preporters.index', compact('risk_preporters'));
+        return view('admin.risk_preporters.index');
     }
 
     /**

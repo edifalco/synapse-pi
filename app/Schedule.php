@@ -21,7 +21,8 @@ class Schedule extends Model
 
     protected $fillable = ['date', 'description', 'status', 'highlight', 'project_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreFinancialvisibilitiesRequest;
 use App\Http\Requests\Admin\UpdateFinancialvisibilitiesRequest;
+use Yajra\DataTables\DataTables;
 
 class FinancialvisibilitiesController extends Controller
 {
@@ -23,16 +24,48 @@ class FinancialvisibilitiesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('financialvisibility_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Financialvisibility::query();
+            $query->with("id_project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('financialvisibility_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $financialvisibilities = Financialvisibility::onlyTrashed()->get();
-        } else {
-            $financialvisibilities = Financialvisibility::all();
+            $query->select([
+                'financialvisibilities.id',
+                'financialvisibilities.type',
+                'financialvisibilities.status',
+                'financialvisibilities.id_project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'financialvisibility_';
+                $routeKey = 'admin.financialvisibilities';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('id_project.name', function ($row) {
+                return $row->id_project ? $row->id_project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.financialvisibilities.index', compact('financialvisibilities'));
+        return view('admin.financialvisibilities.index');
     }
 
     /**

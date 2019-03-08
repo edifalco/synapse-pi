@@ -17,7 +17,8 @@ class DeliverableMember extends Model
 
     protected $fillable = ['member_id', 'deliverable_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

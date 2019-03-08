@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCdDisseminationsRequest;
 use App\Http\Requests\Admin\UpdateCdDisseminationsRequest;
+use Yajra\DataTables\DataTables;
 
 class CdDisseminationsController extends Controller
 {
@@ -23,16 +24,48 @@ class CdDisseminationsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('cd_dissemination_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = CdDissemination::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('cd_dissemination_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $cd_disseminations = CdDissemination::onlyTrashed()->get();
-        } else {
-            $cd_disseminations = CdDissemination::all();
+            $query->select([
+                'cd_disseminations.id',
+                'cd_disseminations.month',
+                'cd_disseminations.value',
+                'cd_disseminations.project_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'cd_dissemination_';
+                $routeKey = 'admin.cd_disseminations';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.cd_disseminations.index', compact('cd_disseminations'));
+        return view('admin.cd_disseminations.index');
     }
 
     /**

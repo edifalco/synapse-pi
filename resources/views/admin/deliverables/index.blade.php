@@ -26,7 +26,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($deliverables) > 0 ? 'datatable' : '' }} @can('deliverable_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped ajaxTable @can('deliverable_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
                         @can('deliverable_delete')
@@ -50,69 +50,6 @@
                         @endif
                     </tr>
                 </thead>
-                
-                <tbody>
-                    @if (count($deliverables) > 0)
-                        @foreach ($deliverables as $deliverable)
-                            <tr data-entry-id="{{ $deliverable->id }}">
-                                @can('deliverable_delete')
-                                    @if ( request('show_deleted') != 1 )<td></td>@endif
-                                @endcan
-
-                                <td field-key='label_identification'>{{ $deliverable->label_identification }}</td>
-                                <td field-key='title'>{!! $deliverable->title !!}</td>
-                                <td field-key='short_title'>{!! $deliverable->short_title !!}</td>
-                                <td field-key='date'>{{ $deliverable->date }}</td>
-                                <td field-key='idStatus'>{{ $deliverable->idStatus->label ?? '' }}</td>
-                                <td field-key='notes'>{!! $deliverable->notes !!}</td>
-                                <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
-                                <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
-                                <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
-                                <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverables.restore', $deliverable->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverables.perma_del', $deliverable->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('deliverable_view')
-                                    <a href="{{ route('admin.deliverables.show',[$deliverable->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('deliverable_edit')
-                                    <a href="{{ route('admin.deliverables.edit',[$deliverable->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('deliverable_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverables.destroy', $deliverable->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="15">@lang('global.app_no_entries_in_table')</td>
-                        </tr>
-                    @endif
-                </tbody>
             </table>
         </div>
     </div>
@@ -123,6 +60,26 @@
         @can('deliverable_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.deliverables.mass_destroy') }}'; @endif
         @endcan
-
+        $(document).ready(function () {
+            window.dtDefaultOptions.ajax = '{!! route('admin.deliverables.index') !!}?show_deleted={{ request('show_deleted') }}';
+            window.dtDefaultOptions.columns = [@can('deliverable_delete')
+                @if ( request('show_deleted') != 1 )
+                    {data: 'massDelete', name: 'id', searchable: false, sortable: false},
+                @endif
+                @endcan{data: 'label_identification', name: 'label_identification'},
+                {data: 'title', name: 'title'},
+                {data: 'short_title', name: 'short_title'},
+                {data: 'date', name: 'date'},
+                {data: 'idStatus.label', name: 'idStatus.label'},
+                {data: 'notes', name: 'notes'},
+                {data: 'project.name', name: 'project.name'},
+                {data: 'confidentiality', name: 'confidentiality'},
+                {data: 'submission_date', name: 'submission_date'},
+                {data: 'due_date_months', name: 'due_date_months'},
+                
+                {data: 'actions', name: 'actions', searchable: false, sortable: false}
+            ];
+            processAjaxTables();
+        });
     </script>
 @endsection

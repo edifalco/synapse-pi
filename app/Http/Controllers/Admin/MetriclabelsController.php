@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreMetriclabelsRequest;
 use App\Http\Requests\Admin\UpdateMetriclabelsRequest;
+use Yajra\DataTables\DataTables;
 
 class MetriclabelsController extends Controller
 {
@@ -23,16 +24,48 @@ class MetriclabelsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('metriclabel_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Metriclabel::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('metriclabel_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $metriclabels = Metriclabel::onlyTrashed()->get();
-        } else {
-            $metriclabels = Metriclabel::all();
+            $query->select([
+                'metriclabels.id',
+                'metriclabels.label',
+                'metriclabels.project_id',
+                'metriclabels.metric_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'metriclabel_';
+                $routeKey = 'admin.metriclabels';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.metriclabels.index', compact('metriclabels'));
+        return view('admin.metriclabels.index');
     }
 
     /**

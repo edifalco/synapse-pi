@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverableWorkpackagesRequest;
 use App\Http\Requests\Admin\UpdateDeliverableWorkpackagesRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverableWorkpackagesController extends Controller
 {
@@ -23,16 +24,51 @@ class DeliverableWorkpackagesController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('deliverable_workpackage_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = DeliverableWorkpackage::query();
+            $query->with("deliverable");
+            $query->with("workpackage");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('deliverable_workpackage_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $deliverable_workpackages = DeliverableWorkpackage::onlyTrashed()->get();
-        } else {
-            $deliverable_workpackages = DeliverableWorkpackage::all();
+            $query->select([
+                'deliverable_workpackages.id',
+                'deliverable_workpackages.deliverable_id',
+                'deliverable_workpackages.workpackage_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_workpackage_';
+                $routeKey = 'admin.deliverable_workpackages';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('deliverable.label_identification', function ($row) {
+                return $row->deliverable ? $row->deliverable->label_identification : '';
+            });
+            $table->editColumn('workpackage.wp_id', function ($row) {
+                return $row->workpackage ? $row->workpackage->wp_id : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.deliverable_workpackages.index', compact('deliverable_workpackages'));
+        return view('admin.deliverable_workpackages.index');
     }
 
     /**

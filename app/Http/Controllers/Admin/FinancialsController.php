@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreFinancialsRequest;
 use App\Http\Requests\Admin\UpdateFinancialsRequest;
+use Yajra\DataTables\DataTables;
 
 class FinancialsController extends Controller
 {
@@ -23,16 +24,48 @@ class FinancialsController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('financial_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = Financial::query();
+            $query->with("project");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('financial_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $financials = Financial::onlyTrashed()->get();
-        } else {
-            $financials = Financial::all();
+            $query->select([
+                'financials.id',
+                'financials.document',
+                'financials.project_id',
+                'financials.title',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'financial_';
+                $routeKey = 'admin.financials';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.financials.index', compact('financials'));
+        return view('admin.financials.index');
     }
 
     /**

@@ -20,7 +20,8 @@ class Document extends Model
 
     protected $fillable = ['title', 'folder', 'document', 'project_id', 'deliverable_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

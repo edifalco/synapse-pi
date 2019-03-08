@@ -17,7 +17,8 @@ class MemberPartner extends Model
 
     protected $fillable = ['member_id', 'partner_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {

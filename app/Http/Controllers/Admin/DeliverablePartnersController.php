@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDeliverablePartnersRequest;
 use App\Http\Requests\Admin\UpdateDeliverablePartnersRequest;
+use Yajra\DataTables\DataTables;
 
 class DeliverablePartnersController extends Controller
 {
@@ -23,16 +24,51 @@ class DeliverablePartnersController extends Controller
         }
 
 
-        if (request('show_deleted') == 1) {
-            if (! Gate::allows('deliverable_partner_delete')) {
-                return abort(401);
+        
+        if (request()->ajax()) {
+            $query = DeliverablePartner::query();
+            $query->with("partner");
+            $query->with("deliverable");
+            $template = 'actionsTemplate';
+            if(request('show_deleted') == 1) {
+                
+        if (! Gate::allows('deliverable_partner_delete')) {
+            return abort(401);
+        }
+                $query->onlyTrashed();
+                $template = 'restoreTemplate';
             }
-            $deliverable_partners = DeliverablePartner::onlyTrashed()->get();
-        } else {
-            $deliverable_partners = DeliverablePartner::all();
+            $query->select([
+                'deliverable_partners.id',
+                'deliverable_partners.partner_id',
+                'deliverable_partners.deliverable_id',
+            ]);
+            $table = Datatables::of($query);
+
+            $table->setRowAttr([
+                'data-entry-id' => '{{$id}}',
+            ]);
+            $table->addColumn('massDelete', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+            $table->editColumn('actions', function ($row) use ($template) {
+                $gateKey  = 'deliverable_partner_';
+                $routeKey = 'admin.deliverable_partners';
+
+                return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('deliverable.label_identification', function ($row) {
+                return $row->deliverable ? $row->deliverable->label_identification : '';
+            });
+
+            $table->rawColumns(['actions','massDelete']);
+
+            return $table->make(true);
         }
 
-        return view('admin.deliverable_partners.index', compact('deliverable_partners'));
+        return view('admin.deliverable_partners.index');
     }
 
     /**

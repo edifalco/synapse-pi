@@ -20,7 +20,8 @@ class Effort extends Model
 
     protected $fillable = ['value', 'period', 'project_id', 'workpackage_id', 'partner_id'];
     protected $hidden = [];
-    
+    public static $searchable = [
+    ];
     
     public static function boot()
     {
