@@ -18,5 +18,11 @@ class Keyword extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Keyword::observe(new \App\Observers\UserActionsObserver);
+    }
     
 }

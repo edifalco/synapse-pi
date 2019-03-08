@@ -19,6 +19,12 @@ class DeliverableWorkpackage extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        DeliverableWorkpackage::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

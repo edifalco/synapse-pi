@@ -37,6 +37,12 @@ class Risk extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Risk::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

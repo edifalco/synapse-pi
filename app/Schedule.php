@@ -23,6 +23,12 @@ class Schedule extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Schedule::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to date format

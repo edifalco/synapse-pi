@@ -24,6 +24,12 @@ class Publication extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        Publication::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

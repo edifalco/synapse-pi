@@ -6,6 +6,8 @@
     @can('user_create')
     <p>
         <a href="{{ route('admin.users.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
+        <a href="#" class="btn btn-warning" style="margin-left:5px;" data-toggle="modal" data-target="#myModal">@lang('global.app_csvImport')</a>
+        @include('csvImport.modal', ['model' => 'User'])
         
     </p>
     @endcan

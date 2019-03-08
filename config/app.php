@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Yajra\DataTables\DataTablesServiceProvider::class,
         
 
         /*
@@ -228,6 +229,12 @@ return [
         
     ],
 
-    
+    'languages' => [
+        'en' => 'English',
+        'es' => 'Spanish',
+        'de' => 'German',
+        'fr' => 'French',
+        'it' => 'Italian',
+    ],
 
 ];

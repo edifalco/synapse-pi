@@ -19,6 +19,12 @@ class ThresholdRisk extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        ThresholdRisk::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format

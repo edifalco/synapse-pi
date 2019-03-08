@@ -19,6 +19,12 @@ class RiskMowner extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        RiskMowner::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

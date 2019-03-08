@@ -19,6 +19,12 @@ class RiskHighlight extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        RiskHighlight::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

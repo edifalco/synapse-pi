@@ -19,6 +19,12 @@ class RiskMreporter extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        RiskMreporter::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set to null if empty

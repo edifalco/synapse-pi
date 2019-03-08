@@ -19,6 +19,12 @@ class ThresholdDeliverable extends Model
     protected $hidden = [];
     
     
+    public static function boot()
+    {
+        parent::boot();
+
+        ThresholdDeliverable::observe(new \App\Observers\UserActionsObserver);
+    }
 
     /**
      * Set attribute to money format
