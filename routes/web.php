@@ -171,10 +171,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('project_members_mass_destroy', ['uses' => 'Admin\ProjectMembersController@massDestroy', 'as' => 'project_members.mass_destroy']);
     Route::post('project_members_restore/{id}', ['uses' => 'Admin\ProjectMembersController@restore', 'as' => 'project_members.restore']);
     Route::delete('project_members_perma_del/{id}', ['uses' => 'Admin\ProjectMembersController@perma_del', 'as' => 'project_members.perma_del']);
-    Route::resource('project_partners', 'Admin\ProjectPartnersController');
-    Route::post('project_partners_mass_destroy', ['uses' => 'Admin\ProjectPartnersController@massDestroy', 'as' => 'project_partners.mass_destroy']);
-    Route::post('project_partners_restore/{id}', ['uses' => 'Admin\ProjectPartnersController@restore', 'as' => 'project_partners.restore']);
-    Route::delete('project_partners_perma_del/{id}', ['uses' => 'Admin\ProjectPartnersController@perma_del', 'as' => 'project_partners.perma_del']);
     Route::resource('project_users', 'Admin\ProjectUsersController');
     Route::post('project_users_mass_destroy', ['uses' => 'Admin\ProjectUsersController@massDestroy', 'as' => 'project_users.mass_destroy']);
     Route::post('project_users_restore/{id}', ['uses' => 'Admin\ProjectUsersController@restore', 'as' => 'project_users.restore']);

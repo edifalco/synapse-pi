@@ -32,13 +32,20 @@
                             <th>@lang('global.projects.fields.image')</th>
                             <td field-key='image'>{{ $project->image }}</td>
                         </tr>
+                        <tr>
+                            <th>@lang('global.projects.fields.partners')</th>
+                            <td field-key='partners'>
+                                @foreach ($project->partners as $singlePartners)
+                                    <span class="label label-info label-many">{{ $singlePartners->name }}</span>
+                                @endforeach
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div><!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
     
 <li role="presentation" class="active"><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
-<li role="presentation" class=""><a href="#project_partners" aria-controls="project_partners" role="tab" data-toggle="tab">Project partners</a></li>
 <li role="presentation" class=""><a href="#efforts" aria-controls="efforts" role="tab" data-toggle="tab">Efforts</a></li>
 <li role="presentation" class=""><a href="#alternativescores" aria-controls="alternativescores" role="tab" data-toggle="tab">Alternativescores</a></li>
 <li role="presentation" class=""><a href="#metriclabels" aria-controls="metriclabels" role="tab" data-toggle="tab">Metriclabels</a></li>
@@ -139,72 +146,6 @@
         @else
             <tr>
                 <td colspan="8">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
-<div role="tabpanel" class="tab-pane " id="project_partners">
-<table class="table table-bordered table-striped {{ count($project_partners) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.project-partners.fields.project')</th>
-                        <th>@lang('global.project-partners.fields.partner')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($project_partners) > 0)
-            @foreach ($project_partners as $project_partner)
-                <tr data-entry-id="{{ $project_partner->id }}">
-                    <td field-key='project'>{{ $project_partner->project->name ?? '' }}</td>
-                                <td field-key='partner'>{{ $project_partner->partner->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_partners.restore', $project_partner->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_partners.perma_del', $project_partner->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('project_partner_view')
-                                    <a href="{{ route('admin.project_partners.show',[$project_partner->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('project_partner_edit')
-                                    <a href="{{ route('admin.project_partners.edit',[$project_partner->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('project_partner_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.project_partners.destroy', $project_partner->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="7">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

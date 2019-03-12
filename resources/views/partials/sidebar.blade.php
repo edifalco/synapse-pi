@@ -359,14 +359,6 @@
                         </a>
                     </li>@endcan
                     
-                    @can('project_partner_access')
-                    <li>
-                        <a href="{{ route('admin.project_partners.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.project-partners.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('project_user_access')
                     <li>
                         <a href="{{ route('admin.project_users.index') }}">

@@ -7,6 +7,5 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         "date" => $faker->date("d-m-Y", $max = 'now'),
         "duration" => $faker->randomNumber(2),
         "image" => $faker->name,
-        "partners_id" => factory('App\Partner')->create(),
     ];
 });

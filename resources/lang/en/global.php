@@ -40,7 +40,7 @@ return [
 		'periods' => [		'title' => 'Periods',		'fields' => [			'date' => 'Date',			'period-num' => 'Period num',			'project' => 'Project',		],	],
 		'posts' => [		'title' => 'Posts',		'fields' => [			'created' => 'Created',			'iduser' => 'IdUser',			'description' => 'Description',			'idproject' => 'IdProject',		],	],
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
-		'project-partners' => [		'title' => 'Project partners',		'fields' => [			'project' => 'Project',			'partner' => 'Partner',		],	],
+		'project-partners' => [		'title' => 'Project partners',		'fields' => [		],	],
 		'project-users' => [		'title' => 'Project users',		'fields' => [			'userid' => 'UserID',			'projectid' => 'ProjectID',		],	],
 		'projects' => [		'title' => 'Projects',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'date' => 'Date',			'duration' => 'Duration',			'image' => 'Image',			'partners' => 'Partners',		],	],
 		'publications' => [		'title' => 'Publications',		'fields' => [			'title' => 'Title',			'year' => 'Year',			'month' => 'Month',			'abbr' => 'Abbr',			'link' => 'Link',			'project' => 'Project',			'authors' => 'Authors',		],	],
