@@ -73,12 +73,18 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('partners_id', trans('global.projects.fields.partners').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('partners_id', $partners, old('partners_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('partners', trans('global.projects.fields.partners').'', ['class' => 'control-label']) !!}
+                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-partners">
+                        {{ trans('global.app_select_all') }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-partners">
+                        {{ trans('global.app_deselect_all') }}
+                    </button>
+                    {!! Form::select('partners[]', $partners, old('partners') ? old('partners') : $project->partners->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-partners' ]) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('partners_id'))
+                    @if($errors->has('partners'))
                         <p class="help-block">
-                            {{ $errors->first('partners_id') }}
+                            {{ $errors->first('partners') }}
                         </p>
                     @endif
                 </div>
@@ -110,4 +116,14 @@
         });
     </script>
             
+    <script>
+        $("#selectbtn-partners").click(function(){
+            $("#selectall-partners > option").prop("selected","selected");
+            $("#selectall-partners").trigger("change");
+        });
+        $("#deselectbtn-partners").click(function(){
+            $("#selectall-partners > option").prop("selected","");
+            $("#selectall-partners").trigger("change");
+        });
+    </script>
 @stop

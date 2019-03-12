@@ -14,13 +14,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $date
  * @property integer $duration
  * @property string $image
- * @property string $partners
 */
 class Project extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'date', 'duration', 'image', 'partners_id'];
+    protected $fillable = ['name', 'description', 'date', 'duration', 'image'];
     protected $hidden = [];
     public static $searchable = [
         'name',
@@ -72,19 +71,10 @@ class Project extends Model
     {
         $this->attributes['duration'] = $input ? $input : null;
     }
-
-    /**
-     * Set to null if empty
-     * @param $input
-     */
-    public function setPartnersIdAttribute($input)
-    {
-        $this->attributes['partners_id'] = $input ? $input : null;
-    }
     
     public function partners()
     {
-        return $this->belongsTo(Partner::class, 'partners_id')->withTrashed();
+        return $this->belongsToMany(Partner::class, 'partner_project')->withTrashed();
     }
     
 }
