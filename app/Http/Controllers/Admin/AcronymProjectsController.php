@@ -27,7 +27,7 @@ class AcronymProjectsController extends Controller
         
         if (request()->ajax()) {
             $query = AcronymProject::query();
-            $query->with("acronym");
+            $query->with("acronyms");
             $query->with("partner");
             $query->with("project");
             $template = 'actionsTemplate';
@@ -41,7 +41,7 @@ class AcronymProjectsController extends Controller
             }
             $query->select([
                 'acronym_projects.id',
-                'acronym_projects.acronym_id',
+                'acronym_projects.acronyms_id',
                 'acronym_projects.partner_id',
                 'acronym_projects.project_id',
             ]);
@@ -58,8 +58,8 @@ class AcronymProjectsController extends Controller
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
             });
-            $table->editColumn('acronym.acronym', function ($row) {
-                return $row->acronym ? $row->acronym->acronym : '';
+            $table->editColumn('acronyms.acronym', function ($row) {
+                return $row->acronyms ? $row->acronyms->acronym : '';
             });
             $table->editColumn('partner.name', function ($row) {
                 return $row->partner ? $row->partner->name : '';

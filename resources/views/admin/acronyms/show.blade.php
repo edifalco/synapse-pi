@@ -14,7 +14,7 @@
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th>@lang('global.acronyms.fields.acronym')</th>
-                            <td field-key='acronym'>{!! $acronym->acronym !!}</td>
+                            <td field-key='acronym'>{{ $acronym->acronym }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.acronyms.fields.partner')</th>
@@ -35,7 +35,7 @@
 <table class="table table-bordered table-striped {{ count($acronym_projects) > 0 ? 'datatable' : '' }}">
     <thead>
         <tr>
-            <th>@lang('global.acronym-projects.fields.acronym')</th>
+            <th>@lang('global.acronym-projects.fields.acronyms')</th>
                         <th>@lang('global.acronym-projects.fields.partner')</th>
                         <th>@lang('global.acronym-projects.fields.project')</th>
                         @if( request('show_deleted') == 1 )
@@ -50,7 +50,7 @@
         @if (count($acronym_projects) > 0)
             @foreach ($acronym_projects as $acronym_project)
                 <tr data-entry-id="{{ $acronym_project->id }}">
-                    <td field-key='acronym'>{{ $acronym_project->acronym->acronym ?? '' }}</td>
+                    <td field-key='acronyms'>{{ $acronym_project->acronyms->acronym ?? '' }}</td>
                                 <td field-key='partner'>{{ $acronym_project->partner->name ?? '' }}</td>
                                 <td field-key='project'>{{ $acronym_project->project->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )

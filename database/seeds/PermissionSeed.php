@@ -299,6 +299,8 @@ class PermissionSeed extends Seeder
             ['id' => 284, 'title' => 'faq_question_edit',],
             ['id' => 285, 'title' => 'faq_question_view',],
             ['id' => 286, 'title' => 'faq_question_delete',],
+            ['id' => 287, 'title' => 'project_management_access',],
+            ['id' => 288, 'title' => 'admin_project_mgmt_access',],
 
         ];
 

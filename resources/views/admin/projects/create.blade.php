@@ -70,6 +70,18 @@
                     @endif
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('partners_id', trans('global.projects.fields.partners').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('partners_id', $partners, old('partners_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('partners_id'))
+                        <p class="help-block">
+                            {{ $errors->first('partners_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
             
         </div>
     </div>

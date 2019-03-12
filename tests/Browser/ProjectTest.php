@@ -25,6 +25,7 @@ class ProjectTest extends DuskTestCase
                 ->type("date", $project->date)
                 ->type("duration", $project->duration)
                 ->type("image", $project->image)
+                ->select("partners_id", $project->partners_id)
                 ->press('Save')
                 ->assertRouteIs('admin.projects.index')
                 ->assertSeeIn("tr:last-child td[field-key='name']", $project->name)
@@ -32,6 +33,7 @@ class ProjectTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='date']", $project->date)
                 ->assertSeeIn("tr:last-child td[field-key='duration']", $project->duration)
                 ->assertSeeIn("tr:last-child td[field-key='image']", $project->image)
+                ->assertSeeIn("tr:last-child td[field-key='partners']", $project->partners->name)
                 ->logout();
         });
     }
@@ -53,6 +55,7 @@ class ProjectTest extends DuskTestCase
                 ->type("date", $project2->date)
                 ->type("duration", $project2->duration)
                 ->type("image", $project2->image)
+                ->select("partners_id", $project2->partners_id)
                 ->press('Update')
                 ->assertRouteIs('admin.projects.index')
                 ->assertSeeIn("tr:last-child td[field-key='name']", $project2->name)
@@ -60,6 +63,7 @@ class ProjectTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='date']", $project2->date)
                 ->assertSeeIn("tr:last-child td[field-key='duration']", $project2->duration)
                 ->assertSeeIn("tr:last-child td[field-key='image']", $project2->image)
+                ->assertSeeIn("tr:last-child td[field-key='partners']", $project2->partners->name)
                 ->logout();
         });
     }
@@ -81,6 +85,7 @@ class ProjectTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='date']", $project->date)
                 ->assertSeeIn("td[field-key='duration']", $project->duration)
                 ->assertSeeIn("td[field-key='image']", $project->image)
+                ->assertSeeIn("td[field-key='partners']", $project->partners->name)
                 ->logout();
         });
     }

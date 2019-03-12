@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 class MegaSearchController extends Controller
 {
     protected $models = [
-        'Acronym' => 'global.acronyms.title',
         'Financialvisibility' => 'global.financialvisibilities.title',
         'Project' => 'global.projects.title',
         'Keyword' => 'global.keywords.title',
         'Metriclabel' => 'global.metriclabels.title',
         'Publication' => 'global.publications.title',
         'Risk' => 'global.risks.title',
+        'Acronym' => 'global.acronyms.title',
         'Scoredescription' => 'global.scoredescriptions.title',
         'Deliverable' => 'global.deliverables.title',
         'Document' => 'global.documents.title',

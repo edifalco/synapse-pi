@@ -13,8 +13,8 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th>@lang('global.acronym-projects.fields.acronym')</th>
-                            <td field-key='acronym'>{{ $acronym_project->acronym->acronym ?? '' }}</td>
+                            <th>@lang('global.acronym-projects.fields.acronyms')</th>
+                            <td field-key='acronyms'>{{ $acronym_project->acronyms->acronym ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.acronym-projects.fields.partner')</th>

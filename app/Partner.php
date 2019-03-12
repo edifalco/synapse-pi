@@ -29,4 +29,7 @@ class Partner extends Model
         Partner::observe(new \App\Observers\UserActionsObserver);
     }
     
+    public function projects() {
+        return $this->hasMany(Project::class, 'partners_id');
+    }
 }

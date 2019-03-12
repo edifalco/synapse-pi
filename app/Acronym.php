@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Acronym
  *
  * @package App
- * @property text $acronym
+ * @property string $acronym
  * @property string $partner
 */
 class Acronym extends Model

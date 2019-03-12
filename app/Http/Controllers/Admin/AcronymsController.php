@@ -55,6 +55,9 @@ class AcronymsController extends Controller
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
             });
+            $table->editColumn('acronym', function ($row) {
+                return $row->acronym ? $row->acronym : '';
+            });
             $table->editColumn('partner.name', function ($row) {
                 return $row->partner ? $row->partner->name : '';
             });
@@ -154,7 +157,7 @@ class AcronymsController extends Controller
             return abort(401);
         }
         
-        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$acronym_projects = \App\AcronymProject::where('acronym_id', $id)->get();
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$acronym_projects = \App\AcronymProject::where('acronyms_id', $id)->get();
 
         $acronym = Acronym::findOrFail($id);
 

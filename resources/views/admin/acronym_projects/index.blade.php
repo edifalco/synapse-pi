@@ -33,7 +33,7 @@
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
-                        <th>@lang('global.acronym-projects.fields.acronym')</th>
+                        <th>@lang('global.acronym-projects.fields.acronyms')</th>
                         <th>@lang('global.acronym-projects.fields.partner')</th>
                         <th>@lang('global.acronym-projects.fields.project')</th>
                         @if( request('show_deleted') == 1 )
@@ -59,7 +59,7 @@
                 @if ( request('show_deleted') != 1 )
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
-                @endcan{data: 'acronym.acronym', name: 'acronym.acronym'},
+                @endcan{data: 'acronyms.acronym', name: 'acronyms.acronym'},
                 {data: 'partner.name', name: 'partner.name'},
                 {data: 'project.name', name: 'project.name'},
                 
