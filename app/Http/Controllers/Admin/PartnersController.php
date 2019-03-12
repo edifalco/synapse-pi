@@ -91,6 +91,9 @@ class PartnersController extends Controller
         }
         $partner = Partner::create($request->all());
 
+        foreach ($request->input('projects', []) as $data) {
+            $partner->projects()->create($data);
+        }
 
 
         return redirect()->route('admin.partners.index');
@@ -128,6 +131,23 @@ class PartnersController extends Controller
         $partner = Partner::findOrFail($id);
         $partner->update($request->all());
 
+        $projects           = $partner->projects;
+        $currentProjectData = [];
+        foreach ($request->input('projects', []) as $index => $data) {
+            if (is_integer($index)) {
+                $partner->projects()->create($data);
+            } else {
+                $id                          = explode('-', $index)[1];
+                $currentProjectData[$id] = $data;
+            }
+        }
+        foreach ($projects as $item) {
+            if (isset($currentProjectData[$item->id])) {
+                $item->update($currentProjectData[$item->id]);
+            } else {
+                $item->delete();
+            }
+        }
 
 
         return redirect()->route('admin.partners.index');
@@ -145,11 +165,11 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_view')) {
             return abort(401);
         }
-        $budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_partners = \App\ProjectPartner::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$memberroles = \App\Memberrole::where('partner_id', $id)->get();
+        $budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_partners = \App\ProjectPartner::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$memberroles = \App\Memberrole::where('partner_id', $id)->get();$projects = \App\Project::where('partners_id', $id)->get();
 
         $partner = Partner::findOrFail($id);
 
-        return view('admin.partners.show', compact('partner', 'budgets', 'partnerroles', 'risk_powners', 'risk_preporters', 'deliverable_partners', 'acronyms', 'member_partners', 'acronym_projects', 'partnernums', 'project_partners', 'project_members', 'members', 'efforts', 'memberroles'));
+        return view('admin.partners.show', compact('partner', 'budgets', 'partnerroles', 'risk_powners', 'risk_preporters', 'deliverable_partners', 'acronyms', 'member_partners', 'acronym_projects', 'partnernums', 'project_partners', 'project_members', 'members', 'efforts', 'memberroles', 'projects'));
     }
 
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class AcronymProject
  *
  * @package App
- * @property string $acronym
+ * @property string $acronyms
  * @property string $partner
  * @property string $project
 */
@@ -16,7 +16,7 @@ class AcronymProject extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['acronym_id', 'partner_id', 'project_id'];
+    protected $fillable = ['acronyms_id', 'partner_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
     ];
@@ -32,9 +32,9 @@ class AcronymProject extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setAcronymIdAttribute($input)
+    public function setAcronymsIdAttribute($input)
     {
-        $this->attributes['acronym_id'] = $input ? $input : null;
+        $this->attributes['acronyms_id'] = $input ? $input : null;
     }
 
     /**
@@ -55,9 +55,9 @@ class AcronymProject extends Model
         $this->attributes['project_id'] = $input ? $input : null;
     }
     
-    public function acronym()
+    public function acronyms()
     {
-        return $this->belongsTo(Acronym::class, 'acronym_id')->withTrashed();
+        return $this->belongsTo(Acronym::class, 'acronyms_id')->withTrashed();
     }
     
     public function partner()

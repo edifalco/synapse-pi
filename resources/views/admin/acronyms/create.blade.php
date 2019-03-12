@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('acronym', trans('global.acronyms.fields.acronym').'', ['class' => 'control-label']) !!}
-                    {!! Form::textarea('acronym', old('acronym'), ['class' => 'form-control ', 'placeholder' => '']) !!}
+                    {!! Form::text('acronym', old('acronym'), ['class' => 'form-control', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('acronym'))
                         <p class="help-block">

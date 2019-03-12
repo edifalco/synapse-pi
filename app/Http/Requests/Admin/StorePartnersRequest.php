@@ -23,6 +23,7 @@ class StorePartnersRequest extends FormRequest
     public function rules()
     {
         return [
+            'projects.*.duration' => 'max:2147483647|nullable|numeric',
         ];
     }
 }

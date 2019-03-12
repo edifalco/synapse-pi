@@ -12,12 +12,12 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('acronym_id', trans('global.acronym-projects.fields.acronym').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('acronym_id', $acronyms, old('acronym_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('acronyms_id', trans('global.acronym-projects.fields.acronyms').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('acronyms_id', $acronyms, old('acronyms_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('acronym_id'))
+                    @if($errors->has('acronyms_id'))
                         <p class="help-block">
-                            {{ $errors->first('acronym_id') }}
+                            {{ $errors->first('acronyms_id') }}
                         </p>
                     @endif
                 </div>

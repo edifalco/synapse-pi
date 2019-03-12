@@ -5,7 +5,7 @@ return [
 		'permissions' => [		'title' => 'Permissions',		'fields' => [			'title' => 'Title',		],	],
 		'roles' => [		'title' => 'Roles',		'fields' => [			'title' => 'Title',			'permission' => 'Permissions',		],	],
 		'users' => [		'title' => 'Users',		'fields' => [			'name' => 'Name',			'email' => 'Email',			'password' => 'Password',			'role' => 'Role',			'remember-token' => 'Remember token',		],	],
-		'acronym-projects' => [		'title' => 'Acronym projects',		'fields' => [			'acronym' => 'Acronym',			'partner' => 'Partner',			'project' => 'Project',		],	],
+		'acronym-projects' => [		'title' => 'Acronym projects',		'fields' => [			'acronyms' => 'Acronyms',			'partner' => 'Partner',			'project' => 'Project',		],	],
 		'acronyms' => [		'title' => 'Acronyms',		'fields' => [			'acronym' => 'Acronym',			'partner' => 'Partner',		],	],
 		'agenda' => [		'title' => 'Agenda',		'fields' => [			'date' => 'Date',			'hour' => 'Hour',			'minute' => 'Minute',			'title' => 'Title',			'description' => 'Description',			'project' => 'Project',			'category' => 'Category',			'duration' => 'Duration',			'meeting-type' => 'Meeting type',			'date-creation' => 'Date creation',		],	],
 		'alternativescores' => [		'title' => 'Alternativescores',		'fields' => [			'show' => 'Show',			'project' => 'Project',		],	],
@@ -42,7 +42,7 @@ return [
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'project-partners' => [		'title' => 'Project partners',		'fields' => [			'project' => 'Project',			'partner' => 'Partner',		],	],
 		'project-users' => [		'title' => 'Project users',		'fields' => [			'userid' => 'UserID',			'projectid' => 'ProjectID',		],	],
-		'projects' => [		'title' => 'Projects',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'date' => 'Date',			'duration' => 'Duration',			'image' => 'Image',		],	],
+		'projects' => [		'title' => 'Projects',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'date' => 'Date',			'duration' => 'Duration',			'image' => 'Image',			'partners' => 'Partners',		],	],
 		'publications' => [		'title' => 'Publications',		'fields' => [			'title' => 'Title',			'year' => 'Year',			'month' => 'Month',			'abbr' => 'Abbr',			'link' => 'Link',			'project' => 'Project',			'authors' => 'Authors',		],	],
 		'risk-highlights' => [		'title' => 'Risk highlights',		'fields' => [			'risk' => 'Risk',			'project' => 'Project',		],	],
 		'risk-mowners' => [		'title' => 'Risk mowners',		'fields' => [			'member' => 'Member',			'risk' => 'Risk',		],	],
@@ -59,6 +59,8 @@ return [
 		'faq-management' => [		'title' => 'FAQ Management',		'fields' => [		],	],
 		'faq-categories' => [		'title' => 'Categories',		'fields' => [			'title' => 'Category',		],	],
 		'faq-questions' => [		'title' => 'Questions',		'fields' => [			'category' => 'Category',			'question-text' => 'Question',			'answer-text' => 'Answer',		],	],
+		'admin-project-mgmt' => [		'title' => 'Admin project mgmt',		'fields' => [		],	],
+		'project-management' => [		'title' => 'Project management',		'fields' => [		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

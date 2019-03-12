@@ -24,6 +24,7 @@ class UpdatePartnersRequest extends FormRequest
     {
         return [
             
+            'projects.*.duration' => 'max:2147483647|nullable|numeric',
         ];
     }
 }

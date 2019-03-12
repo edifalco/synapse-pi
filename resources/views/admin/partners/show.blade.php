@@ -47,6 +47,7 @@
 <li role="presentation" class=""><a href="#members" aria-controls="members" role="tab" data-toggle="tab">Members</a></li>
 <li role="presentation" class=""><a href="#efforts" aria-controls="efforts" role="tab" data-toggle="tab">Efforts</a></li>
 <li role="presentation" class=""><a href="#memberroles" aria-controls="memberroles" role="tab" data-toggle="tab">Memberroles</a></li>
+<li role="presentation" class=""><a href="#projects" aria-controls="projects" role="tab" data-toggle="tab">Projects</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -385,7 +386,7 @@
         @if (count($acronyms) > 0)
             @foreach ($acronyms as $acronym)
                 <tr data-entry-id="{{ $acronym->id }}">
-                    <td field-key='acronym'>{!! $acronym->acronym !!}</td>
+                    <td field-key='acronym'>{{ $acronym->acronym }}</td>
                                 <td field-key='partner'>{{ $acronym->partner->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -503,7 +504,7 @@
 <table class="table table-bordered table-striped {{ count($acronym_projects) > 0 ? 'datatable' : '' }}">
     <thead>
         <tr>
-            <th>@lang('global.acronym-projects.fields.acronym')</th>
+            <th>@lang('global.acronym-projects.fields.acronyms')</th>
                         <th>@lang('global.acronym-projects.fields.partner')</th>
                         <th>@lang('global.acronym-projects.fields.project')</th>
                         @if( request('show_deleted') == 1 )
@@ -518,7 +519,7 @@
         @if (count($acronym_projects) > 0)
             @foreach ($acronym_projects as $acronym_project)
                 <tr data-entry-id="{{ $acronym_project->id }}">
-                    <td field-key='acronym'>{{ $acronym_project->acronym->acronym ?? '' }}</td>
+                    <td field-key='acronyms'>{{ $acronym_project->acronyms->acronym ?? '' }}</td>
                                 <td field-key='partner'>{{ $acronym_project->partner->name ?? '' }}</td>
                                 <td field-key='project'>{{ $acronym_project->project->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
@@ -980,6 +981,78 @@
         @else
             <tr>
                 <td colspan="9">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="projects">
+<table class="table table-bordered table-striped {{ count($projects) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.projects.fields.name')</th>
+                        <th>@lang('global.projects.fields.description')</th>
+                        <th>@lang('global.projects.fields.date')</th>
+                        <th>@lang('global.projects.fields.duration')</th>
+                        <th>@lang('global.projects.fields.image')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($projects) > 0)
+            @foreach ($projects as $project)
+                <tr data-entry-id="{{ $project->id }}">
+                    <td field-key='name'>{!! $project->name !!}</td>
+                                <td field-key='description'>{!! $project->description !!}</td>
+                                <td field-key='date'>{{ $project->date }}</td>
+                                <td field-key='duration'>{{ $project->duration }}</td>
+                                <td field-key='image'>{{ $project->image }}</td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.projects.restore', $project->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.projects.perma_del', $project->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('project_view')
+                                    <a href="{{ route('admin.projects.show',[$project->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('project_edit')
+                                    <a href="{{ route('admin.projects.edit',[$project->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('project_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.projects.destroy', $project->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="11">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

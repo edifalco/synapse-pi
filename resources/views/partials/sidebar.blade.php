@@ -16,35 +16,11 @@
                 </a>
             </li>
 
-            @can('acronym_project_access')
-            <li>
-                <a href="{{ route('admin.acronym_projects.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.acronym-projects.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('acronym_access')
-            <li>
-                <a href="{{ route('admin.acronyms.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.acronyms.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('agenda_access')
             <li>
                 <a href="{{ route('admin.agendas.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.agenda.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('alternativescore_access')
-            <li>
-                <a href="{{ route('admin.alternativescores.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.alternativescores.title')</span>
                 </a>
             </li>@endcan
             
@@ -56,115 +32,11 @@
                 </a>
             </li>@endcan
             
-            @can('cd_dissemination_access')
-            <li>
-                <a href="{{ route('admin.cd_disseminations.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-disseminations.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('cd_email_access')
-            <li>
-                <a href="{{ route('admin.cd_emails.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-emails.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('cd_intranet_access_access')
-            <li>
-                <a href="{{ route('admin.cd_intranet_accesses.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-intranet-access.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('cd_meeting_access')
-            <li>
-                <a href="{{ route('admin.cd_meetings.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-meetings.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('cd_score_access')
-            <li>
-                <a href="{{ route('admin.cd_scores.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-scores.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('cd_scores2_access')
-            <li>
-                <a href="{{ route('admin.cd_scores2s.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.cd-scores2.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_document_access')
-            <li>
-                <a href="{{ route('admin.deliverable_documents.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-documents.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_member_access')
-            <li>
-                <a href="{{ route('admin.deliverable_members.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-members.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_partner_access')
-            <li>
-                <a href="{{ route('admin.deliverable_partners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-partners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_reviewer_access')
-            <li>
-                <a href="{{ route('admin.deliverable_reviewers.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-reviewers.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_status_access')
-            <li>
-                <a href="{{ route('admin.deliverable_statuses.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-status.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('deliverable_workpackage_access')
-            <li>
-                <a href="{{ route('admin.deliverable_workpackages.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.deliverable-workpackages.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('deliverable_access')
             <li>
                 <a href="{{ route('admin.deliverables.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.deliverables.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('document_favorite_access')
-            <li>
-                <a href="{{ route('admin.document_favorites.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.document-favorites.title')</span>
                 </a>
             </li>@endcan
             
@@ -176,14 +48,6 @@
                 </a>
             </li>@endcan
             
-            @can('effort_access')
-            <li>
-                <a href="{{ route('admin.efforts.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.efforts.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('financial_access')
             <li>
                 <a href="{{ route('admin.financials.index') }}">
@@ -192,179 +56,11 @@
                 </a>
             </li>@endcan
             
-            @can('financialvisibility_access')
-            <li>
-                <a href="{{ route('admin.financialvisibilities.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.financialvisibilities.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('keyword_access')
-            <li>
-                <a href="{{ route('admin.keywords.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.keywords.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('member_partner_access')
-            <li>
-                <a href="{{ route('admin.member_partners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.member-partners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('memberrole_access')
-            <li>
-                <a href="{{ route('admin.memberroles.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.memberroles.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('member_access')
-            <li>
-                <a href="{{ route('admin.members.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.members.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('metricicon_access')
-            <li>
-                <a href="{{ route('admin.metricicons.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.metricicons.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('metriclabel_access')
-            <li>
-                <a href="{{ route('admin.metriclabels.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.metriclabels.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('partnernum_access')
-            <li>
-                <a href="{{ route('admin.partnernums.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.partnernums.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('partnerrole_access')
-            <li>
-                <a href="{{ route('admin.partnerroles.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.partnerroles.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('partner_access')
-            <li>
-                <a href="{{ route('admin.partners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.partners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('period_access')
-            <li>
-                <a href="{{ route('admin.periods.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.periods.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('post_access')
-            <li>
-                <a href="{{ route('admin.posts.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.posts.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('project_member_access')
-            <li>
-                <a href="{{ route('admin.project_members.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.project-members.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('project_partner_access')
-            <li>
-                <a href="{{ route('admin.project_partners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.project-partners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('project_user_access')
-            <li>
-                <a href="{{ route('admin.project_users.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.project-users.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('project_access')
-            <li>
-                <a href="{{ route('admin.projects.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.projects.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('publication_access')
             <li>
                 <a href="{{ route('admin.publications.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.publications.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_highlight_access')
-            <li>
-                <a href="{{ route('admin.risk_highlights.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.risk-highlights.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_mowner_access')
-            <li>
-                <a href="{{ route('admin.risk_mowners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.risk-mowners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_mreporter_access')
-            <li>
-                <a href="{{ route('admin.risk_mreporters.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.risk-mreporters.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_powner_access')
-            <li>
-                <a href="{{ route('admin.risk_powners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.risk-powners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_preporter_access')
-            <li>
-                <a href="{{ route('admin.risk_preporters.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.risk-preporters.title')</span>
                 </a>
             </li>@endcan
             
@@ -384,36 +80,366 @@
                 </a>
             </li>@endcan
             
-            @can('scoredescription_access')
-            <li>
-                <a href="{{ route('admin.scoredescriptions.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.scoredescriptions.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('threshold_deliverable_access')
-            <li>
-                <a href="{{ route('admin.threshold_deliverables.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.threshold-deliverables.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('threshold_risk_access')
-            <li>
-                <a href="{{ route('admin.threshold_risks.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.threshold-risks.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('workpackage_access')
             <li>
                 <a href="{{ route('admin.workpackages.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.workpackages.title')</span>
                 </a>
+            </li>@endcan
+            
+            @can('project_access')
+            <li>
+                <a href="{{ route('admin.projects.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.projects.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('post_access')
+            <li>
+                <a href="{{ route('admin.posts.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.posts.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('partner_access')
+            <li>
+                <a href="{{ route('admin.partners.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.partners.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('member_access')
+            <li>
+                <a href="{{ route('admin.members.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.members.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('acronym_access')
+            <li>
+                <a href="{{ route('admin.acronyms.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.acronyms.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('effort_access')
+            <li>
+                <a href="{{ route('admin.efforts.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.efforts.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('project_management_access')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.project-management.title')</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('alternativescore_access')
+                    <li>
+                        <a href="{{ route('admin.alternativescores.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.alternativescores.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                </ul>
+            </li>@endcan
+            
+            @can('admin_project_mgmt_access')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.admin-project-mgmt.title')</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('acronym_project_access')
+                    <li>
+                        <a href="{{ route('admin.acronym_projects.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.acronym-projects.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_dissemination_access')
+                    <li>
+                        <a href="{{ route('admin.cd_disseminations.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-disseminations.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_email_access')
+                    <li>
+                        <a href="{{ route('admin.cd_emails.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-emails.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_intranet_access_access')
+                    <li>
+                        <a href="{{ route('admin.cd_intranet_accesses.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-intranet-access.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_meeting_access')
+                    <li>
+                        <a href="{{ route('admin.cd_meetings.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-meetings.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_score_access')
+                    <li>
+                        <a href="{{ route('admin.cd_scores.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-scores.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('cd_scores2_access')
+                    <li>
+                        <a href="{{ route('admin.cd_scores2s.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.cd-scores2.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_document_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_documents.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-documents.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_member_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_members.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-members.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_partner_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_partners.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-partners.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_reviewer_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_reviewers.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-reviewers.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_status_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_statuses.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-status.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('deliverable_workpackage_access')
+                    <li>
+                        <a href="{{ route('admin.deliverable_workpackages.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.deliverable-workpackages.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('document_favorite_access')
+                    <li>
+                        <a href="{{ route('admin.document_favorites.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.document-favorites.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('financialvisibility_access')
+                    <li>
+                        <a href="{{ route('admin.financialvisibilities.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.financialvisibilities.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('keyword_access')
+                    <li>
+                        <a href="{{ route('admin.keywords.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.keywords.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('member_partner_access')
+                    <li>
+                        <a href="{{ route('admin.member_partners.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.member-partners.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('memberrole_access')
+                    <li>
+                        <a href="{{ route('admin.memberroles.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.memberroles.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('metriclabel_access')
+                    <li>
+                        <a href="{{ route('admin.metriclabels.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.metriclabels.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('partnernum_access')
+                    <li>
+                        <a href="{{ route('admin.partnernums.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.partnernums.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('metricicon_access')
+                    <li>
+                        <a href="{{ route('admin.metricicons.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.metricicons.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('partnerrole_access')
+                    <li>
+                        <a href="{{ route('admin.partnerroles.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.partnerroles.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('period_access')
+                    <li>
+                        <a href="{{ route('admin.periods.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.periods.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('project_member_access')
+                    <li>
+                        <a href="{{ route('admin.project_members.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.project-members.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('project_partner_access')
+                    <li>
+                        <a href="{{ route('admin.project_partners.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.project-partners.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('project_user_access')
+                    <li>
+                        <a href="{{ route('admin.project_users.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.project-users.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_highlight_access')
+                    <li>
+                        <a href="{{ route('admin.risk_highlights.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.risk-highlights.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_mowner_access')
+                    <li>
+                        <a href="{{ route('admin.risk_mowners.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.risk-mowners.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_mreporter_access')
+                    <li>
+                        <a href="{{ route('admin.risk_mreporters.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.risk-mreporters.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_powner_access')
+                    <li>
+                        <a href="{{ route('admin.risk_powners.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.risk-powners.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_preporter_access')
+                    <li>
+                        <a href="{{ route('admin.risk_preporters.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.risk-preporters.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('scoredescription_access')
+                    <li>
+                        <a href="{{ route('admin.scoredescriptions.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.scoredescriptions.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('threshold_deliverable_access')
+                    <li>
+                        <a href="{{ route('admin.threshold_deliverables.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.threshold-deliverables.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('threshold_risk_access')
+                    <li>
+                        <a href="{{ route('admin.threshold_risks.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.threshold-risks.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                </ul>
             </li>@endcan
             
             @can('user_management_access')

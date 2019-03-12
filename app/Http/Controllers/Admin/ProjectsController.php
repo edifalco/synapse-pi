@@ -27,6 +27,7 @@ class ProjectsController extends Controller
         
         if (request()->ajax()) {
             $query = Project::query();
+            $query->with("partners");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -43,6 +44,7 @@ class ProjectsController extends Controller
                 'projects.date',
                 'projects.duration',
                 'projects.image',
+                'projects.partners_id',
             ]);
             $table = Datatables::of($query);
 
@@ -56,6 +58,9 @@ class ProjectsController extends Controller
                 $routeKey = 'admin.projects';
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('partners.name', function ($row) {
+                return $row->partners ? $row->partners->name : '';
             });
 
             $table->rawColumns(['actions','massDelete']);
@@ -76,7 +81,10 @@ class ProjectsController extends Controller
         if (! Gate::allows('project_create')) {
             return abort(401);
         }
-        return view('admin.projects.create');
+        
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+
+        return view('admin.projects.create', compact('partners'));
     }
 
     /**
@@ -109,9 +117,12 @@ class ProjectsController extends Controller
         if (! Gate::allows('project_edit')) {
             return abort(401);
         }
+        
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+
         $project = Project::findOrFail($id);
 
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit', compact('project', 'partners'));
     }
 
     /**
@@ -146,7 +157,8 @@ class ProjectsController extends Controller
         if (! Gate::allows('project_view')) {
             return abort(401);
         }
-        $project_members = \App\ProjectMember::where('project_id', $id)->get();$project_partners = \App\ProjectPartner::where('project_id', $id)->get();$efforts = \App\Effort::where('project_id', $id)->get();$alternativescores = \App\Alternativescore::where('project_id', $id)->get();$metriclabels = \App\Metriclabel::where('project_id', $id)->get();$project_users = \App\ProjectUser::where('projectID_id', $id)->get();$risk_highlights = \App\RiskHighlight::where('project_id', $id)->get();$scoredescriptions = \App\Scoredescription::where('project_id', $id)->get();$threshold_deliverables = \App\ThresholdDeliverable::where('project_id', $id)->get();$threshold_risks = \App\ThresholdRisk::where('project_id', $id)->get();$document_favorites = \App\DocumentFavorite::where('project_id', $id)->get();$financials = \App\Financial::where('project_id', $id)->get();$financialvisibilities = \App\Financialvisibility::where('id_project_id', $id)->get();$memberroles = \App\Memberrole::where('project_id', $id)->get();$acronym_projects = \App\AcronymProject::where('project_id', $id)->get();$cd_disseminations = \App\CdDissemination::where('project_id', $id)->get();$metricicons = \App\Metricicon::where('project_id', $id)->get();$cd_emails = \App\CdEmail::where('project_id', $id)->get();$cd_intranet_accesses = \App\CdIntranetAccess::where('project_id', $id)->get();$partnernums = \App\Partnernum::where('project_id', $id)->get();$cd_meetings = \App\CdMeeting::where('project_id', $id)->get();$partnerroles = \App\Partnerrole::where('project_id', $id)->get();$cd_scores = \App\CdScore::where('project_id', $id)->get();$cd_scores2s = \App\CdScores2::where('project_id', $id)->get();$periods = \App\Period::where('project_id', $id)->get();$workpackages = \App\Workpackage::where('project_id', $id)->get();$budgets = \App\Budget::where('project_id', $id)->get();$posts = \App\Post::where('idProject_id', $id)->get();$schedules = \App\Schedule::where('project_id', $id)->get();$documents = \App\Document::where('project_id', $id)->get();$agendas = \App\Agenda::where('project_id', $id)->get();$publications = \App\Publication::where('project_id', $id)->get();$risks = \App\Risk::where('project_id', $id)->get();$deliverables = \App\Deliverable::where('project_id', $id)->get();
+        
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$project_members = \App\ProjectMember::where('project_id', $id)->get();$project_partners = \App\ProjectPartner::where('project_id', $id)->get();$efforts = \App\Effort::where('project_id', $id)->get();$alternativescores = \App\Alternativescore::where('project_id', $id)->get();$metriclabels = \App\Metriclabel::where('project_id', $id)->get();$project_users = \App\ProjectUser::where('projectID_id', $id)->get();$risk_highlights = \App\RiskHighlight::where('project_id', $id)->get();$scoredescriptions = \App\Scoredescription::where('project_id', $id)->get();$threshold_deliverables = \App\ThresholdDeliverable::where('project_id', $id)->get();$threshold_risks = \App\ThresholdRisk::where('project_id', $id)->get();$document_favorites = \App\DocumentFavorite::where('project_id', $id)->get();$financials = \App\Financial::where('project_id', $id)->get();$financialvisibilities = \App\Financialvisibility::where('id_project_id', $id)->get();$memberroles = \App\Memberrole::where('project_id', $id)->get();$acronym_projects = \App\AcronymProject::where('project_id', $id)->get();$cd_disseminations = \App\CdDissemination::where('project_id', $id)->get();$metricicons = \App\Metricicon::where('project_id', $id)->get();$cd_emails = \App\CdEmail::where('project_id', $id)->get();$cd_intranet_accesses = \App\CdIntranetAccess::where('project_id', $id)->get();$partnernums = \App\Partnernum::where('project_id', $id)->get();$cd_meetings = \App\CdMeeting::where('project_id', $id)->get();$partnerroles = \App\Partnerrole::where('project_id', $id)->get();$cd_scores = \App\CdScore::where('project_id', $id)->get();$cd_scores2s = \App\CdScores2::where('project_id', $id)->get();$periods = \App\Period::where('project_id', $id)->get();$workpackages = \App\Workpackage::where('project_id', $id)->get();$budgets = \App\Budget::where('project_id', $id)->get();$posts = \App\Post::where('idProject_id', $id)->get();$schedules = \App\Schedule::where('project_id', $id)->get();$documents = \App\Document::where('project_id', $id)->get();$agendas = \App\Agenda::where('project_id', $id)->get();$publications = \App\Publication::where('project_id', $id)->get();$risks = \App\Risk::where('project_id', $id)->get();$deliverables = \App\Deliverable::where('project_id', $id)->get();
 
         $project = Project::findOrFail($id);
 
