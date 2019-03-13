@@ -35,7 +35,7 @@
     
 <li role="presentation" class="active"><a href="#project_users" aria-controls="project_users" role="tab" data-toggle="tab">Project users</a></li>
 <li role="presentation" class=""><a href="#user_actions" aria-controls="user_actions" role="tab" data-toggle="tab">User actions</a></li>
-<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
+<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Activities</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -145,9 +145,9 @@
     <thead>
         <tr>
             <th>@lang('global.posts.fields.created')</th>
-                        <th>@lang('global.posts.fields.iduser')</th>
+                        <th>@lang('global.posts.fields.user')</th>
                         <th>@lang('global.posts.fields.description')</th>
-                        <th>@lang('global.posts.fields.idproject')</th>
+                        <th>@lang('global.posts.fields.project')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -161,9 +161,9 @@
             @foreach ($posts as $post)
                 <tr data-entry-id="{{ $post->id }}">
                     <td field-key='created'>{{ $post->created }}</td>
-                                <td field-key='idUser'>{{ $post->idUser->name ?? '' }}</td>
+                                <td field-key='user'>{{ $post->user->name ?? '' }}</td>
                                 <td field-key='description'>{!! $post->description !!}</td>
-                                <td field-key='idProject'>{{ $post->idProject->name ?? '' }}</td>
+                                <td field-key='project'>{{ $post->project->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

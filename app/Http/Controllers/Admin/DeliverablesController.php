@@ -27,7 +27,7 @@ class DeliverablesController extends Controller
         
         if (request()->ajax()) {
             $query = Deliverable::query();
-            $query->with("idStatus");
+            $query->with("status");
             $query->with("project");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
@@ -44,7 +44,7 @@ class DeliverablesController extends Controller
                 'deliverables.title',
                 'deliverables.short_title',
                 'deliverables.date',
-                'deliverables.idStatus_id',
+                'deliverables.status_id',
                 'deliverables.notes',
                 'deliverables.project_id',
                 'deliverables.confidentiality',
@@ -64,8 +64,8 @@ class DeliverablesController extends Controller
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
             });
-            $table->editColumn('idStatus.label', function ($row) {
-                return $row->idStatus ? $row->idStatus->label : '';
+            $table->editColumn('status.label', function ($row) {
+                return $row->status ? $row->status->label : '';
             });
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
@@ -90,10 +90,10 @@ class DeliverablesController extends Controller
             return abort(401);
         }
         
-        $id_statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
+        $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.deliverables.create', compact('id_statuses', 'projects'));
+        return view('admin.deliverables.create', compact('statuses', 'projects'));
     }
 
     /**
@@ -127,12 +127,12 @@ class DeliverablesController extends Controller
             return abort(401);
         }
         
-        $id_statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
+        $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
         $deliverable = Deliverable::findOrFail($id);
 
-        return view('admin.deliverables.edit', compact('deliverable', 'id_statuses', 'projects'));
+        return view('admin.deliverables.edit', compact('deliverable', 'statuses', 'projects'));
     }
 
     /**
@@ -168,7 +168,7 @@ class DeliverablesController extends Controller
             return abort(401);
         }
         
-        $id_statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
+        $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_members = \App\DeliverableMember::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
 
         $deliverable = Deliverable::findOrFail($id);

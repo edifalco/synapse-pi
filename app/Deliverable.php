@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property text $title
  * @property text $short_title
  * @property string $date
- * @property string $idStatus
+ * @property string $status
  * @property text $notes
  * @property string $project
  * @property integer $confidentiality
@@ -24,7 +24,7 @@ class Deliverable extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'idstatus_id', 'project_id'];
+    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'status_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
         'label_identification',
@@ -75,9 +75,9 @@ class Deliverable extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setIdStatusIdAttribute($input)
+    public function setStatusIdAttribute($input)
     {
-        $this->attributes['idStatus_id'] = $input ? $input : null;
+        $this->attributes['status_id'] = $input ? $input : null;
     }
 
     /**
@@ -137,9 +137,9 @@ class Deliverable extends Model
         $this->attributes['due_date_months'] = $input ? $input : null;
     }
     
-    public function idStatus()
+    public function status()
     {
-        return $this->belongsTo(DeliverableStatus::class, 'idStatus_id');
+        return $this->belongsTo(DeliverableStatus::class, 'status_id');
     }
     
     public function project()

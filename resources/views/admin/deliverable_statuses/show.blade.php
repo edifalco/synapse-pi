@@ -35,7 +35,7 @@
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
                         <th>@lang('global.deliverables.fields.date')</th>
-                        <th>@lang('global.deliverables.fields.idstatus')</th>
+                        <th>@lang('global.deliverables.fields.status')</th>
                         <th>@lang('global.deliverables.fields.notes')</th>
                         <th>@lang('global.deliverables.fields.project')</th>
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
@@ -57,7 +57,7 @@
                                 <td field-key='title'>{!! $deliverable->title !!}</td>
                                 <td field-key='short_title'>{!! $deliverable->short_title !!}</td>
                                 <td field-key='date'>{{ $deliverable->date }}</td>
-                                <td field-key='idStatus'>{{ $deliverable->idStatus->label ?? '' }}</td>
+                                <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
                                 <td field-key='notes'>{!! $deliverable->notes !!}</td>
                                 <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>

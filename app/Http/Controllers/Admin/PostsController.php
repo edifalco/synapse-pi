@@ -27,8 +27,8 @@ class PostsController extends Controller
         
         if (request()->ajax()) {
             $query = Post::query();
-            $query->with("idUser");
-            $query->with("idProject");
+            $query->with("user");
+            $query->with("project");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -41,9 +41,9 @@ class PostsController extends Controller
             $query->select([
                 'posts.id',
                 'posts.created',
-                'posts.idUser_id',
+                'posts.user_id',
                 'posts.description',
-                'posts.idProject_id',
+                'posts.project_id',
             ]);
             $table = Datatables::of($query);
 
@@ -58,11 +58,11 @@ class PostsController extends Controller
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
             });
-            $table->editColumn('idUser.name', function ($row) {
-                return $row->idUser ? $row->idUser->name : '';
+            $table->editColumn('user.name', function ($row) {
+                return $row->user ? $row->user->name : '';
             });
-            $table->editColumn('idProject.name', function ($row) {
-                return $row->idProject ? $row->idProject->name : '';
+            $table->editColumn('project.name', function ($row) {
+                return $row->project ? $row->project->name : '';
             });
 
             $table->rawColumns(['actions','massDelete']);
@@ -84,10 +84,10 @@ class PostsController extends Controller
             return abort(401);
         }
         
-        $id_users = \App\User::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $id_projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $users = \App\User::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.posts.create', compact('id_users', 'id_projects'));
+        return view('admin.posts.create', compact('users', 'projects'));
     }
 
     /**
@@ -121,12 +121,12 @@ class PostsController extends Controller
             return abort(401);
         }
         
-        $id_users = \App\User::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $id_projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $users = \App\User::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
         $post = Post::findOrFail($id);
 
-        return view('admin.posts.edit', compact('post', 'id_users', 'id_projects'));
+        return view('admin.posts.edit', compact('post', 'users', 'projects'));
     }
 
     /**

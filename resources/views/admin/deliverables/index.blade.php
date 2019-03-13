@@ -37,7 +37,7 @@
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
                         <th>@lang('global.deliverables.fields.date')</th>
-                        <th>@lang('global.deliverables.fields.idstatus')</th>
+                        <th>@lang('global.deliverables.fields.status')</th>
                         <th>@lang('global.deliverables.fields.notes')</th>
                         <th>@lang('global.deliverables.fields.project')</th>
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
@@ -70,7 +70,7 @@
                 {data: 'title', name: 'title'},
                 {data: 'short_title', name: 'short_title'},
                 {data: 'date', name: 'date'},
-                {data: 'idStatus.label', name: 'idStatus.label'},
+                {data: 'status.label', name: 'status.label'},
                 {data: 'notes', name: 'notes'},
                 {data: 'project.name', name: 'project.name'},
                 {data: 'confidentiality', name: 'confidentiality'},

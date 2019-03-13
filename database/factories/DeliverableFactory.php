@@ -6,7 +6,7 @@ $factory->define(App\Deliverable::class, function (Faker\Generator $faker) {
         "title" => $faker->name,
         "short_title" => $faker->name,
         "date" => $faker->date("d-m-Y", $max = 'now'),
-        "idStatus_id" => factory('App\DeliverableStatus')->create(),
+        "status_id" => factory('App\DeliverableStatus')->create(),
         "notes" => $faker->name,
         "project_id" => factory('App\Project')->create(),
         "confidentiality" => $faker->randomNumber(2),

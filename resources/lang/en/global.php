@@ -22,7 +22,7 @@ return [
 		'deliverable-reviewers' => [		'title' => 'Deliverable reviewers',		'fields' => [			'deliverable' => 'Deliverable',			'member' => 'Member',		],	],
 		'deliverable-status' => [		'title' => 'Deliverable status',		'fields' => [			'label' => 'Label',		],	],
 		'deliverable-workpackages' => [		'title' => 'Deliverable workpackages',		'fields' => [			'deliverable' => 'Deliverable',			'workpackage' => 'Workpackage',		],	],
-		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'idstatus' => 'IdStatus',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',		],	],
+		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'status' => 'Status',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',		],	],
 		'document-favorites' => [		'title' => 'Document favorites',		'fields' => [			'document' => 'Document',			'project' => 'Project',		],	],
 		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'folder' => 'Folder',			'document' => 'Document',			'project' => 'Project',			'deliverable' => 'Deliverable',		],	],
 		'efforts' => [		'title' => 'Efforts',		'fields' => [			'project' => 'Project',			'workpackage' => 'Workpackage',			'partner' => 'Partner',			'value' => 'Value',			'period' => 'Period',		],	],
@@ -38,7 +38,7 @@ return [
 		'partnerroles' => [		'title' => 'Partnerroles',		'fields' => [			'partner' => 'Partner',			'role-id' => 'Role',			'project' => 'Project',		],	],
 		'partners' => [		'title' => 'Institutions',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
 		'periods' => [		'title' => 'Periods',		'fields' => [		],	],
-		'posts' => [		'title' => 'Posts',		'fields' => [			'created' => 'Created',			'iduser' => 'IdUser',			'description' => 'Description',			'idproject' => 'IdProject',		],	],
+		'posts' => [		'title' => 'Activities',		'fields' => [			'created' => 'Created',			'user' => 'User',			'description' => 'Description',			'project' => 'Project',		],	],
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'project-partners' => [		'title' => 'Project partners',		'fields' => [		],	],
 		'project-users' => [		'title' => 'Project users',		'fields' => [			'userid' => 'UserID',			'projectid' => 'ProjectID',		],	],

@@ -25,12 +25,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('idUser_id', trans('global.posts.fields.iduser').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('idUser_id', $idUsers, old('idUser_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('user_id', trans('global.posts.fields.user').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('user_id', $users, old('user_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('idUser_id'))
+                    @if($errors->has('user_id'))
                         <p class="help-block">
-                            {{ $errors->first('idUser_id') }}
+                            {{ $errors->first('user_id') }}
                         </p>
                     @endif
                 </div>
@@ -49,12 +49,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('idProject_id', trans('global.posts.fields.idproject').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('idProject_id', $idProjects, old('idProject_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('project_id', trans('global.posts.fields.project').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('project_id', $projects, old('project_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('idProject_id'))
+                    @if($errors->has('project_id'))
                         <p class="help-block">
-                            {{ $errors->first('idProject_id') }}
+                            {{ $errors->first('project_id') }}
                         </p>
                     @endif
                 </div>

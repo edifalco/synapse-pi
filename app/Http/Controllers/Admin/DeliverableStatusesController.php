@@ -135,7 +135,7 @@ class DeliverableStatusesController extends Controller
         if (! Gate::allows('deliverable_status_view')) {
             return abort(401);
         }
-        $deliverables = \App\Deliverable::where('idStatus_id', $id)->get();
+        $deliverables = \App\Deliverable::where('status_id', $id)->get();
 
         $deliverable_status = DeliverableStatus::findOrFail($id);
 
