@@ -31,13 +31,13 @@ return [
 		'keywords' => [		'title' => 'Keywords',		'fields' => [			'word' => 'Word',		],	],
 		'member-partners' => [		'title' => 'Member partners',		'fields' => [			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'memberroles' => [		'title' => 'Memberroles',		'fields' => [			'member' => 'Member',			'role' => 'Role',			'project' => 'Project',			'partner' => 'Partner',		],	],
-		'members' => [		'title' => 'Members',		'fields' => [			'name' => 'Name',			'surname' => 'Surname',			'partner' => 'Partner',			'email' => 'Email',			'phone' => 'Phone',			'notes' => 'Notes',		],	],
+		'members' => [		'title' => 'People',		'fields' => [			'name' => 'Name',			'surname' => 'Surname',			'partner' => 'Partner',			'email' => 'Email',			'phone' => 'Phone',			'notes' => 'Notes',		],	],
 		'metricicons' => [		'title' => 'Metricicons',		'fields' => [			'metric-id' => 'Metric',			'icon-id' => 'Icon',			'project' => 'Project',		],	],
 		'metriclabels' => [		'title' => 'Metriclabels',		'fields' => [			'label' => 'Label',			'project' => 'Project',			'metric-id' => 'Metric',		],	],
 		'partnernums' => [		'title' => 'Partnernums',		'fields' => [			'value' => 'Value',			'partner' => 'Partner',			'project' => 'Project',		],	],
 		'partnerroles' => [		'title' => 'Partnerroles',		'fields' => [			'partner' => 'Partner',			'role-id' => 'Role',			'project' => 'Project',		],	],
-		'partners' => [		'title' => 'Partners',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
-		'periods' => [		'title' => 'Periods',		'fields' => [			'date' => 'Date',			'period-num' => 'Period num',			'project' => 'Project',		],	],
+		'partners' => [		'title' => 'Institutions',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
+		'periods' => [		'title' => 'Periods',		'fields' => [		],	],
 		'posts' => [		'title' => 'Posts',		'fields' => [			'created' => 'Created',			'iduser' => 'IdUser',			'description' => 'Description',			'idproject' => 'IdProject',		],	],
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'project-partners' => [		'title' => 'Project partners',		'fields' => [		],	],
@@ -61,6 +61,7 @@ return [
 		'faq-questions' => [		'title' => 'Questions',		'fields' => [			'category' => 'Category',			'question-text' => 'Question',			'answer-text' => 'Answer',		],	],
 		'admin-project-mgmt' => [		'title' => 'Admin project mgmt',		'fields' => [		],	],
 		'project-management' => [		'title' => 'Project management',		'fields' => [		],	],
+		'project-periods' => [		'title' => 'Project Periods',		'fields' => [			'date' => 'Date',			'period-num' => 'Period num',			'project' => 'Project',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

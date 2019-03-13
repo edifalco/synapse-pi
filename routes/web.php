@@ -19,6 +19,18 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@index');
     
+    Route::resource('projects', 'Admin\ProjectsController');
+    Route::post('projects_mass_destroy', ['uses' => 'Admin\ProjectsController@massDestroy', 'as' => 'projects.mass_destroy']);
+    Route::post('projects_restore/{id}', ['uses' => 'Admin\ProjectsController@restore', 'as' => 'projects.restore']);
+    Route::delete('projects_perma_del/{id}', ['uses' => 'Admin\ProjectsController@perma_del', 'as' => 'projects.perma_del']);
+    Route::resource('partners', 'Admin\PartnersController');
+    Route::post('partners_mass_destroy', ['uses' => 'Admin\PartnersController@massDestroy', 'as' => 'partners.mass_destroy']);
+    Route::post('partners_restore/{id}', ['uses' => 'Admin\PartnersController@restore', 'as' => 'partners.restore']);
+    Route::delete('partners_perma_del/{id}', ['uses' => 'Admin\PartnersController@perma_del', 'as' => 'partners.perma_del']);
+    Route::resource('members', 'Admin\MembersController');
+    Route::post('members_mass_destroy', ['uses' => 'Admin\MembersController@massDestroy', 'as' => 'members.mass_destroy']);
+    Route::post('members_restore/{id}', ['uses' => 'Admin\MembersController@restore', 'as' => 'members.restore']);
+    Route::delete('members_perma_del/{id}', ['uses' => 'Admin\MembersController@perma_del', 'as' => 'members.perma_del']);
     Route::resource('agendas', 'Admin\AgendasController');
     Route::post('agendas_mass_destroy', ['uses' => 'Admin\AgendasController@massDestroy', 'as' => 'agendas.mass_destroy']);
     Route::post('agendas_restore/{id}', ['uses' => 'Admin\AgendasController@restore', 'as' => 'agendas.restore']);
@@ -53,22 +65,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('workpackages_mass_destroy', ['uses' => 'Admin\WorkpackagesController@massDestroy', 'as' => 'workpackages.mass_destroy']);
     Route::post('workpackages_restore/{id}', ['uses' => 'Admin\WorkpackagesController@restore', 'as' => 'workpackages.restore']);
     Route::delete('workpackages_perma_del/{id}', ['uses' => 'Admin\WorkpackagesController@perma_del', 'as' => 'workpackages.perma_del']);
-    Route::resource('projects', 'Admin\ProjectsController');
-    Route::post('projects_mass_destroy', ['uses' => 'Admin\ProjectsController@massDestroy', 'as' => 'projects.mass_destroy']);
-    Route::post('projects_restore/{id}', ['uses' => 'Admin\ProjectsController@restore', 'as' => 'projects.restore']);
-    Route::delete('projects_perma_del/{id}', ['uses' => 'Admin\ProjectsController@perma_del', 'as' => 'projects.perma_del']);
     Route::resource('posts', 'Admin\PostsController');
     Route::post('posts_mass_destroy', ['uses' => 'Admin\PostsController@massDestroy', 'as' => 'posts.mass_destroy']);
     Route::post('posts_restore/{id}', ['uses' => 'Admin\PostsController@restore', 'as' => 'posts.restore']);
     Route::delete('posts_perma_del/{id}', ['uses' => 'Admin\PostsController@perma_del', 'as' => 'posts.perma_del']);
-    Route::resource('partners', 'Admin\PartnersController');
-    Route::post('partners_mass_destroy', ['uses' => 'Admin\PartnersController@massDestroy', 'as' => 'partners.mass_destroy']);
-    Route::post('partners_restore/{id}', ['uses' => 'Admin\PartnersController@restore', 'as' => 'partners.restore']);
-    Route::delete('partners_perma_del/{id}', ['uses' => 'Admin\PartnersController@perma_del', 'as' => 'partners.perma_del']);
-    Route::resource('members', 'Admin\MembersController');
-    Route::post('members_mass_destroy', ['uses' => 'Admin\MembersController@massDestroy', 'as' => 'members.mass_destroy']);
-    Route::post('members_restore/{id}', ['uses' => 'Admin\MembersController@restore', 'as' => 'members.restore']);
-    Route::delete('members_perma_del/{id}', ['uses' => 'Admin\MembersController@perma_del', 'as' => 'members.perma_del']);
     Route::resource('acronyms', 'Admin\AcronymsController');
     Route::post('acronyms_mass_destroy', ['uses' => 'Admin\AcronymsController@massDestroy', 'as' => 'acronyms.mass_destroy']);
     Route::post('acronyms_restore/{id}', ['uses' => 'Admin\AcronymsController@restore', 'as' => 'acronyms.restore']);
@@ -77,14 +77,14 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('efforts_mass_destroy', ['uses' => 'Admin\EffortsController@massDestroy', 'as' => 'efforts.mass_destroy']);
     Route::post('efforts_restore/{id}', ['uses' => 'Admin\EffortsController@restore', 'as' => 'efforts.restore']);
     Route::delete('efforts_perma_del/{id}', ['uses' => 'Admin\EffortsController@perma_del', 'as' => 'efforts.perma_del']);
-    Route::resource('acronym_projects', 'Admin\AcronymProjectsController');
-    Route::post('acronym_projects_mass_destroy', ['uses' => 'Admin\AcronymProjectsController@massDestroy', 'as' => 'acronym_projects.mass_destroy']);
-    Route::post('acronym_projects_restore/{id}', ['uses' => 'Admin\AcronymProjectsController@restore', 'as' => 'acronym_projects.restore']);
-    Route::delete('acronym_projects_perma_del/{id}', ['uses' => 'Admin\AcronymProjectsController@perma_del', 'as' => 'acronym_projects.perma_del']);
     Route::resource('alternativescores', 'Admin\AlternativescoresController');
     Route::post('alternativescores_mass_destroy', ['uses' => 'Admin\AlternativescoresController@massDestroy', 'as' => 'alternativescores.mass_destroy']);
     Route::post('alternativescores_restore/{id}', ['uses' => 'Admin\AlternativescoresController@restore', 'as' => 'alternativescores.restore']);
     Route::delete('alternativescores_perma_del/{id}', ['uses' => 'Admin\AlternativescoresController@perma_del', 'as' => 'alternativescores.perma_del']);
+    Route::resource('acronym_projects', 'Admin\AcronymProjectsController');
+    Route::post('acronym_projects_mass_destroy', ['uses' => 'Admin\AcronymProjectsController@massDestroy', 'as' => 'acronym_projects.mass_destroy']);
+    Route::post('acronym_projects_restore/{id}', ['uses' => 'Admin\AcronymProjectsController@restore', 'as' => 'acronym_projects.restore']);
+    Route::delete('acronym_projects_perma_del/{id}', ['uses' => 'Admin\AcronymProjectsController@perma_del', 'as' => 'acronym_projects.perma_del']);
     Route::resource('cd_disseminations', 'Admin\CdDisseminationsController');
     Route::post('cd_disseminations_mass_destroy', ['uses' => 'Admin\CdDisseminationsController@massDestroy', 'as' => 'cd_disseminations.mass_destroy']);
     Route::post('cd_disseminations_restore/{id}', ['uses' => 'Admin\CdDisseminationsController@restore', 'as' => 'cd_disseminations.restore']);
@@ -163,10 +163,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('partnerroles_mass_destroy', ['uses' => 'Admin\PartnerrolesController@massDestroy', 'as' => 'partnerroles.mass_destroy']);
     Route::post('partnerroles_restore/{id}', ['uses' => 'Admin\PartnerrolesController@restore', 'as' => 'partnerroles.restore']);
     Route::delete('partnerroles_perma_del/{id}', ['uses' => 'Admin\PartnerrolesController@perma_del', 'as' => 'partnerroles.perma_del']);
-    Route::resource('periods', 'Admin\PeriodsController');
-    Route::post('periods_mass_destroy', ['uses' => 'Admin\PeriodsController@massDestroy', 'as' => 'periods.mass_destroy']);
-    Route::post('periods_restore/{id}', ['uses' => 'Admin\PeriodsController@restore', 'as' => 'periods.restore']);
-    Route::delete('periods_perma_del/{id}', ['uses' => 'Admin\PeriodsController@perma_del', 'as' => 'periods.perma_del']);
     Route::resource('project_members', 'Admin\ProjectMembersController');
     Route::post('project_members_mass_destroy', ['uses' => 'Admin\ProjectMembersController@massDestroy', 'as' => 'project_members.mass_destroy']);
     Route::post('project_members_restore/{id}', ['uses' => 'Admin\ProjectMembersController@restore', 'as' => 'project_members.restore']);
@@ -218,6 +214,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('faq_categories_mass_destroy', ['uses' => 'Admin\FaqCategoriesController@massDestroy', 'as' => 'faq_categories.mass_destroy']);
     Route::resource('faq_questions', 'Admin\FaqQuestionsController');
     Route::post('faq_questions_mass_destroy', ['uses' => 'Admin\FaqQuestionsController@massDestroy', 'as' => 'faq_questions.mass_destroy']);
+    Route::resource('project_periods', 'Admin\ProjectPeriodsController');
+    Route::post('project_periods_mass_destroy', ['uses' => 'Admin\ProjectPeriodsController@massDestroy', 'as' => 'project_periods.mass_destroy']);
+    Route::post('project_periods_restore/{id}', ['uses' => 'Admin\ProjectPeriodsController@restore', 'as' => 'project_periods.restore']);
+    Route::delete('project_periods_perma_del/{id}', ['uses' => 'Admin\ProjectPeriodsController@perma_del', 'as' => 'project_periods.perma_del']);
 
 
     Route::post('csv_parse', 'Admin\CsvImportController@parse')->name('csv_parse');

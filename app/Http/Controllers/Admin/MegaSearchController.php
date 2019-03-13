@@ -21,6 +21,7 @@ class MegaSearchController extends Controller
         'Workpackage' => 'global.workpackages.title',
         'Financial' => 'global.financials.title',
         'Schedule' => 'global.schedules.title',
+        'ProjectPeriod' => 'global.project-periods.title',
         'Post' => 'global.posts.title',
         'Agenda' => 'global.agenda.title',
     ];

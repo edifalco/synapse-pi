@@ -68,8 +68,8 @@
 <li role="presentation" class=""><a href="#partnerroles" aria-controls="partnerroles" role="tab" data-toggle="tab">Partnerroles</a></li>
 <li role="presentation" class=""><a href="#cd_scores" aria-controls="cd_scores" role="tab" data-toggle="tab">Cd scores</a></li>
 <li role="presentation" class=""><a href="#cd_scores2" aria-controls="cd_scores2" role="tab" data-toggle="tab">Cd scores2</a></li>
-<li role="presentation" class=""><a href="#periods" aria-controls="periods" role="tab" data-toggle="tab">Periods</a></li>
 <li role="presentation" class=""><a href="#workpackages" aria-controls="workpackages" role="tab" data-toggle="tab">Workpackages</a></li>
+<li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
 <li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
 <li role="presentation" class=""><a href="#schedules" aria-controls="schedules" role="tab" data-toggle="tab">Schedules</a></li>
@@ -1599,74 +1599,6 @@
     </tbody>
 </table>
 </div>
-<div role="tabpanel" class="tab-pane " id="periods">
-<table class="table table-bordered table-striped {{ count($periods) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.periods.fields.date')</th>
-                        <th>@lang('global.periods.fields.period-num')</th>
-                        <th>@lang('global.periods.fields.project')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($periods) > 0)
-            @foreach ($periods as $period)
-                <tr data-entry-id="{{ $period->id }}">
-                    <td field-key='date'>{{ $period->date }}</td>
-                                <td field-key='period_num'>{{ $period->period_num }}</td>
-                                <td field-key='project'>{{ $period->project->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.periods.restore', $period->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.periods.perma_del', $period->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('period_view')
-                                    <a href="{{ route('admin.periods.show',[$period->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('period_edit')
-                                    <a href="{{ route('admin.periods.edit',[$period->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('period_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.periods.destroy', $period->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="8">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
 <div role="tabpanel" class="tab-pane " id="workpackages">
 <table class="table table-bordered table-striped {{ count($workpackages) > 0 ? 'datatable' : '' }}">
     <thead>
@@ -1732,6 +1664,74 @@
         @else
             <tr>
                 <td colspan="9">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="project_periods">
+<table class="table table-bordered table-striped {{ count($project_periods) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.project-periods.fields.date')</th>
+                        <th>@lang('global.project-periods.fields.period-num')</th>
+                        <th>@lang('global.project-periods.fields.project')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($project_periods) > 0)
+            @foreach ($project_periods as $project_period)
+                <tr data-entry-id="{{ $project_period->id }}">
+                    <td field-key='date'>{{ $project_period->date }}</td>
+                                <td field-key='period_num'>{{ $project_period->period_num }}</td>
+                                <td field-key='project'>{{ $project_period->project->name ?? '' }}</td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.project_periods.restore', $project_period->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.project_periods.perma_del', $project_period->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('project_period_view')
+                                    <a href="{{ route('admin.project_periods.show',[$project_period->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('project_period_edit')
+                                    <a href="{{ route('admin.project_periods.edit',[$project_period->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('project_period_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.project_periods.destroy', $project_period->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="8">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

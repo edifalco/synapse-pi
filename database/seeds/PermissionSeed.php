@@ -189,11 +189,6 @@ class PermissionSeed extends Seeder
             ['id' => 174, 'title' => 'partner_edit',],
             ['id' => 175, 'title' => 'partner_view',],
             ['id' => 176, 'title' => 'partner_delete',],
-            ['id' => 177, 'title' => 'period_access',],
-            ['id' => 178, 'title' => 'period_create',],
-            ['id' => 179, 'title' => 'period_edit',],
-            ['id' => 180, 'title' => 'period_view',],
-            ['id' => 181, 'title' => 'period_delete',],
             ['id' => 182, 'title' => 'post_access',],
             ['id' => 183, 'title' => 'post_create',],
             ['id' => 184, 'title' => 'post_edit',],
@@ -296,6 +291,11 @@ class PermissionSeed extends Seeder
             ['id' => 286, 'title' => 'faq_question_delete',],
             ['id' => 287, 'title' => 'project_management_access',],
             ['id' => 288, 'title' => 'admin_project_mgmt_access',],
+            ['id' => 289, 'title' => 'project_period_access',],
+            ['id' => 290, 'title' => 'project_period_create',],
+            ['id' => 291, 'title' => 'project_period_edit',],
+            ['id' => 292, 'title' => 'project_period_view',],
+            ['id' => 293, 'title' => 'project_period_delete',],
 
         ];
 
