@@ -17,16 +17,16 @@
                             <td field-key='created'>{{ $post->created }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.posts.fields.iduser')</th>
-                            <td field-key='idUser'>{{ $post->idUser->name ?? '' }}</td>
+                            <th>@lang('global.posts.fields.user')</th>
+                            <td field-key='user'>{{ $post->user->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.posts.fields.description')</th>
                             <td field-key='description'>{!! $post->description !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.posts.fields.idproject')</th>
-                            <td field-key='idProject'>{{ $post->idProject->name ?? '' }}</td>
+                            <th>@lang('global.posts.fields.project')</th>
+                            <td field-key='project'>{{ $post->project->name ?? '' }}</td>
                         </tr>
                     </table>
                 </div>

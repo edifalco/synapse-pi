@@ -48,6 +48,22 @@
                 </a>
             </li>@endcan
             
+            @can('post_access')
+            <li>
+                <a href="{{ route('admin.posts.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.posts.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('schedule_access')
+            <li>
+                <a href="{{ route('admin.schedules.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.schedules.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('agenda_access')
             <li>
                 <a href="{{ route('admin.agendas.index') }}">
@@ -56,19 +72,19 @@
                 </a>
             </li>@endcan
             
-            @can('budget_access')
-            <li>
-                <a href="{{ route('admin.budgets.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.budgets.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('deliverable_access')
             <li>
                 <a href="{{ route('admin.deliverables.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.deliverables.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('budget_access')
+            <li>
+                <a href="{{ route('admin.budgets.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.budgets.title')</span>
                 </a>
             </li>@endcan
             
@@ -104,27 +120,11 @@
                 </a>
             </li>@endcan
             
-            @can('schedule_access')
-            <li>
-                <a href="{{ route('admin.schedules.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.schedules.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('workpackage_access')
             <li>
                 <a href="{{ route('admin.workpackages.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.workpackages.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('post_access')
-            <li>
-                <a href="{{ route('admin.posts.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.posts.title')</span>
                 </a>
             </li>@endcan
             
@@ -141,6 +141,14 @@
                 <a href="{{ route('admin.efforts.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.efforts.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('project_period_access')
+            <li>
+                <a href="{{ route('admin.project_periods.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.project-periods.title')</span>
                 </a>
             </li>@endcan
             
@@ -498,14 +506,6 @@
                     </li>@endcan
                     
                 </ul>
-            </li>@endcan
-            
-            @can('project_period_access')
-            <li>
-                <a href="{{ route('admin.project_periods.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.project-periods.title')</span>
-                </a>
             </li>@endcan
             
 

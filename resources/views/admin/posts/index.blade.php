@@ -34,9 +34,9 @@
                         @endcan
 
                         <th>@lang('global.posts.fields.created')</th>
-                        <th>@lang('global.posts.fields.iduser')</th>
+                        <th>@lang('global.posts.fields.user')</th>
                         <th>@lang('global.posts.fields.description')</th>
-                        <th>@lang('global.posts.fields.idproject')</th>
+                        <th>@lang('global.posts.fields.project')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -61,9 +61,9 @@
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
                 @endcan{data: 'created', name: 'created'},
-                {data: 'idUser.name', name: 'idUser.name'},
+                {data: 'user.name', name: 'user.name'},
                 {data: 'description', name: 'description'},
-                {data: 'idProject.name', name: 'idProject.name'},
+                {data: 'project.name', name: 'project.name'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

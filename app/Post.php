@@ -10,15 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App
  * @property string $created
- * @property string $idUser
+ * @property string $user
  * @property text $description
- * @property string $idProject
+ * @property string $project
 */
 class Post extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['created', 'description', 'iduser_id', 'idproject_id'];
+    protected $fillable = ['created', 'description', 'user_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
         'description',
@@ -65,28 +65,28 @@ class Post extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setIdUserIdAttribute($input)
+    public function setUserIdAttribute($input)
     {
-        $this->attributes['idUser_id'] = $input ? $input : null;
+        $this->attributes['user_id'] = $input ? $input : null;
     }
 
     /**
      * Set to null if empty
      * @param $input
      */
-    public function setIdProjectIdAttribute($input)
+    public function setProjectIdAttribute($input)
     {
-        $this->attributes['idProject_id'] = $input ? $input : null;
+        $this->attributes['project_id'] = $input ? $input : null;
     }
     
-    public function idUser()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'idUser_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     
-    public function idProject()
+    public function project()
     {
-        return $this->belongsTo(Project::class, 'idProject_id')->withTrashed();
+        return $this->belongsTo(Project::class, 'project_id')->withTrashed();
     }
     
 }

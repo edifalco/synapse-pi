@@ -71,8 +71,8 @@
 <li role="presentation" class=""><a href="#workpackages" aria-controls="workpackages" role="tab" data-toggle="tab">Workpackages</a></li>
 <li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
-<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
 <li role="presentation" class=""><a href="#schedules" aria-controls="schedules" role="tab" data-toggle="tab">Schedules</a></li>
+<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Activities</a></li>
 <li role="presentation" class=""><a href="#documents" aria-controls="documents" role="tab" data-toggle="tab">Documents</a></li>
 <li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>
 <li role="presentation" class=""><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
@@ -1786,76 +1786,6 @@
     </tbody>
 </table>
 </div>
-<div role="tabpanel" class="tab-pane " id="posts">
-<table class="table table-bordered table-striped {{ count($posts) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.posts.fields.created')</th>
-                        <th>@lang('global.posts.fields.iduser')</th>
-                        <th>@lang('global.posts.fields.description')</th>
-                        <th>@lang('global.posts.fields.idproject')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($posts) > 0)
-            @foreach ($posts as $post)
-                <tr data-entry-id="{{ $post->id }}">
-                    <td field-key='created'>{{ $post->created }}</td>
-                                <td field-key='idUser'>{{ $post->idUser->name ?? '' }}</td>
-                                <td field-key='description'>{!! $post->description !!}</td>
-                                <td field-key='idProject'>{{ $post->idProject->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.posts.restore', $post->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.posts.perma_del', $post->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('post_view')
-                                    <a href="{{ route('admin.posts.show',[$post->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('post_edit')
-                                    <a href="{{ route('admin.posts.edit',[$post->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('post_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.posts.destroy', $post->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
 <div role="tabpanel" class="tab-pane " id="schedules">
 <table class="table table-bordered table-striped {{ count($schedules) > 0 ? 'datatable' : '' }}">
     <thead>
@@ -1923,6 +1853,76 @@
         @else
             <tr>
                 <td colspan="10">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="posts">
+<table class="table table-bordered table-striped {{ count($posts) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.posts.fields.created')</th>
+                        <th>@lang('global.posts.fields.user')</th>
+                        <th>@lang('global.posts.fields.description')</th>
+                        <th>@lang('global.posts.fields.project')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($posts) > 0)
+            @foreach ($posts as $post)
+                <tr data-entry-id="{{ $post->id }}">
+                    <td field-key='created'>{{ $post->created }}</td>
+                                <td field-key='user'>{{ $post->user->name ?? '' }}</td>
+                                <td field-key='description'>{!! $post->description !!}</td>
+                                <td field-key='project'>{{ $post->project->name ?? '' }}</td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.posts.restore', $post->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.posts.perma_del', $post->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('post_view')
+                                    <a href="{{ route('admin.posts.show',[$post->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('post_edit')
+                                    <a href="{{ route('admin.posts.edit',[$post->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('post_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.posts.destroy', $post->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
@@ -2266,7 +2266,7 @@
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
                         <th>@lang('global.deliverables.fields.date')</th>
-                        <th>@lang('global.deliverables.fields.idstatus')</th>
+                        <th>@lang('global.deliverables.fields.status')</th>
                         <th>@lang('global.deliverables.fields.notes')</th>
                         <th>@lang('global.deliverables.fields.project')</th>
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
@@ -2288,7 +2288,7 @@
                                 <td field-key='title'>{!! $deliverable->title !!}</td>
                                 <td field-key='short_title'>{!! $deliverable->short_title !!}</td>
                                 <td field-key='date'>{{ $deliverable->date }}</td>
-                                <td field-key='idStatus'>{{ $deliverable->idStatus->label ?? '' }}</td>
+                                <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
                                 <td field-key='notes'>{!! $deliverable->notes !!}</td>
                                 <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>

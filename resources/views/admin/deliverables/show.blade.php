@@ -29,8 +29,8 @@
                             <td field-key='date'>{{ $deliverable->date }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.deliverables.fields.idstatus')</th>
-                            <td field-key='idStatus'>{{ $deliverable->idStatus->label ?? '' }}</td>
+                            <th>@lang('global.deliverables.fields.status')</th>
+                            <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.deliverables.fields.notes')</th>

@@ -60,12 +60,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('idStatus_id', trans('global.deliverables.fields.idstatus').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('idStatus_id', $idStatuses, old('idStatus_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('status_id', trans('global.deliverables.fields.status').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('status_id', $statuses, old('status_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('idStatus_id'))
+                    @if($errors->has('status_id'))
                         <p class="help-block">
-                            {{ $errors->first('idStatus_id') }}
+                            {{ $errors->first('status_id') }}
                         </p>
                     @endif
                 </div>
