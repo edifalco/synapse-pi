@@ -16,6 +16,38 @@
                 </a>
             </li>
 
+            @can('project_access')
+            <li>
+                <a href="{{ route('admin.projects.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.projects.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('partner_access')
+            <li>
+                <a href="{{ route('admin.partners.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.partners.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('member_access')
+            <li>
+                <a href="{{ route('admin.members.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.members.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('keyword_access')
+            <li>
+                <a href="{{ route('admin.keywords.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.keywords.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('agenda_access')
             <li>
                 <a href="{{ route('admin.agendas.index') }}">
@@ -88,35 +120,11 @@
                 </a>
             </li>@endcan
             
-            @can('project_access')
-            <li>
-                <a href="{{ route('admin.projects.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.projects.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('post_access')
             <li>
                 <a href="{{ route('admin.posts.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.posts.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('partner_access')
-            <li>
-                <a href="{{ route('admin.partners.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.partners.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('member_access')
-            <li>
-                <a href="{{ route('admin.members.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.members.title')</span>
                 </a>
             </li>@endcan
             
@@ -287,14 +295,6 @@
                         </a>
                     </li>@endcan
                     
-                    @can('keyword_access')
-                    <li>
-                        <a href="{{ route('admin.keywords.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.keywords.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('member_partner_access')
                     <li>
                         <a href="{{ route('admin.member_partners.index') }}">
@@ -340,14 +340,6 @@
                         <a href="{{ route('admin.partnerroles.index') }}">
                             <i class="fa fa-tags"></i>
                             <span>@lang('global.partnerroles.title')</span>
-                        </a>
-                    </li>@endcan
-                    
-                    @can('period_access')
-                    <li>
-                        <a href="{{ route('admin.periods.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.periods.title')</span>
                         </a>
                     </li>@endcan
                     
@@ -506,6 +498,14 @@
                     </li>@endcan
                     
                 </ul>
+            </li>@endcan
+            
+            @can('project_period_access')
+            <li>
+                <a href="{{ route('admin.project_periods.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.project-periods.title')</span>
+                </a>
             </li>@endcan
             
 
