@@ -133,18 +133,30 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('members', trans('global.deliverables.fields.members').'', ['class' => 'control-label']) !!}
-                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-members">
+                    {!! Form::label('responsible', trans('global.deliverables.fields.responsible').'', ['class' => 'control-label']) !!}
+                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-responsible">
                         {{ trans('global.app_select_all') }}
                     </button>
-                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-members">
+                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-responsible">
                         {{ trans('global.app_deselect_all') }}
                     </button>
-                    {!! Form::select('members[]', $members, old('members') ? old('members') : $deliverable->members->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-members' ]) !!}
+                    {!! Form::select('responsible[]', $responsibles, old('responsible') ? old('responsible') : $deliverable->responsible->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-responsible' ]) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('members'))
+                    @if($errors->has('responsible'))
                         <p class="help-block">
-                            {{ $errors->first('members') }}
+                            {{ $errors->first('responsible') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('workpackages_id', trans('global.deliverables.fields.workpackages').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('workpackages_id', $workpackages, old('workpackages_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('workpackages_id'))
+                        <p class="help-block">
+                            {{ $errors->first('workpackages_id') }}
                         </p>
                     @endif
                 </div>
@@ -177,13 +189,13 @@
     </script>
             
     <script>
-        $("#selectbtn-members").click(function(){
-            $("#selectall-members > option").prop("selected","selected");
-            $("#selectall-members").trigger("change");
+        $("#selectbtn-responsible").click(function(){
+            $("#selectall-responsible > option").prop("selected","selected");
+            $("#selectall-responsible").trigger("change");
         });
-        $("#deselectbtn-members").click(function(){
-            $("#selectall-members > option").prop("selected","");
-            $("#selectall-members").trigger("change");
+        $("#deselectbtn-responsible").click(function(){
+            $("#selectall-responsible > option").prop("selected","");
+            $("#selectall-responsible").trigger("change");
         });
     </script>
 @stop

@@ -25,6 +25,8 @@ class UpdateWorkpackagesRequest extends FormRequest
         return [
             
             'order' => 'max:2147483647|nullable|numeric',
+            'deliverables.*.confidentiality' => 'max:2147483647|nullable|numeric',
+            'deliverables.*.due_date_months' => 'max:2147483647|nullable|numeric',
         ];
     }
 }

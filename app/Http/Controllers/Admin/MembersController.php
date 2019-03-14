@@ -158,7 +158,7 @@ class MembersController extends Controller
             return abort(401);
         }
         
-        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$member_partners = \App\MemberPartner::where('member_id', $id)->get();$memberroles = \App\Memberrole::where('member_id', $id)->get();$risk_mowners = \App\RiskMowner::where('member_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('member_id', $id)->get();$project_members = \App\ProjectMember::where('member_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('member_id', $id)->get();$deliverables = \App\Deliverable::whereHas('members',
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$member_partners = \App\MemberPartner::where('member_id', $id)->get();$memberroles = \App\Memberrole::where('member_id', $id)->get();$risk_mowners = \App\RiskMowner::where('member_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('member_id', $id)->get();$project_members = \App\ProjectMember::where('member_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('member_id', $id)->get();$deliverables = \App\Deliverable::whereHas('responsible',
                     function ($query) use ($id) {
                         $query->where('id', $id);
                     })->get();

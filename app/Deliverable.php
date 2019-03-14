@@ -19,12 +19,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $confidentiality
  * @property string $submission_date
  * @property integer $due_date_months
+ * @property string $workpackages
 */
 class Deliverable extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'status_id', 'project_id'];
+    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'status_id', 'project_id', 'workpackages_id'];
     protected $hidden = [];
     public static $searchable = [
         'label_identification',
@@ -136,6 +137,15 @@ class Deliverable extends Model
     {
         $this->attributes['due_date_months'] = $input ? $input : null;
     }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setWorkpackagesIdAttribute($input)
+    {
+        $this->attributes['workpackages_id'] = $input ? $input : null;
+    }
     
     public function status()
     {
@@ -147,9 +157,14 @@ class Deliverable extends Model
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
     }
     
-    public function members()
+    public function responsible()
     {
         return $this->belongsToMany(Member::class, 'deliverable_member')->withTrashed();
+    }
+    
+    public function workpackages()
+    {
+        return $this->belongsTo(Workpackage::class, 'workpackages_id')->withTrashed();
     }
     
 }

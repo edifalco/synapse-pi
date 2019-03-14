@@ -54,4 +54,7 @@ class Workpackage extends Model
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
     }
     
+    public function deliverables() {
+        return $this->hasMany(Deliverable::class, 'workpackages_id');
+    }
 }
