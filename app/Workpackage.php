@@ -55,6 +55,6 @@ class Workpackage extends Model
     }
     
     public function deliverables() {
-        return $this->hasMany(Deliverable::class, 'workpackages_id');
+        return $this->hasMany(Deliverable::class, 'workpackage_id');
     }
 }

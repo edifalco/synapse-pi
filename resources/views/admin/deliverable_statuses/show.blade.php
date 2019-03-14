@@ -107,7 +107,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="16">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="17">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

@@ -176,7 +176,7 @@ class WorkpackagesController extends Controller
             return abort(401);
         }
         
-        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverables = \App\Deliverable::where('workpackages_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('workpackage_id', $id)->get();$efforts = \App\Effort::where('workpackage_id', $id)->get();
+        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverables = \App\Deliverable::where('workpackage_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('workpackage_id', $id)->get();$efforts = \App\Effort::where('workpackage_id', $id)->get();
 
         $workpackage = Workpackage::findOrFail($id);
 
