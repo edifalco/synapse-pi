@@ -28,7 +28,7 @@ class UpdateDeliverablesRequest extends FormRequest
             'confidentiality' => 'max:2147483647|nullable|numeric',
             'submission_date' => 'nullable|date_format:'.config('app.date_format'),
             'due_date_months' => 'max:2147483647|nullable|numeric',
-            'members.*' => 'exists:members,id',
+            'responsible.*' => 'exists:members,id',
         ];
     }
 }

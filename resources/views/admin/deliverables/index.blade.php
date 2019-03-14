@@ -43,7 +43,8 @@
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
-                        <th>@lang('global.deliverables.fields.members')</th>
+                        <th>@lang('global.deliverables.fields.responsible')</th>
+                        <th>@lang('global.deliverables.fields.workpackages')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -77,7 +78,8 @@
                 {data: 'confidentiality', name: 'confidentiality'},
                 {data: 'submission_date', name: 'submission_date'},
                 {data: 'due_date_months', name: 'due_date_months'},
-                {data: 'members.surname', name: 'members.surname'},
+                {data: 'responsible.surname', name: 'responsible.surname'},
+                {data: 'workpackages.wp_id', name: 'workpackages.wp_id'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

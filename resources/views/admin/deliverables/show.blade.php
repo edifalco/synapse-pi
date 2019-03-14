@@ -53,10 +53,10 @@
                             <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.deliverables.fields.members')</th>
-                            <td field-key='members'>
-                                @foreach ($deliverable->members as $singleMembers)
-                                    <span class="label label-info label-many">{{ $singleMembers->surname }}</span>
+                            <th>@lang('global.deliverables.fields.responsible')</th>
+                            <td field-key='responsible'>
+                                @foreach ($deliverable->responsible as $singleResponsible)
+                                    <span class="label label-info label-many">{{ $singleResponsible->surname }}</span>
                                 @endforeach
                             </td>
                         </tr>

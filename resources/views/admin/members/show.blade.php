@@ -469,7 +469,7 @@
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
-                        <th>@lang('global.deliverables.fields.members')</th>
+                        <th>@lang('global.deliverables.fields.responsible')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -492,9 +492,9 @@
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
                                 <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
                                 <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
-                                <td field-key='members'>
-                                    @foreach ($deliverable->members as $singleMembers)
-                                        <span class="label label-info label-many">{{ $singleMembers->surname }}</span>
+                                <td field-key='responsible'>
+                                    @foreach ($deliverable->responsible as $singleResponsible)
+                                        <span class="label label-info label-many">{{ $singleResponsible->surname }}</span>
                                     @endforeach
                                 </td>
                                 @if( request('show_deleted') == 1 )
@@ -537,7 +537,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="16">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="17">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

@@ -29,7 +29,8 @@ class DeliverablesController extends Controller
             $query = Deliverable::query();
             $query->with("status");
             $query->with("project");
-            $query->with("members");
+            $query->with("responsible");
+            $query->with("workpackages");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -51,6 +52,7 @@ class DeliverablesController extends Controller
                 'deliverables.confidentiality',
                 'deliverables.submission_date',
                 'deliverables.due_date_months',
+                'deliverables.workpackages_id',
             ]);
             $table = Datatables::of($query);
 
@@ -71,16 +73,19 @@ class DeliverablesController extends Controller
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
             });
-            $table->editColumn('members.surname', function ($row) {
-                if(count($row->members) == 0) {
+            $table->editColumn('responsible.surname', function ($row) {
+                if(count($row->responsible) == 0) {
                     return '';
                 }
 
                 return '<span class="label label-info label-many">' . implode('</span><span class="label label-info label-many"> ',
-                        $row->members->pluck('surname')->toArray()) . '</span>';
+                        $row->responsible->pluck('surname')->toArray()) . '</span>';
+            });
+            $table->editColumn('workpackages.wp_id', function ($row) {
+                return $row->workpackages ? $row->workpackages->wp_id : '';
             });
 
-            $table->rawColumns(['actions','massDelete','members.surname']);
+            $table->rawColumns(['actions','massDelete','responsible.surname']);
 
             return $table->make(true);
         }
@@ -101,10 +106,11 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('surname', 'id');
+        $responsibles = \App\Member::get()->pluck('surname', 'id');
 
+        $workpackages = \App\Workpackage::get()->pluck('wp_id', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.deliverables.create', compact('statuses', 'projects', 'members'));
+        return view('admin.deliverables.create', compact('statuses', 'projects', 'responsibles', 'workpackages'));
     }
 
     /**
@@ -119,7 +125,7 @@ class DeliverablesController extends Controller
             return abort(401);
         }
         $deliverable = Deliverable::create($request->all());
-        $deliverable->members()->sync(array_filter((array)$request->input('members')));
+        $deliverable->responsible()->sync(array_filter((array)$request->input('responsible')));
 
 
 
@@ -141,12 +147,13 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('surname', 'id');
+        $responsibles = \App\Member::get()->pluck('surname', 'id');
 
+        $workpackages = \App\Workpackage::get()->pluck('wp_id', 'id')->prepend(trans('global.app_please_select'), '');
 
         $deliverable = Deliverable::findOrFail($id);
 
-        return view('admin.deliverables.edit', compact('deliverable', 'statuses', 'projects', 'members'));
+        return view('admin.deliverables.edit', compact('deliverable', 'statuses', 'projects', 'responsibles', 'workpackages'));
     }
 
     /**
@@ -163,7 +170,7 @@ class DeliverablesController extends Controller
         }
         $deliverable = Deliverable::findOrFail($id);
         $deliverable->update($request->all());
-        $deliverable->members()->sync(array_filter((array)$request->input('members')));
+        $deliverable->responsible()->sync(array_filter((array)$request->input('responsible')));
 
 
 
@@ -185,8 +192,9 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('surname', 'id');
-$deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
+        $responsibles = \App\Member::get()->pluck('surname', 'id');
+
+        $workpackages = \App\Workpackage::get()->pluck('wp_id', 'id')->prepend(trans('global.app_please_select'), '');$deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
 
         $deliverable = Deliverable::findOrFail($id);
 

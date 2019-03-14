@@ -33,8 +33,9 @@ class DeliverableTest extends DuskTestCase
                 ->type("confidentiality", $deliverable->confidentiality)
                 ->type("submission_date", $deliverable->submission_date)
                 ->type("due_date_months", $deliverable->due_date_months)
-                ->select('select[name="members[]"]', $relations[0]->id)
-                ->select('select[name="members[]"]', $relations[1]->id)
+                ->select('select[name="responsible[]"]', $relations[0]->id)
+                ->select('select[name="responsible[]"]', $relations[1]->id)
+                ->select("workpackages_id", $deliverable->workpackages_id)
                 ->press('Save')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable->label_identification)
@@ -47,8 +48,9 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->logout();
         });
     }
@@ -78,8 +80,9 @@ class DeliverableTest extends DuskTestCase
                 ->type("confidentiality", $deliverable2->confidentiality)
                 ->type("submission_date", $deliverable2->submission_date)
                 ->type("due_date_months", $deliverable2->due_date_months)
-                ->select('select[name="members[]"]', $relations[0]->id)
-                ->select('select[name="members[]"]', $relations[1]->id)
+                ->select('select[name="responsible[]"]', $relations[0]->id)
+                ->select('select[name="responsible[]"]', $relations[1]->id)
+                ->select("workpackages_id", $deliverable2->workpackages_id)
                 ->press('Update')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable2->label_identification)
@@ -92,8 +95,9 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable2->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable2->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable2->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable2->workpackages->wp_id)
                 ->logout();
         });
     }
@@ -108,7 +112,7 @@ class DeliverableTest extends DuskTestCase
             factory('App\Member')->create(), 
         ];
 
-        $deliverable->members()->attach([$relations[0]->id, $relations[1]->id]);
+        $deliverable->responsible()->attach([$relations[0]->id, $relations[1]->id]);
 
         $this->browse(function (Browser $browser) use ($admin, $deliverable, $relations) {
             $browser->loginAs($admin)
@@ -124,8 +128,9 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("td[field-key='due_date_months']", $deliverable->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->logout();
         });
     }

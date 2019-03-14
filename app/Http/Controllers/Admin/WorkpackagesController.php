@@ -98,6 +98,9 @@ class WorkpackagesController extends Controller
         }
         $workpackage = Workpackage::create($request->all());
 
+        foreach ($request->input('deliverables', []) as $data) {
+            $workpackage->deliverables()->create($data);
+        }
 
 
         return redirect()->route('admin.workpackages.index');
@@ -138,6 +141,23 @@ class WorkpackagesController extends Controller
         $workpackage = Workpackage::findOrFail($id);
         $workpackage->update($request->all());
 
+        $deliverables           = $workpackage->deliverables;
+        $currentDeliverableData = [];
+        foreach ($request->input('deliverables', []) as $index => $data) {
+            if (is_integer($index)) {
+                $workpackage->deliverables()->create($data);
+            } else {
+                $id                          = explode('-', $index)[1];
+                $currentDeliverableData[$id] = $data;
+            }
+        }
+        foreach ($deliverables as $item) {
+            if (isset($currentDeliverableData[$item->id])) {
+                $item->update($currentDeliverableData[$item->id]);
+            } else {
+                $item->delete();
+            }
+        }
 
 
         return redirect()->route('admin.workpackages.index');
@@ -156,11 +176,11 @@ class WorkpackagesController extends Controller
             return abort(401);
         }
         
-        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverable_workpackages = \App\DeliverableWorkpackage::where('workpackage_id', $id)->get();$efforts = \App\Effort::where('workpackage_id', $id)->get();
+        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverable_workpackages = \App\DeliverableWorkpackage::where('workpackage_id', $id)->get();$efforts = \App\Effort::where('workpackage_id', $id)->get();$deliverables = \App\Deliverable::where('workpackages_id', $id)->get();
 
         $workpackage = Workpackage::findOrFail($id);
 
-        return view('admin.workpackages.show', compact('workpackage', 'deliverable_workpackages', 'efforts'));
+        return view('admin.workpackages.show', compact('workpackage', 'deliverable_workpackages', 'efforts', 'deliverables'));
     }
 
 
