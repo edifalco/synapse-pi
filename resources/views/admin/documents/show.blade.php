@@ -17,10 +17,6 @@
                             <td field-key='title'>{{ $document->title }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.documents.fields.folder')</th>
-                            <td field-key='folder'>{{ $document->folder }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.documents.fields.project')</th>
                             <td field-key='project'>{{ $document->project->name ?? '' }}</td>
                         </tr>

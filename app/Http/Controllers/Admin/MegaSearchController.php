@@ -15,6 +15,7 @@ class MegaSearchController extends Controller
         'Risk' => 'global.risks.title',
         'Acronym' => 'global.acronyms.title',
         'Scoredescription' => 'global.scoredescriptions.title',
+        'DocumentFolder' => 'global.document-folders.title',
         'Document' => 'global.documents.title',
         'Member' => 'global.members.title',
         'Workpackage' => 'global.workpackages.title',

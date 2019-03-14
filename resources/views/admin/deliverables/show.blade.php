@@ -340,7 +340,6 @@
     <thead>
         <tr>
             <th>@lang('global.documents.fields.title')</th>
-                        <th>@lang('global.documents.fields.folder')</th>
                         <th>@lang('global.documents.fields.project')</th>
                         <th>@lang('global.documents.fields.deliverable')</th>
                         <th>@lang('global.documents.fields.document')</th>
@@ -357,7 +356,6 @@
             @foreach ($documents as $document)
                 <tr data-entry-id="{{ $document->id }}">
                     <td field-key='title'>{{ $document->title }}</td>
-                                <td field-key='folder'>{{ $document->folder }}</td>
                                 <td field-key='project'>{{ $document->project->name ?? '' }}</td>
                                 <td field-key='deliverable'>{{ $document->deliverable->label_identification ?? '' }}</td>
                                 <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>

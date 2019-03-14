@@ -24,7 +24,7 @@ return [
 		'deliverable-workpackages' => [		'title' => 'Deliverable workpackages',		'fields' => [			'deliverable' => 'Deliverable',			'workpackage' => 'Workpackage',		],	],
 		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'workpackage' => 'Workpackage',			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'status' => 'Status',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',			'responsible' => 'Responsible',		],	],
 		'document-favorites' => [		'title' => 'Document favorites',		'fields' => [			'document' => 'Document',			'project' => 'Project',		],	],
-		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'folder' => 'Folder',			'project' => 'Project',			'deliverable' => 'Deliverable',			'document' => 'Document',		],	],
+		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'project' => 'Project',			'deliverable' => 'Deliverable',			'document' => 'Document',			'folder' => 'Folder',		],	],
 		'efforts' => [		'title' => 'Efforts',		'fields' => [			'project' => 'Project',			'workpackage' => 'Workpackage',			'partner' => 'Partner',			'value' => 'Value',			'period' => 'Period',		],	],
 		'financials' => [		'title' => 'Financials',		'fields' => [			'document' => 'Document',			'project' => 'Project',			'title' => 'Title',		],	],
 		'financialvisibilities' => [		'title' => 'Financialvisibilities',		'fields' => [			'type' => 'Type',			'status' => 'Status',			'id-project' => 'Id project',		],	],
@@ -62,6 +62,8 @@ return [
 		'admin-project-mgmt' => [		'title' => 'Admin project mgmt',		'fields' => [		],	],
 		'project-management' => [		'title' => 'Project management',		'fields' => [		],	],
 		'project-periods' => [		'title' => 'Project Periods',		'fields' => [			'date' => 'Date',			'period-num' => 'Period num',			'project' => 'Project',		],	],
+		'document-folders' => [		'title' => 'Document folders',		'fields' => [		],	],
+		'document-folders' => [		'title' => 'Document folders',		'fields' => [			'name' => 'Name',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

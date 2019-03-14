@@ -25,18 +25,6 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('folder', trans('global.documents.fields.folder').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('folder', old('folder'), ['class' => 'form-control', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('folder'))
-                        <p class="help-block">
-                            {{ $errors->first('folder') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('project_id', trans('global.documents.fields.project').'', ['class' => 'control-label']) !!}
                     {!! Form::select('project_id', $projects, old('project_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
@@ -72,6 +60,18 @@
                     @if($errors->has('document'))
                         <p class="help-block">
                             {{ $errors->first('document') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('folder_id', trans('global.documents.fields.folder').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('folder_id', $folders, old('folder_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('folder_id'))
+                        <p class="help-block">
+                            {{ $errors->first('folder_id') }}
                         </p>
                     @endif
                 </div>
