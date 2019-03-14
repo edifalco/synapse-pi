@@ -54,7 +54,7 @@ return [
 		'scoredescriptions' => [		'title' => 'Scoredescriptions',		'fields' => [			'description' => 'Description',			'project' => 'Project',			'score-id' => 'Score',		],	],
 		'threshold-deliverables' => [		'title' => 'Threshold deliverables',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
 		'threshold-risks' => [		'title' => 'Threshold risks',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
-		'workpackages' => [		'title' => 'Workpackages',		'fields' => [			'wp-id' => 'Wp',			'name' => 'Name',			'project' => 'Project',			'order' => 'Order',		],	],
+		'workpackages' => [		'title' => 'Work Packages',		'fields' => [			'wp-id' => 'Wp',			'name' => 'Name',			'project' => 'Project',			'order' => 'Order',		],	],
 		'user-actions' => [		'title' => 'User actions',		'created_at' => 'Time',		'fields' => [			'user' => 'User',			'action' => 'Action',			'action-model' => 'Action model',			'action-id' => 'Action id',		],	],
 		'faq-management' => [		'title' => 'FAQ Management',		'fields' => [		],	],
 		'faq-categories' => [		'title' => 'Categories',		'fields' => [			'title' => 'Category',		],	],
@@ -64,6 +64,7 @@ return [
 		'project-periods' => [		'title' => 'Project Periods',		'fields' => [			'date' => 'Date',			'period-num' => 'Period num',			'project' => 'Project',		],	],
 		'document-folders' => [		'title' => 'Document folders',		'fields' => [		],	],
 		'document-folders' => [		'title' => 'Document folders',		'fields' => [			'name' => 'Name',		],	],
+		'countries' => [		'title' => 'Countries',		'fields' => [			'shortcode' => 'Shortcode',			'title' => 'Title',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

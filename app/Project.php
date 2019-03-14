@@ -77,7 +77,10 @@ class Project extends Model
         return $this->belongsToMany(Partner::class, 'partner_project')->withTrashed();
     }
     
-    public function deliverables() {
-        return $this->hasMany(Deliverable::class, 'project_id');
+    public function workpackages() {
+        return $this->hasMany(Workpackage::class, 'project_id');
+    }
+    public function project_periods() {
+        return $this->hasMany(ProjectPeriod::class, 'project_id');
     }
 }

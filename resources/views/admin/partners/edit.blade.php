@@ -49,12 +49,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('country', trans('global.partners.fields.country').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('country', old('country'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    {!! Form::label('country_id', trans('global.partners.fields.country').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('country_id', $countries, old('country_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('country'))
+                    @if($errors->has('country_id'))
                         <p class="help-block">
-                            {{ $errors->first('country') }}
+                            {{ $errors->first('country_id') }}
                         </p>
                     @endif
                 </div>

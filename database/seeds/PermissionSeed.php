@@ -296,6 +296,11 @@ class PermissionSeed extends Seeder
             ['id' => 297, 'title' => 'document_folder_edit',],
             ['id' => 298, 'title' => 'document_folder_view',],
             ['id' => 299, 'title' => 'document_folder_delete',],
+            ['id' => 300, 'title' => 'country_access',],
+            ['id' => 301, 'title' => 'country_create',],
+            ['id' => 302, 'title' => 'country_edit',],
+            ['id' => 303, 'title' => 'country_view',],
+            ['id' => 304, 'title' => 'country_delete',],
 
         ];
 

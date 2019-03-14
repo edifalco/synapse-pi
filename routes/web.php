@@ -85,6 +85,14 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('project_periods_mass_destroy', ['uses' => 'Admin\ProjectPeriodsController@massDestroy', 'as' => 'project_periods.mass_destroy']);
     Route::post('project_periods_restore/{id}', ['uses' => 'Admin\ProjectPeriodsController@restore', 'as' => 'project_periods.restore']);
     Route::delete('project_periods_perma_del/{id}', ['uses' => 'Admin\ProjectPeriodsController@perma_del', 'as' => 'project_periods.perma_del']);
+    Route::resource('document_folders', 'Admin\DocumentFoldersController');
+    Route::post('document_folders_mass_destroy', ['uses' => 'Admin\DocumentFoldersController@massDestroy', 'as' => 'document_folders.mass_destroy']);
+    Route::post('document_folders_restore/{id}', ['uses' => 'Admin\DocumentFoldersController@restore', 'as' => 'document_folders.restore']);
+    Route::delete('document_folders_perma_del/{id}', ['uses' => 'Admin\DocumentFoldersController@perma_del', 'as' => 'document_folders.perma_del']);
+    Route::resource('countries', 'Admin\CountriesController');
+    Route::post('countries_mass_destroy', ['uses' => 'Admin\CountriesController@massDestroy', 'as' => 'countries.mass_destroy']);
+    Route::post('countries_restore/{id}', ['uses' => 'Admin\CountriesController@restore', 'as' => 'countries.restore']);
+    Route::delete('countries_perma_del/{id}', ['uses' => 'Admin\CountriesController@perma_del', 'as' => 'countries.perma_del']);
     Route::resource('alternativescores', 'Admin\AlternativescoresController');
     Route::post('alternativescores_mass_destroy', ['uses' => 'Admin\AlternativescoresController@massDestroy', 'as' => 'alternativescores.mass_destroy']);
     Route::post('alternativescores_restore/{id}', ['uses' => 'Admin\AlternativescoresController@restore', 'as' => 'alternativescores.restore']);
@@ -214,10 +222,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('faq_categories_mass_destroy', ['uses' => 'Admin\FaqCategoriesController@massDestroy', 'as' => 'faq_categories.mass_destroy']);
     Route::resource('faq_questions', 'Admin\FaqQuestionsController');
     Route::post('faq_questions_mass_destroy', ['uses' => 'Admin\FaqQuestionsController@massDestroy', 'as' => 'faq_questions.mass_destroy']);
-    Route::resource('document_folders', 'Admin\DocumentFoldersController');
-    Route::post('document_folders_mass_destroy', ['uses' => 'Admin\DocumentFoldersController@massDestroy', 'as' => 'document_folders.mass_destroy']);
-    Route::post('document_folders_restore/{id}', ['uses' => 'Admin\DocumentFoldersController@restore', 'as' => 'document_folders.restore']);
-    Route::delete('document_folders_perma_del/{id}', ['uses' => 'Admin\DocumentFoldersController@perma_del', 'as' => 'document_folders.perma_del']);
 
 
     Route::post('csv_parse', 'Admin\CsvImportController@parse')->name('csv_parse');

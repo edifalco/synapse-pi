@@ -23,13 +23,13 @@ class PartnerTest extends DuskTestCase
                 ->type("name", $partner->name)
                 ->type("acronym", $partner->acronym)
                 ->type("image", $partner->image)
-                ->type("country", $partner->country)
+                ->select("country_id", $partner->country_id)
                 ->press('Save')
                 ->assertRouteIs('admin.partners.index')
                 ->assertSeeIn("tr:last-child td[field-key='name']", $partner->name)
                 ->assertSeeIn("tr:last-child td[field-key='acronym']", $partner->acronym)
                 ->assertSeeIn("tr:last-child td[field-key='image']", $partner->image)
-                ->assertSeeIn("tr:last-child td[field-key='country']", $partner->country)
+                ->assertSeeIn("tr:last-child td[field-key='country']", $partner->country->title)
                 ->logout();
         });
     }
@@ -49,13 +49,13 @@ class PartnerTest extends DuskTestCase
                 ->type("name", $partner2->name)
                 ->type("acronym", $partner2->acronym)
                 ->type("image", $partner2->image)
-                ->type("country", $partner2->country)
+                ->select("country_id", $partner2->country_id)
                 ->press('Update')
                 ->assertRouteIs('admin.partners.index')
                 ->assertSeeIn("tr:last-child td[field-key='name']", $partner2->name)
                 ->assertSeeIn("tr:last-child td[field-key='acronym']", $partner2->acronym)
                 ->assertSeeIn("tr:last-child td[field-key='image']", $partner2->image)
-                ->assertSeeIn("tr:last-child td[field-key='country']", $partner2->country)
+                ->assertSeeIn("tr:last-child td[field-key='country']", $partner2->country->title)
                 ->logout();
         });
     }
@@ -75,7 +75,7 @@ class PartnerTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='name']", $partner->name)
                 ->assertSeeIn("td[field-key='acronym']", $partner->acronym)
                 ->assertSeeIn("td[field-key='image']", $partner->image)
-                ->assertSeeIn("td[field-key='country']", $partner->country)
+                ->assertSeeIn("td[field-key='country']", $partner->country->title)
                 ->logout();
         });
     }

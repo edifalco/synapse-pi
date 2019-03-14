@@ -17,7 +17,7 @@ class Partner extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'acronym', 'image', 'country'];
+    protected $fillable = ['name', 'acronym', 'image', 'country_id'];
     protected $hidden = [];
     public static $searchable = [
     ];
@@ -27,6 +27,20 @@ class Partner extends Model
         parent::boot();
 
         Partner::observe(new \App\Observers\UserActionsObserver);
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCountryIdAttribute($input)
+    {
+        $this->attributes['country_id'] = $input ? $input : null;
+    }
+    
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id')->withTrashed();
     }
     
 }
