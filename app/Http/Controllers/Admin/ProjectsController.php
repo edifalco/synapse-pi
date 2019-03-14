@@ -106,6 +106,9 @@ class ProjectsController extends Controller
         $project = Project::create($request->all());
         $project->partners()->sync(array_filter((array)$request->input('partners')));
 
+        foreach ($request->input('deliverables', []) as $data) {
+            $project->deliverables()->create($data);
+        }
 
 
         return redirect()->route('admin.projects.index');
@@ -148,6 +151,23 @@ class ProjectsController extends Controller
         $project->update($request->all());
         $project->partners()->sync(array_filter((array)$request->input('partners')));
 
+        $deliverables           = $project->deliverables;
+        $currentDeliverableData = [];
+        foreach ($request->input('deliverables', []) as $index => $data) {
+            if (is_integer($index)) {
+                $project->deliverables()->create($data);
+            } else {
+                $id                          = explode('-', $index)[1];
+                $currentDeliverableData[$id] = $data;
+            }
+        }
+        foreach ($deliverables as $item) {
+            if (isset($currentDeliverableData[$item->id])) {
+                $item->update($currentDeliverableData[$item->id]);
+            } else {
+                $item->delete();
+            }
+        }
 
 
         return redirect()->route('admin.projects.index');

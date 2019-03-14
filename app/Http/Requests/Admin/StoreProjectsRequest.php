@@ -26,6 +26,8 @@ class StoreProjectsRequest extends FormRequest
             'date' => 'nullable|date_format:'.config('app.date_format'),
             'duration' => 'max:2147483647|nullable|numeric',
             'partners.*' => 'exists:partners,id',
+            'deliverables.*.confidentiality' => 'max:2147483647|nullable|numeric',
+            'deliverables.*.due_date_months' => 'max:2147483647|nullable|numeric',
         ];
     }
 }
