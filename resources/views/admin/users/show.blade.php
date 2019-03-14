@@ -35,7 +35,7 @@
     
 <li role="presentation" class="active"><a href="#project_users" aria-controls="project_users" role="tab" data-toggle="tab">Project users</a></li>
 <li role="presentation" class=""><a href="#user_actions" aria-controls="user_actions" role="tab" data-toggle="tab">User actions</a></li>
-<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Activities</a></li>
+<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
 </ul>
 
 <!-- Tab panes -->

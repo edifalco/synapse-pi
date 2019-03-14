@@ -117,10 +117,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('deliverable_documents_mass_destroy', ['uses' => 'Admin\DeliverableDocumentsController@massDestroy', 'as' => 'deliverable_documents.mass_destroy']);
     Route::post('deliverable_documents_restore/{id}', ['uses' => 'Admin\DeliverableDocumentsController@restore', 'as' => 'deliverable_documents.restore']);
     Route::delete('deliverable_documents_perma_del/{id}', ['uses' => 'Admin\DeliverableDocumentsController@perma_del', 'as' => 'deliverable_documents.perma_del']);
-    Route::resource('deliverable_members', 'Admin\DeliverableMembersController');
-    Route::post('deliverable_members_mass_destroy', ['uses' => 'Admin\DeliverableMembersController@massDestroy', 'as' => 'deliverable_members.mass_destroy']);
-    Route::post('deliverable_members_restore/{id}', ['uses' => 'Admin\DeliverableMembersController@restore', 'as' => 'deliverable_members.restore']);
-    Route::delete('deliverable_members_perma_del/{id}', ['uses' => 'Admin\DeliverableMembersController@perma_del', 'as' => 'deliverable_members.perma_del']);
     Route::resource('deliverable_partners', 'Admin\DeliverablePartnersController');
     Route::post('deliverable_partners_mass_destroy', ['uses' => 'Admin\DeliverablePartnersController@massDestroy', 'as' => 'deliverable_partners.mass_destroy']);
     Route::post('deliverable_partners_restore/{id}', ['uses' => 'Admin\DeliverablePartnersController@restore', 'as' => 'deliverable_partners.restore']);

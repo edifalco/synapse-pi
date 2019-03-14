@@ -29,6 +29,7 @@ class DeliverablesController extends Controller
             $query = Deliverable::query();
             $query->with("status");
             $query->with("project");
+            $query->with("members");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -70,8 +71,16 @@ class DeliverablesController extends Controller
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
             });
+            $table->editColumn('members.name', function ($row) {
+                if(count($row->members) == 0) {
+                    return '';
+                }
 
-            $table->rawColumns(['actions','massDelete']);
+                return '<span class="label label-info label-many">' . implode('</span><span class="label label-info label-many"> ',
+                        $row->members->pluck('name')->toArray()) . '</span>';
+            });
+
+            $table->rawColumns(['actions','massDelete','members.name']);
 
             return $table->make(true);
         }
@@ -92,8 +101,10 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $members = \App\Member::get()->pluck('name', 'id');
 
-        return view('admin.deliverables.create', compact('statuses', 'projects'));
+
+        return view('admin.deliverables.create', compact('statuses', 'projects', 'members'));
     }
 
     /**
@@ -108,6 +119,7 @@ class DeliverablesController extends Controller
             return abort(401);
         }
         $deliverable = Deliverable::create($request->all());
+        $deliverable->members()->sync(array_filter((array)$request->input('members')));
 
 
 
@@ -129,10 +141,12 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $members = \App\Member::get()->pluck('name', 'id');
+
 
         $deliverable = Deliverable::findOrFail($id);
 
-        return view('admin.deliverables.edit', compact('deliverable', 'statuses', 'projects'));
+        return view('admin.deliverables.edit', compact('deliverable', 'statuses', 'projects', 'members'));
     }
 
     /**
@@ -149,6 +163,7 @@ class DeliverablesController extends Controller
         }
         $deliverable = Deliverable::findOrFail($id);
         $deliverable->update($request->all());
+        $deliverable->members()->sync(array_filter((array)$request->input('members')));
 
 
 
@@ -169,11 +184,13 @@ class DeliverablesController extends Controller
         }
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
-        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_members = \App\DeliverableMember::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
+        $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $members = \App\Member::get()->pluck('name', 'id');
+$deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
 
         $deliverable = Deliverable::findOrFail($id);
 
-        return view('admin.deliverables.show', compact('deliverable', 'deliverable_documents', 'deliverable_reviewers', 'deliverable_workpackages', 'deliverable_members', 'deliverable_partners', 'documents'));
+        return view('admin.deliverables.show', compact('deliverable', 'deliverable_documents', 'deliverable_reviewers', 'deliverable_workpackages', 'deliverable_partners', 'documents'));
     }
 
 

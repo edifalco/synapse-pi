@@ -45,9 +45,9 @@
 <li role="presentation" class=""><a href="#memberroles" aria-controls="memberroles" role="tab" data-toggle="tab">Memberroles</a></li>
 <li role="presentation" class=""><a href="#risk_mowners" aria-controls="risk_mowners" role="tab" data-toggle="tab">Risk mowners</a></li>
 <li role="presentation" class=""><a href="#risk_mreporters" aria-controls="risk_mreporters" role="tab" data-toggle="tab">Risk mreporters</a></li>
-<li role="presentation" class=""><a href="#deliverable_members" aria-controls="deliverable_members" role="tab" data-toggle="tab">Deliverable members</a></li>
 <li role="presentation" class=""><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
 <li role="presentation" class=""><a href="#deliverable_reviewers" aria-controls="deliverable_reviewers" role="tab" data-toggle="tab">Deliverable reviewers</a></li>
+<li role="presentation" class=""><a href="#deliverables" aria-controls="deliverables" role="tab" data-toggle="tab">Deliverables</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -321,72 +321,6 @@
     </tbody>
 </table>
 </div>
-<div role="tabpanel" class="tab-pane " id="deliverable_members">
-<table class="table table-bordered table-striped {{ count($deliverable_members) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.deliverable-members.fields.member')</th>
-                        <th>@lang('global.deliverable-members.fields.deliverable')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($deliverable_members) > 0)
-            @foreach ($deliverable_members as $deliverable_member)
-                <tr data-entry-id="{{ $deliverable_member->id }}">
-                    <td field-key='member'>{{ $deliverable_member->member->name ?? '' }}</td>
-                                <td field-key='deliverable'>{{ $deliverable_member->deliverable->label_identification ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.restore', $deliverable_member->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.perma_del', $deliverable_member->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('deliverable_member_view')
-                                    <a href="{{ route('admin.deliverable_members.show',[$deliverable_member->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('deliverable_member_edit')
-                                    <a href="{{ route('admin.deliverable_members.edit',[$deliverable_member->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('deliverable_member_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.destroy', $deliverable_member->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="7">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
 <div role="tabpanel" class="tab-pane " id="project_members">
 <table class="table table-bordered table-striped {{ count($project_members) > 0 ? 'datatable' : '' }}">
     <thead>
@@ -516,6 +450,94 @@
         @else
             <tr>
                 <td colspan="7">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="deliverables">
+<table class="table table-bordered table-striped {{ count($deliverables) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.deliverables.fields.label-identification')</th>
+                        <th>@lang('global.deliverables.fields.title')</th>
+                        <th>@lang('global.deliverables.fields.short-title')</th>
+                        <th>@lang('global.deliverables.fields.date')</th>
+                        <th>@lang('global.deliverables.fields.status')</th>
+                        <th>@lang('global.deliverables.fields.notes')</th>
+                        <th>@lang('global.deliverables.fields.project')</th>
+                        <th>@lang('global.deliverables.fields.confidentiality')</th>
+                        <th>@lang('global.deliverables.fields.submission-date')</th>
+                        <th>@lang('global.deliverables.fields.due-date-months')</th>
+                        <th>@lang('global.deliverables.fields.members')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($deliverables) > 0)
+            @foreach ($deliverables as $deliverable)
+                <tr data-entry-id="{{ $deliverable->id }}">
+                    <td field-key='label_identification'>{{ $deliverable->label_identification }}</td>
+                                <td field-key='title'>{!! $deliverable->title !!}</td>
+                                <td field-key='short_title'>{!! $deliverable->short_title !!}</td>
+                                <td field-key='date'>{{ $deliverable->date }}</td>
+                                <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
+                                <td field-key='notes'>{!! $deliverable->notes !!}</td>
+                                <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
+                                <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
+                                <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
+                                <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
+                                <td field-key='members'>
+                                    @foreach ($deliverable->members as $singleMembers)
+                                        <span class="label label-info label-many">{{ $singleMembers->name }}</span>
+                                    @endforeach
+                                </td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.deliverables.restore', $deliverable->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.deliverables.perma_del', $deliverable->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('deliverable_view')
+                                    <a href="{{ route('admin.deliverables.show',[$deliverable->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('deliverable_edit')
+                                    <a href="{{ route('admin.deliverables.edit',[$deliverable->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('deliverable_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.deliverables.destroy', $deliverable->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="16">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

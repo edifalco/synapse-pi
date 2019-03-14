@@ -247,14 +247,6 @@
                         </a>
                     </li>@endcan
                     
-                    @can('deliverable_member_access')
-                    <li>
-                        <a href="{{ route('admin.deliverable_members.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.deliverable-members.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('deliverable_partner_access')
                     <li>
                         <a href="{{ route('admin.deliverable_partners.index') }}">
