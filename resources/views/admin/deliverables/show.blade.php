@@ -56,7 +56,7 @@
                             <th>@lang('global.deliverables.fields.members')</th>
                             <td field-key='members'>
                                 @foreach ($deliverable->members as $singleMembers)
-                                    <span class="label label-info label-many">{{ $singleMembers->name }}</span>
+                                    <span class="label label-info label-many">{{ $singleMembers->surname }}</span>
                                 @endforeach
                             </td>
                         </tr>
