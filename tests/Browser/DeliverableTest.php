@@ -24,6 +24,7 @@ class DeliverableTest extends DuskTestCase
                 ->visit(route('admin.deliverables.index'))
                 ->clickLink('Add new')
                 ->type("label_identification", $deliverable->label_identification)
+                ->select("workpackages_id", $deliverable->workpackages_id)
                 ->type("title", $deliverable->title)
                 ->type("short_title", $deliverable->short_title)
                 ->type("date", $deliverable->date)
@@ -35,10 +36,10 @@ class DeliverableTest extends DuskTestCase
                 ->type("due_date_months", $deliverable->due_date_months)
                 ->select('select[name="responsible[]"]', $relations[0]->id)
                 ->select('select[name="responsible[]"]', $relations[1]->id)
-                ->select("workpackages_id", $deliverable->workpackages_id)
                 ->press('Save')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable->label_identification)
+                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->assertSeeIn("tr:last-child td[field-key='title']", $deliverable->title)
                 ->assertSeeIn("tr:last-child td[field-key='short_title']", $deliverable->short_title)
                 ->assertSeeIn("tr:last-child td[field-key='date']", $deliverable->date)
@@ -50,7 +51,6 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable->due_date_months)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->logout();
         });
     }
@@ -71,6 +71,7 @@ class DeliverableTest extends DuskTestCase
                 ->visit(route('admin.deliverables.index'))
                 ->click('tr[data-entry-id="' . $deliverable->id . '"] .btn-info')
                 ->type("label_identification", $deliverable2->label_identification)
+                ->select("workpackages_id", $deliverable2->workpackages_id)
                 ->type("title", $deliverable2->title)
                 ->type("short_title", $deliverable2->short_title)
                 ->type("date", $deliverable2->date)
@@ -82,10 +83,10 @@ class DeliverableTest extends DuskTestCase
                 ->type("due_date_months", $deliverable2->due_date_months)
                 ->select('select[name="responsible[]"]', $relations[0]->id)
                 ->select('select[name="responsible[]"]', $relations[1]->id)
-                ->select("workpackages_id", $deliverable2->workpackages_id)
                 ->press('Update')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable2->label_identification)
+                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable2->workpackages->wp_id)
                 ->assertSeeIn("tr:last-child td[field-key='title']", $deliverable2->title)
                 ->assertSeeIn("tr:last-child td[field-key='short_title']", $deliverable2->short_title)
                 ->assertSeeIn("tr:last-child td[field-key='date']", $deliverable2->date)
@@ -97,7 +98,6 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable2->due_date_months)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='workpackages']", $deliverable2->workpackages->wp_id)
                 ->logout();
         });
     }
@@ -119,6 +119,7 @@ class DeliverableTest extends DuskTestCase
                 ->visit(route('admin.deliverables.index'))
                 ->click('tr[data-entry-id="' . $deliverable->id . '"] .btn-primary')
                 ->assertSeeIn("td[field-key='label_identification']", $deliverable->label_identification)
+                ->assertSeeIn("td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->assertSeeIn("td[field-key='title']", $deliverable->title)
                 ->assertSeeIn("td[field-key='short_title']", $deliverable->short_title)
                 ->assertSeeIn("td[field-key='date']", $deliverable->date)
@@ -130,7 +131,6 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='due_date_months']", $deliverable->due_date_months)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:first-child", $relations[0]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='responsible'] span:last-child", $relations[1]->surname)
-                ->assertSeeIn("td[field-key='workpackages']", $deliverable->workpackages->wp_id)
                 ->logout();
         });
     }
