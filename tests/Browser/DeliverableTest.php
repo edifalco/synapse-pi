@@ -47,8 +47,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
                 ->logout();
         });
     }
@@ -92,8 +92,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable2->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable2->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable2->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
                 ->logout();
         });
     }
@@ -124,8 +124,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("td[field-key='due_date_months']", $deliverable->due_date_months)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
-                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->surname)
                 ->logout();
         });
     }

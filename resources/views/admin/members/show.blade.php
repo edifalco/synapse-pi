@@ -494,7 +494,7 @@
                                 <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
                                 <td field-key='members'>
                                     @foreach ($deliverable->members as $singleMembers)
-                                        <span class="label label-info label-many">{{ $singleMembers->name }}</span>
+                                        <span class="label label-info label-many">{{ $singleMembers->surname }}</span>
                                     @endforeach
                                 </td>
                                 @if( request('show_deleted') == 1 )

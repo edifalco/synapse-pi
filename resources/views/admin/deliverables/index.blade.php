@@ -77,7 +77,7 @@
                 {data: 'confidentiality', name: 'confidentiality'},
                 {data: 'submission_date', name: 'submission_date'},
                 {data: 'due_date_months', name: 'due_date_months'},
-                {data: 'members.name', name: 'members.name'},
+                {data: 'members.surname', name: 'members.surname'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

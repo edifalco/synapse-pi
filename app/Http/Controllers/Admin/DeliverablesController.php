@@ -71,16 +71,16 @@ class DeliverablesController extends Controller
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
             });
-            $table->editColumn('members.name', function ($row) {
+            $table->editColumn('members.surname', function ($row) {
                 if(count($row->members) == 0) {
                     return '';
                 }
 
                 return '<span class="label label-info label-many">' . implode('</span><span class="label label-info label-many"> ',
-                        $row->members->pluck('name')->toArray()) . '</span>';
+                        $row->members->pluck('surname')->toArray()) . '</span>';
             });
 
-            $table->rawColumns(['actions','massDelete','members.name']);
+            $table->rawColumns(['actions','massDelete','members.surname']);
 
             return $table->make(true);
         }
@@ -101,7 +101,7 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('name', 'id');
+        $members = \App\Member::get()->pluck('surname', 'id');
 
 
         return view('admin.deliverables.create', compact('statuses', 'projects', 'members'));
@@ -141,7 +141,7 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('name', 'id');
+        $members = \App\Member::get()->pluck('surname', 'id');
 
 
         $deliverable = Deliverable::findOrFail($id);
@@ -185,7 +185,7 @@ class DeliverablesController extends Controller
         
         $statuses = \App\DeliverableStatus::get()->pluck('label', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $members = \App\Member::get()->pluck('name', 'id');
+        $members = \App\Member::get()->pluck('surname', 'id');
 $deliverable_documents = \App\DeliverableDocument::where('deliverable_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('deliverable_id', $id)->get();$deliverable_workpackages = \App\DeliverableWorkpackage::where('deliverable_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('deliverable_id', $id)->get();$documents = \App\Document::where('deliverable_id', $id)->get();
 
         $deliverable = Deliverable::findOrFail($id);
