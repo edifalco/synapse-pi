@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App
  * @property string $label_identification
- * @property string $workpackages
  * @property text $title
  * @property text $short_title
  * @property string $date
@@ -25,7 +24,7 @@ class Deliverable extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'workpackages_id', 'status_id', 'project_id'];
+    protected $fillable = ['label_identification', 'title', 'short_title', 'date', 'notes', 'confidentiality', 'submission_date', 'due_date_months', 'status_id', 'project_id'];
     protected $hidden = [];
     public static $searchable = [
         'label_identification',
@@ -40,15 +39,6 @@ class Deliverable extends Model
         parent::boot();
 
         Deliverable::observe(new \App\Observers\UserActionsObserver);
-    }
-
-    /**
-     * Set to null if empty
-     * @param $input
-     */
-    public function setWorkpackagesIdAttribute($input)
-    {
-        $this->attributes['workpackages_id'] = $input ? $input : null;
     }
 
     /**
@@ -145,11 +135,6 @@ class Deliverable extends Model
     public function setDueDateMonthsAttribute($input)
     {
         $this->attributes['due_date_months'] = $input ? $input : null;
-    }
-    
-    public function workpackages()
-    {
-        return $this->belongsTo(Workpackage::class, 'workpackages_id')->withTrashed();
     }
     
     public function status()

@@ -37,10 +37,6 @@
                             <td field-key='notes'>{!! $deliverable->notes !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.deliverables.fields.project')</th>
-                            <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.deliverables.fields.confidentiality')</th>
                             <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
                         </tr>

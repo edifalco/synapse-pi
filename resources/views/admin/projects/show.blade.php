@@ -2268,7 +2268,6 @@
                         <th>@lang('global.deliverables.fields.date')</th>
                         <th>@lang('global.deliverables.fields.status')</th>
                         <th>@lang('global.deliverables.fields.notes')</th>
-                        <th>@lang('global.deliverables.fields.project')</th>
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
@@ -2291,7 +2290,6 @@
                                 <td field-key='date'>{{ $deliverable->date }}</td>
                                 <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
                                 <td field-key='notes'>{!! $deliverable->notes !!}</td>
-                                <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
                                 <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
                                 <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
@@ -2340,7 +2338,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="17">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="16">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

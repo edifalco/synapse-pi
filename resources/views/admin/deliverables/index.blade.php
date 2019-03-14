@@ -34,7 +34,6 @@
                         @endcan
 
                         <th>@lang('global.deliverables.fields.label-identification')</th>
-                        <th>@lang('global.deliverables.fields.workpackages')</th>
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
                         <th>@lang('global.deliverables.fields.date')</th>
@@ -69,7 +68,6 @@
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
                 @endcan{data: 'label_identification', name: 'label_identification'},
-                {data: 'workpackages.wp_id', name: 'workpackages.wp_id'},
                 {data: 'title', name: 'title'},
                 {data: 'short_title', name: 'short_title'},
                 {data: 'date', name: 'date'},

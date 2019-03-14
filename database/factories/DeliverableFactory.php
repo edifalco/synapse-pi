@@ -3,7 +3,6 @@
 $factory->define(App\Deliverable::class, function (Faker\Generator $faker) {
     return [
         "label_identification" => $faker->name,
-        "workpackages_id" => factory('App\Workpackage')->create(),
         "title" => $faker->name,
         "short_title" => $faker->name,
         "date" => $faker->date("d-m-Y", $max = 'now'),

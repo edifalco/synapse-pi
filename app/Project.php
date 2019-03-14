@@ -77,4 +77,7 @@ class Project extends Model
         return $this->belongsToMany(Partner::class, 'partner_project')->withTrashed();
     }
     
+    public function deliverables() {
+        return $this->hasMany(Deliverable::class, 'project_id');
+    }
 }
