@@ -17,12 +17,12 @@ return [
 		'cd-scores' => [		'title' => 'Cd scores',		'fields' => [			'month' => 'Month',			'value' => 'Value',			'project' => 'Project',		],	],
 		'cd-scores2' => [		'title' => 'Cd scores2',		'fields' => [			'month' => 'Month',			'value' => 'Value',			'project' => 'Project',		],	],
 		'deliverable-documents' => [		'title' => 'Deliverable documents',		'fields' => [			'deliverable' => 'Deliverable',			'document' => 'Document',		],	],
-		'deliverable-members' => [		'title' => 'Deliverable members',		'fields' => [			'member' => 'Member',			'deliverable' => 'Deliverable',		],	],
+		'deliverable-members' => [		'title' => 'Deliverable members',		'fields' => [		],	],
 		'deliverable-partners' => [		'title' => 'Deliverable partners',		'fields' => [			'partner' => 'Partner',			'deliverable' => 'Deliverable',		],	],
 		'deliverable-reviewers' => [		'title' => 'Deliverable reviewers',		'fields' => [			'deliverable' => 'Deliverable',			'member' => 'Member',		],	],
 		'deliverable-status' => [		'title' => 'Deliverable status',		'fields' => [			'label' => 'Label',		],	],
 		'deliverable-workpackages' => [		'title' => 'Deliverable workpackages',		'fields' => [			'deliverable' => 'Deliverable',			'workpackage' => 'Workpackage',		],	],
-		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'status' => 'Status',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',		],	],
+		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'status' => 'Status',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',			'members' => 'Members',		],	],
 		'document-favorites' => [		'title' => 'Document favorites',		'fields' => [			'document' => 'Document',			'project' => 'Project',		],	],
 		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'folder' => 'Folder',			'document' => 'Document',			'project' => 'Project',			'deliverable' => 'Deliverable',		],	],
 		'efforts' => [		'title' => 'Efforts',		'fields' => [			'project' => 'Project',			'workpackage' => 'Workpackage',			'partner' => 'Partner',			'value' => 'Value',			'period' => 'Period',		],	],
@@ -31,14 +31,14 @@ return [
 		'keywords' => [		'title' => 'Keywords',		'fields' => [			'word' => 'Word',		],	],
 		'member-partners' => [		'title' => 'Member partners',		'fields' => [			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'memberroles' => [		'title' => 'Memberroles',		'fields' => [			'member' => 'Member',			'role' => 'Role',			'project' => 'Project',			'partner' => 'Partner',		],	],
-		'members' => [		'title' => 'People',		'fields' => [			'name' => 'Name',			'surname' => 'Surname',			'partner' => 'Partner',			'email' => 'Email',			'phone' => 'Phone',			'notes' => 'Notes',		],	],
+		'members' => [		'title' => 'Members',		'fields' => [			'name' => 'Name',			'surname' => 'Surname',			'partner' => 'Partner',			'email' => 'Email',			'phone' => 'Phone',			'notes' => 'Notes',		],	],
 		'metricicons' => [		'title' => 'Metricicons',		'fields' => [			'metric-id' => 'Metric',			'icon-id' => 'Icon',			'project' => 'Project',		],	],
 		'metriclabels' => [		'title' => 'Metriclabels',		'fields' => [			'label' => 'Label',			'project' => 'Project',			'metric-id' => 'Metric',		],	],
 		'partnernums' => [		'title' => 'Partnernums',		'fields' => [			'value' => 'Value',			'partner' => 'Partner',			'project' => 'Project',		],	],
 		'partnerroles' => [		'title' => 'Partnerroles',		'fields' => [			'partner' => 'Partner',			'role-id' => 'Role',			'project' => 'Project',		],	],
-		'partners' => [		'title' => 'Institutions',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
+		'partners' => [		'title' => 'Partners',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
 		'periods' => [		'title' => 'Periods',		'fields' => [		],	],
-		'posts' => [		'title' => 'Activities',		'fields' => [			'created' => 'Created',			'user' => 'User',			'description' => 'Description',			'project' => 'Project',		],	],
+		'posts' => [		'title' => 'Posts',		'fields' => [			'created' => 'Created',			'user' => 'User',			'description' => 'Description',			'project' => 'Project',		],	],
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'project-partners' => [		'title' => 'Project partners',		'fields' => [		],	],
 		'project-users' => [		'title' => 'Project users',		'fields' => [			'userid' => 'UserID',			'projectid' => 'ProjectID',		],	],

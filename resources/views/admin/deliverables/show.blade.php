@@ -52,6 +52,14 @@
                             <th>@lang('global.deliverables.fields.due-date-months')</th>
                             <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
                         </tr>
+                        <tr>
+                            <th>@lang('global.deliverables.fields.members')</th>
+                            <td field-key='members'>
+                                @foreach ($deliverable->members as $singleMembers)
+                                    <span class="label label-info label-many">{{ $singleMembers->name }}</span>
+                                @endforeach
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div><!-- Nav tabs -->
@@ -60,7 +68,6 @@
 <li role="presentation" class="active"><a href="#deliverable_documents" aria-controls="deliverable_documents" role="tab" data-toggle="tab">Deliverable documents</a></li>
 <li role="presentation" class=""><a href="#deliverable_reviewers" aria-controls="deliverable_reviewers" role="tab" data-toggle="tab">Deliverable reviewers</a></li>
 <li role="presentation" class=""><a href="#deliverable_workpackages" aria-controls="deliverable_workpackages" role="tab" data-toggle="tab">Deliverable workpackages</a></li>
-<li role="presentation" class=""><a href="#deliverable_members" aria-controls="deliverable_members" role="tab" data-toggle="tab">Deliverable members</a></li>
 <li role="presentation" class=""><a href="#deliverable_partners" aria-controls="deliverable_partners" role="tab" data-toggle="tab">Deliverable partners</a></li>
 <li role="presentation" class=""><a href="#documents" aria-controls="documents" role="tab" data-toggle="tab">Documents</a></li>
 </ul>
@@ -251,72 +258,6 @@
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
                                         'route' => ['admin.deliverable_workpackages.destroy', $deliverable_workpackage->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="7">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
-<div role="tabpanel" class="tab-pane " id="deliverable_members">
-<table class="table table-bordered table-striped {{ count($deliverable_members) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.deliverable-members.fields.member')</th>
-                        <th>@lang('global.deliverable-members.fields.deliverable')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($deliverable_members) > 0)
-            @foreach ($deliverable_members as $deliverable_member)
-                <tr data-entry-id="{{ $deliverable_member->id }}">
-                    <td field-key='member'>{{ $deliverable_member->member->name ?? '' }}</td>
-                                <td field-key='deliverable'>{{ $deliverable_member->deliverable->label_identification ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.restore', $deliverable_member->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.perma_del', $deliverable_member->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('deliverable_member_view')
-                                    <a href="{{ route('admin.deliverable_members.show',[$deliverable_member->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('deliverable_member_edit')
-                                    <a href="{{ route('admin.deliverable_members.edit',[$deliverable_member->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('deliverable_member_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.deliverable_members.destroy', $deliverable_member->id])) !!}
                                     {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                     @endcan

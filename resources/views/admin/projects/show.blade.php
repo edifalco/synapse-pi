@@ -72,7 +72,7 @@
 <li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
 <li role="presentation" class=""><a href="#schedules" aria-controls="schedules" role="tab" data-toggle="tab">Schedules</a></li>
-<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Activities</a></li>
+<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
 <li role="presentation" class=""><a href="#documents" aria-controls="documents" role="tab" data-toggle="tab">Documents</a></li>
 <li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>
 <li role="presentation" class=""><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
@@ -2272,6 +2272,7 @@
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
+                        <th>@lang('global.deliverables.fields.members')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -2294,6 +2295,11 @@
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
                                 <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
                                 <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>
+                                <td field-key='members'>
+                                    @foreach ($deliverable->members as $singleMembers)
+                                        <span class="label label-info label-many">{{ $singleMembers->name }}</span>
+                                    @endforeach
+                                </td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -2334,7 +2340,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="15">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="16">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

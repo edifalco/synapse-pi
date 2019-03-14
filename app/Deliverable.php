@@ -147,4 +147,9 @@ class Deliverable extends Model
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
     }
     
+    public function members()
+    {
+        return $this->belongsToMany(Member::class, 'deliverable_member')->withTrashed();
+    }
+    
 }

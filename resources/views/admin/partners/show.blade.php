@@ -43,7 +43,7 @@
 <li role="presentation" class=""><a href="#acronym_projects" aria-controls="acronym_projects" role="tab" data-toggle="tab">Acronym projects</a></li>
 <li role="presentation" class=""><a href="#partnernums" aria-controls="partnernums" role="tab" data-toggle="tab">Partnernums</a></li>
 <li role="presentation" class=""><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
-<li role="presentation" class=""><a href="#members" aria-controls="members" role="tab" data-toggle="tab">People</a></li>
+<li role="presentation" class=""><a href="#members" aria-controls="members" role="tab" data-toggle="tab">Members</a></li>
 <li role="presentation" class=""><a href="#efforts" aria-controls="efforts" role="tab" data-toggle="tab">Efforts</a></li>
 <li role="presentation" class=""><a href="#memberroles" aria-controls="memberroles" role="tab" data-toggle="tab">Memberroles</a></li>
 <li role="presentation" class=""><a href="#projects" aria-controls="projects" role="tab" data-toggle="tab">Projects</a></li>

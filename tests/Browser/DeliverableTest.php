@@ -14,9 +14,12 @@ class DeliverableTest extends DuskTestCase
         $admin = \App\User::find(1);
         $deliverable = factory('App\Deliverable')->make();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
-        $this->browse(function (Browser $browser) use ($admin, $deliverable) {
+        $this->browse(function (Browser $browser) use ($admin, $deliverable, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.deliverables.index'))
                 ->clickLink('Add new')
@@ -30,6 +33,8 @@ class DeliverableTest extends DuskTestCase
                 ->type("confidentiality", $deliverable->confidentiality)
                 ->type("submission_date", $deliverable->submission_date)
                 ->type("due_date_months", $deliverable->due_date_months)
+                ->select('select[name="members[]"]', $relations[0]->id)
+                ->select('select[name="members[]"]', $relations[1]->id)
                 ->press('Save')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable->label_identification)
@@ -42,6 +47,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable->due_date_months)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
                 ->logout();
         });
     }
@@ -52,9 +59,12 @@ class DeliverableTest extends DuskTestCase
         $deliverable = factory('App\Deliverable')->create();
         $deliverable2 = factory('App\Deliverable')->make();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
-        $this->browse(function (Browser $browser) use ($admin, $deliverable, $deliverable2) {
+        $this->browse(function (Browser $browser) use ($admin, $deliverable, $deliverable2, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.deliverables.index'))
                 ->click('tr[data-entry-id="' . $deliverable->id . '"] .btn-info')
@@ -68,6 +78,8 @@ class DeliverableTest extends DuskTestCase
                 ->type("confidentiality", $deliverable2->confidentiality)
                 ->type("submission_date", $deliverable2->submission_date)
                 ->type("due_date_months", $deliverable2->due_date_months)
+                ->select('select[name="members[]"]', $relations[0]->id)
+                ->select('select[name="members[]"]', $relations[1]->id)
                 ->press('Update')
                 ->assertRouteIs('admin.deliverables.index')
                 ->assertSeeIn("tr:last-child td[field-key='label_identification']", $deliverable2->label_identification)
@@ -80,6 +92,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='confidentiality']", $deliverable2->confidentiality)
                 ->assertSeeIn("tr:last-child td[field-key='submission_date']", $deliverable2->submission_date)
                 ->assertSeeIn("tr:last-child td[field-key='due_date_months']", $deliverable2->due_date_months)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
                 ->logout();
         });
     }
@@ -89,10 +103,14 @@ class DeliverableTest extends DuskTestCase
         $admin = \App\User::find(1);
         $deliverable = factory('App\Deliverable')->create();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
+        $deliverable->members()->attach([$relations[0]->id, $relations[1]->id]);
 
-        $this->browse(function (Browser $browser) use ($admin, $deliverable) {
+        $this->browse(function (Browser $browser) use ($admin, $deliverable, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.deliverables.index'))
                 ->click('tr[data-entry-id="' . $deliverable->id . '"] .btn-primary')
@@ -106,6 +124,8 @@ class DeliverableTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='confidentiality']", $deliverable->confidentiality)
                 ->assertSeeIn("td[field-key='submission_date']", $deliverable->submission_date)
                 ->assertSeeIn("td[field-key='due_date_months']", $deliverable->due_date_months)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:first-child", $relations[0]->name)
+                ->assertSeeIn("tr:last-child td[field-key='members'] span:last-child", $relations[1]->name)
                 ->logout();
         });
     }

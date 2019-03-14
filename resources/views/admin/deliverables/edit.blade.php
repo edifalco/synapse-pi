@@ -131,6 +131,24 @@
                     @endif
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('members', trans('global.deliverables.fields.members').'', ['class' => 'control-label']) !!}
+                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-members">
+                        {{ trans('global.app_select_all') }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-members">
+                        {{ trans('global.app_deselect_all') }}
+                    </button>
+                    {!! Form::select('members[]', $members, old('members') ? old('members') : $deliverable->members->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-members' ]) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('members'))
+                        <p class="help-block">
+                            {{ $errors->first('members') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
             
         </div>
     </div>
@@ -158,4 +176,14 @@
         });
     </script>
             
+    <script>
+        $("#selectbtn-members").click(function(){
+            $("#selectall-members > option").prop("selected","selected");
+            $("#selectall-members").trigger("change");
+        });
+        $("#deselectbtn-members").click(function(){
+            $("#selectall-members > option").prop("selected","");
+            $("#selectall-members").trigger("change");
+        });
+    </script>
 @stop
