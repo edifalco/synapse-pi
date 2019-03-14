@@ -33,6 +33,7 @@
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
+                        <th>@lang('global.deliverables.fields.workpackage')</th>
                         <th>@lang('global.deliverables.fields.label-identification')</th>
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
@@ -67,7 +68,8 @@
                 @if ( request('show_deleted') != 1 )
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
-                @endcan{data: 'label_identification', name: 'label_identification'},
+                @endcan{data: 'workpackage.wp_id', name: 'workpackage.wp_id'},
+                {data: 'label_identification', name: 'label_identification'},
                 {data: 'title', name: 'title'},
                 {data: 'short_title', name: 'short_title'},
                 {data: 'date', name: 'date'},

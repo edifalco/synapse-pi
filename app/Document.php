@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property string $title
  * @property string $folder
- * @property text $document
  * @property string $project
  * @property string $deliverable
+ * @property string $document
 */
 class Document extends Model
 {
@@ -23,7 +23,6 @@ class Document extends Model
     public static $searchable = [
         'title',
         'folder',
-        'document',
     ];
     
     public static function boot()

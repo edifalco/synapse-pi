@@ -13,6 +13,18 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('workpackage_id', trans('global.deliverables.fields.workpackage').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('workpackage_id', $workpackages, old('workpackage_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('workpackage_id'))
+                        <p class="help-block">
+                            {{ $errors->first('workpackage_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('label_identification', trans('global.deliverables.fields.label-identification').'', ['class' => 'control-label']) !!}
                     {!! Form::text('label_identification', old('label_identification'), ['class' => 'form-control', 'placeholder' => '']) !!}
                     <p class="help-block"></p>

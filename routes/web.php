@@ -51,12 +51,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('deliverables_mass_destroy', ['uses' => 'Admin\DeliverablesController@massDestroy', 'as' => 'deliverables.mass_destroy']);
     Route::post('deliverables_restore/{id}', ['uses' => 'Admin\DeliverablesController@restore', 'as' => 'deliverables.restore']);
     Route::delete('deliverables_perma_del/{id}', ['uses' => 'Admin\DeliverablesController@perma_del', 'as' => 'deliverables.perma_del']);
-    Route::resource('budgets', 'Admin\BudgetsController');
-    Route::post('budgets_mass_destroy', ['uses' => 'Admin\BudgetsController@massDestroy', 'as' => 'budgets.mass_destroy']);
     Route::resource('documents', 'Admin\DocumentsController');
     Route::post('documents_mass_destroy', ['uses' => 'Admin\DocumentsController@massDestroy', 'as' => 'documents.mass_destroy']);
     Route::post('documents_restore/{id}', ['uses' => 'Admin\DocumentsController@restore', 'as' => 'documents.restore']);
     Route::delete('documents_perma_del/{id}', ['uses' => 'Admin\DocumentsController@perma_del', 'as' => 'documents.perma_del']);
+    Route::resource('budgets', 'Admin\BudgetsController');
+    Route::post('budgets_mass_destroy', ['uses' => 'Admin\BudgetsController@massDestroy', 'as' => 'budgets.mass_destroy']);
     Route::resource('financials', 'Admin\FinancialsController');
     Route::post('financials_mass_destroy', ['uses' => 'Admin\FinancialsController@massDestroy', 'as' => 'financials.mass_destroy']);
     Route::post('financials_restore/{id}', ['uses' => 'Admin\FinancialsController@restore', 'as' => 'financials.restore']);

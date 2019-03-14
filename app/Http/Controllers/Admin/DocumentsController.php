@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDocumentsRequest;
 use App\Http\Requests\Admin\UpdateDocumentsRequest;
+use App\Http\Controllers\Traits\FileUploadTrait;
 use Yajra\DataTables\DataTables;
 
 class DocumentsController extends Controller
 {
+    use FileUploadTrait;
+
     /**
      * Display a listing of Document.
      *
@@ -42,9 +45,9 @@ class DocumentsController extends Controller
                 'documents.id',
                 'documents.title',
                 'documents.folder',
-                'documents.document',
                 'documents.project_id',
                 'documents.deliverable_id',
+                'documents.document',
             ]);
             $table = Datatables::of($query);
 
@@ -65,8 +68,11 @@ class DocumentsController extends Controller
             $table->editColumn('deliverable.label_identification', function ($row) {
                 return $row->deliverable ? $row->deliverable->label_identification : '';
             });
+            $table->editColumn('document', function ($row) {
+                if($row->document) { return '<a href="'.asset(env('UPLOAD_PATH').'/'.$row->document) .'" target="_blank">Download file</a>'; };
+            });
 
-            $table->rawColumns(['actions','massDelete']);
+            $table->rawColumns(['actions','massDelete','document']);
 
             return $table->make(true);
         }
@@ -102,6 +108,7 @@ class DocumentsController extends Controller
         if (! Gate::allows('document_create')) {
             return abort(401);
         }
+        $request = $this->saveFiles($request);
         $document = Document::create($request->all());
 
 
@@ -142,6 +149,7 @@ class DocumentsController extends Controller
         if (! Gate::allows('document_edit')) {
             return abort(401);
         }
+        $request = $this->saveFiles($request);
         $document = Document::findOrFail($id);
         $document->update($request->all());
 
