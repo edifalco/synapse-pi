@@ -3,6 +3,7 @@
 $factory->define(App\Deliverable::class, function (Faker\Generator $faker) {
     return [
         "label_identification" => $faker->name,
+        "workpackages_id" => factory('App\Workpackage')->create(),
         "title" => $faker->name,
         "short_title" => $faker->name,
         "date" => $faker->date("d-m-Y", $max = 'now'),
@@ -12,6 +13,5 @@ $factory->define(App\Deliverable::class, function (Faker\Generator $faker) {
         "confidentiality" => $faker->randomNumber(2),
         "submission_date" => $faker->date("d-m-Y", $max = 'now'),
         "due_date_months" => $faker->randomNumber(2),
-        "workpackages_id" => factory('App\Workpackage')->create(),
     ];
 });

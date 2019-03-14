@@ -34,6 +34,7 @@
                         @endcan
 
                         <th>@lang('global.deliverables.fields.label-identification')</th>
+                        <th>@lang('global.deliverables.fields.workpackages')</th>
                         <th>@lang('global.deliverables.fields.title')</th>
                         <th>@lang('global.deliverables.fields.short-title')</th>
                         <th>@lang('global.deliverables.fields.date')</th>
@@ -44,7 +45,6 @@
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
                         <th>@lang('global.deliverables.fields.responsible')</th>
-                        <th>@lang('global.deliverables.fields.workpackages')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -69,6 +69,7 @@
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
                 @endcan{data: 'label_identification', name: 'label_identification'},
+                {data: 'workpackages.wp_id', name: 'workpackages.wp_id'},
                 {data: 'title', name: 'title'},
                 {data: 'short_title', name: 'short_title'},
                 {data: 'date', name: 'date'},
@@ -79,7 +80,6 @@
                 {data: 'submission_date', name: 'submission_date'},
                 {data: 'due_date_months', name: 'due_date_months'},
                 {data: 'responsible.surname', name: 'responsible.surname'},
-                {data: 'workpackages.wp_id', name: 'workpackages.wp_id'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

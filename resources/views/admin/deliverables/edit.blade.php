@@ -25,6 +25,18 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('workpackages_id', trans('global.deliverables.fields.workpackages').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('workpackages_id', $workpackages, old('workpackages_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('workpackages_id'))
+                        <p class="help-block">
+                            {{ $errors->first('workpackages_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('title', trans('global.deliverables.fields.title').'', ['class' => 'control-label']) !!}
                     {!! Form::textarea('title', old('title'), ['class' => 'form-control ', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
@@ -145,18 +157,6 @@
                     @if($errors->has('responsible'))
                         <p class="help-block">
                             {{ $errors->first('responsible') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('workpackages_id', trans('global.deliverables.fields.workpackages').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('workpackages_id', $workpackages, old('workpackages_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('workpackages_id'))
-                        <p class="help-block">
-                            {{ $errors->first('workpackages_id') }}
                         </p>
                     @endif
                 </div>
