@@ -37,7 +37,6 @@
                         <th>@lang('global.partners.fields.acronym')</th>
                         <th>@lang('global.partners.fields.image')</th>
                         <th>@lang('global.partners.fields.country')</th>
-                        <th>@lang('global.countries.fields.shortcode')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -65,7 +64,6 @@
                 {data: 'acronym', name: 'acronym'},
                 {data: 'image', name: 'image'},
                 {data: 'country.title', name: 'country.title'},
-                {data: 'country.shortcode', name: 'country.shortcode'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

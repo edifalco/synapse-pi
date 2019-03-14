@@ -27,7 +27,6 @@
                         <tr>
                             <th>@lang('global.partners.fields.country')</th>
                             <td field-key='country'>{{ $partner->country->title ?? '' }}</td>
-<td field-key='shortcode'>{{ isset($partner->country) ? $partner->country->shortcode : '' }}</td>
                         </tr>
                     </table>
                 </div>
