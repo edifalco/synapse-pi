@@ -214,6 +214,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('faq_categories_mass_destroy', ['uses' => 'Admin\FaqCategoriesController@massDestroy', 'as' => 'faq_categories.mass_destroy']);
     Route::resource('faq_questions', 'Admin\FaqQuestionsController');
     Route::post('faq_questions_mass_destroy', ['uses' => 'Admin\FaqQuestionsController@massDestroy', 'as' => 'faq_questions.mass_destroy']);
+    Route::resource('document_folders', 'Admin\DocumentFoldersController');
+    Route::post('document_folders_mass_destroy', ['uses' => 'Admin\DocumentFoldersController@massDestroy', 'as' => 'document_folders.mass_destroy']);
+    Route::post('document_folders_restore/{id}', ['uses' => 'Admin\DocumentFoldersController@restore', 'as' => 'document_folders.restore']);
+    Route::delete('document_folders_perma_del/{id}', ['uses' => 'Admin\DocumentFoldersController@perma_del', 'as' => 'document_folders.perma_del']);
 
 
     Route::post('csv_parse', 'Admin\CsvImportController@parse')->name('csv_parse');

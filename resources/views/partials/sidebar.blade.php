@@ -500,6 +500,14 @@
                 </ul>
             </li>@endcan
             
+            @can('document_folder_access')
+            <li>
+                <a href="{{ route('admin.document_folders.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.document-folders.title')</span>
+                </a>
+            </li>@endcan
+            
 
             
 

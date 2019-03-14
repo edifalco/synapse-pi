@@ -9,20 +9,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App
  * @property string $title
- * @property string $folder
  * @property string $project
  * @property string $deliverable
  * @property string $document
+ * @property string $folder
 */
 class Document extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['title', 'folder', 'document', 'project_id', 'deliverable_id'];
+    protected $fillable = ['title', 'document', 'project_id', 'deliverable_id', 'folder_id'];
     protected $hidden = [];
     public static $searchable = [
         'title',
-        'folder',
     ];
     
     public static function boot()
@@ -49,6 +48,15 @@ class Document extends Model
     {
         $this->attributes['deliverable_id'] = $input ? $input : null;
     }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setFolderIdAttribute($input)
+    {
+        $this->attributes['folder_id'] = $input ? $input : null;
+    }
     
     public function project()
     {
@@ -58,6 +66,11 @@ class Document extends Model
     public function deliverable()
     {
         return $this->belongsTo(Deliverable::class, 'deliverable_id')->withTrashed();
+    }
+    
+    public function folder()
+    {
+        return $this->belongsTo(DocumentFolder::class, 'folder_id')->withTrashed();
     }
     
 }

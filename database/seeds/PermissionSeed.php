@@ -291,6 +291,11 @@ class PermissionSeed extends Seeder
             ['id' => 291, 'title' => 'project_period_edit',],
             ['id' => 292, 'title' => 'project_period_view',],
             ['id' => 293, 'title' => 'project_period_delete',],
+            ['id' => 295, 'title' => 'document_folder_access',],
+            ['id' => 296, 'title' => 'document_folder_create',],
+            ['id' => 297, 'title' => 'document_folder_edit',],
+            ['id' => 298, 'title' => 'document_folder_view',],
+            ['id' => 299, 'title' => 'document_folder_delete',],
 
         ];
 

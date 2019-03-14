@@ -32,6 +32,7 @@ class DocumentsController extends Controller
             $query = Document::query();
             $query->with("project");
             $query->with("deliverable");
+            $query->with("folder");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -44,10 +45,10 @@ class DocumentsController extends Controller
             $query->select([
                 'documents.id',
                 'documents.title',
-                'documents.folder',
                 'documents.project_id',
                 'documents.deliverable_id',
                 'documents.document',
+                'documents.folder_id',
             ]);
             $table = Datatables::of($query);
 
@@ -71,6 +72,9 @@ class DocumentsController extends Controller
             $table->editColumn('document', function ($row) {
                 if($row->document) { return '<a href="'.asset(env('UPLOAD_PATH').'/'.$row->document) .'" target="_blank">Download file</a>'; };
             });
+            $table->editColumn('folder.name', function ($row) {
+                return $row->folder ? $row->folder->name : '';
+            });
 
             $table->rawColumns(['actions','massDelete','document']);
 
@@ -93,8 +97,9 @@ class DocumentsController extends Controller
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $deliverables = \App\Deliverable::get()->pluck('label_identification', 'id')->prepend(trans('global.app_please_select'), '');
+        $folders = \App\DocumentFolder::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.documents.create', compact('projects', 'deliverables'));
+        return view('admin.documents.create', compact('projects', 'deliverables', 'folders'));
     }
 
     /**
@@ -131,10 +136,11 @@ class DocumentsController extends Controller
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $deliverables = \App\Deliverable::get()->pluck('label_identification', 'id')->prepend(trans('global.app_please_select'), '');
+        $folders = \App\DocumentFolder::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
         $document = Document::findOrFail($id);
 
-        return view('admin.documents.edit', compact('document', 'projects', 'deliverables'));
+        return view('admin.documents.edit', compact('document', 'projects', 'deliverables', 'folders'));
     }
 
     /**
@@ -172,7 +178,8 @@ class DocumentsController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $deliverables = \App\Deliverable::get()->pluck('label_identification', 'id')->prepend(trans('global.app_please_select'), '');$document_favorites = \App\DocumentFavorite::where('document_id', $id)->get();$deliverable_documents = \App\DeliverableDocument::where('document_id', $id)->get();
+        $deliverables = \App\Deliverable::get()->pluck('label_identification', 'id')->prepend(trans('global.app_please_select'), '');
+        $folders = \App\DocumentFolder::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$document_favorites = \App\DocumentFavorite::where('document_id', $id)->get();$deliverable_documents = \App\DeliverableDocument::where('document_id', $id)->get();
 
         $document = Document::findOrFail($id);
 
