@@ -27,6 +27,7 @@ class PartnersController extends Controller
         
         if (request()->ajax()) {
             $query = Partner::query();
+            $query->with("country");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -41,7 +42,7 @@ class PartnersController extends Controller
                 'partners.name',
                 'partners.acronym',
                 'partners.image',
-                'partners.country',
+                'partners.country_id',
             ]);
             $table = Datatables::of($query);
 
@@ -55,6 +56,9 @@ class PartnersController extends Controller
                 $routeKey = 'admin.partners';
 
                 return view($template, compact('row', 'gateKey', 'routeKey'));
+            });
+            $table->editColumn('country.title', function ($row) {
+                return $row->country ? $row->country->title : '';
             });
 
             $table->rawColumns(['actions','massDelete']);
@@ -75,7 +79,10 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-        return view('admin.partners.create');
+        
+        $countries = \App\Country::get()->pluck('title', 'id')->prepend(trans('global.app_please_select'), '');
+
+        return view('admin.partners.create', compact('countries'));
     }
 
     /**
@@ -108,9 +115,12 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_edit')) {
             return abort(401);
         }
+        
+        $countries = \App\Country::get()->pluck('title', 'id')->prepend(trans('global.app_please_select'), '');
+
         $partner = Partner::findOrFail($id);
 
-        return view('admin.partners.edit', compact('partner'));
+        return view('admin.partners.edit', compact('partner', 'countries'));
     }
 
     /**
@@ -145,7 +155,8 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_view')) {
             return abort(401);
         }
-        $budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$memberroles = \App\Memberrole::where('partner_id', $id)->get();$projects = \App\Project::whereHas('partners',
+        
+        $countries = \App\Country::get()->pluck('title', 'id')->prepend(trans('global.app_please_select'), '');$budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$memberroles = \App\Memberrole::where('partner_id', $id)->get();$projects = \App\Project::whereHas('partners',
                     function ($query) use ($id) {
                         $query->where('id', $id);
                     })->get();

@@ -69,8 +69,8 @@
 <li role="presentation" class=""><a href="#partnerroles" aria-controls="partnerroles" role="tab" data-toggle="tab">Partnerroles</a></li>
 <li role="presentation" class=""><a href="#cd_scores" aria-controls="cd_scores" role="tab" data-toggle="tab">Cd scores</a></li>
 <li role="presentation" class=""><a href="#cd_scores2" aria-controls="cd_scores2" role="tab" data-toggle="tab">Cd scores2</a></li>
-<li role="presentation" class=""><a href="#workpackages" aria-controls="workpackages" role="tab" data-toggle="tab">Workpackages</a></li>
-<li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
+<li role="presentation" class=""><a href="#workpackages" aria-controls="workpackages" role="tab" data-toggle="tab">Work Packages</a></li>
+<li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Reporting Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
 <li role="presentation" class=""><a href="#schedules" aria-controls="schedules" role="tab" data-toggle="tab">Schedules</a></li>
 <li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
@@ -1675,7 +1675,6 @@
         <tr>
             <th>@lang('global.workpackages.fields.wp-id')</th>
                         <th>@lang('global.workpackages.fields.name')</th>
-                        <th>@lang('global.workpackages.fields.project')</th>
                         <th>@lang('global.workpackages.fields.order')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
@@ -1691,7 +1690,6 @@
                 <tr data-entry-id="{{ $workpackage->id }}">
                     <td field-key='wp_id'>{{ $workpackage->wp_id }}</td>
                                 <td field-key='name'>{{ $workpackage->name }}</td>
-                                <td field-key='project'>{{ $workpackage->project->name ?? '' }}</td>
                                 <td field-key='order'>{{ $workpackage->order }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -1745,7 +1743,6 @@
         <tr>
             <th>@lang('global.project-periods.fields.date')</th>
                         <th>@lang('global.project-periods.fields.period-num')</th>
-                        <th>@lang('global.project-periods.fields.project')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -1760,7 +1757,6 @@
                 <tr data-entry-id="{{ $project_period->id }}">
                     <td field-key='date'>{{ $project_period->date }}</td>
                                 <td field-key='period_num'>{{ $project_period->period_num }}</td>
-                                <td field-key='project'>{{ $project_period->project->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -2266,6 +2262,7 @@
                         <th>@lang('global.deliverables.fields.date')</th>
                         <th>@lang('global.deliverables.fields.status')</th>
                         <th>@lang('global.deliverables.fields.notes')</th>
+                        <th>@lang('global.deliverables.fields.project')</th>
                         <th>@lang('global.deliverables.fields.confidentiality')</th>
                         <th>@lang('global.deliverables.fields.submission-date')</th>
                         <th>@lang('global.deliverables.fields.due-date-months')</th>
@@ -2288,6 +2285,7 @@
                                 <td field-key='date'>{{ $deliverable->date }}</td>
                                 <td field-key='status'>{{ $deliverable->status->label ?? '' }}</td>
                                 <td field-key='notes'>{!! $deliverable->notes !!}</td>
+                                <td field-key='project'>{{ $deliverable->project->name ?? '' }}</td>
                                 <td field-key='confidentiality'>{{ $deliverable->confidentiality }}</td>
                                 <td field-key='submission_date'>{{ $deliverable->submission_date }}</td>
                                 <td field-key='due_date_months'>{{ $deliverable->due_date_months }}</td>

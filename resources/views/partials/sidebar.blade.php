@@ -152,6 +152,22 @@
                 </a>
             </li>@endcan
             
+            @can('document_folder_access')
+            <li>
+                <a href="{{ route('admin.document_folders.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.document-folders.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('country_access')
+            <li>
+                <a href="{{ route('admin.countries.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.countries.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('project_management_access')
             <li class="treeview">
                 <a href="#">
@@ -498,14 +514,6 @@
                     </li>@endcan
                     
                 </ul>
-            </li>@endcan
-            
-            @can('document_folder_access')
-            <li>
-                <a href="{{ route('admin.document_folders.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.document-folders.title')</span>
-                </a>
             </li>@endcan
             
 

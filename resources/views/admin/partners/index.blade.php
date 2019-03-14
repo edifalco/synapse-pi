@@ -63,7 +63,7 @@
                 @endcan{data: 'name', name: 'name'},
                 {data: 'acronym', name: 'acronym'},
                 {data: 'image', name: 'image'},
-                {data: 'country', name: 'country'},
+                {data: 'country.title', name: 'country.title'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

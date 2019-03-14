@@ -94,27 +94,59 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            Deliverables
+            Work Packages
         </div>
         <div class="panel-body">
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>@lang('global.deliverables.fields.label-identification')</th>
-                        <th>@lang('global.deliverables.fields.confidentiality')</th>
-                        <th>@lang('global.deliverables.fields.due-date-months')</th>
+                    <th>@lang('global.workpackages.fields.wp-id')</th>
+                        <th>@lang('global.workpackages.fields.name')</th>
+                        <th>@lang('global.workpackages.fields.order')</th>
                         
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="deliverables">
-                    @forelse(old('deliverables', []) as $index => $data)
-                        @include('admin.projects.deliverables_row', [
+                <tbody id="work-packages">
+                    @forelse(old('workpackages', []) as $index => $data)
+                        @include('admin.projects.workpackages_row', [
                             'index' => $index
                         ])
                     @empty
-                        @foreach($project->deliverables as $item)
-                            @include('admin.projects.deliverables_row', [
+                        @foreach($project->workpackages as $item)
+                            @include('admin.projects.workpackages_row', [
+                                'index' => 'id-' . $item->id,
+                                'field' => $item
+                            ])
+                        @endforeach
+                    @endforelse
+                </tbody>
+            </table>
+            <a href="#" class="btn btn-success pull-right add-new">@lang('global.app_add_new')</a>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Reporting Periods
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>@lang('global.project-periods.fields.date')</th>
+                        <th>@lang('global.project-periods.fields.period-num')</th>
+                        
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="reporting-periods">
+                    @forelse(old('project_periods', []) as $index => $data)
+                        @include('admin.projects.project_periods_row', [
+                            'index' => $index
+                        ])
+                    @empty
+                        @foreach($project->project_periods as $item)
+                            @include('admin.projects.project_periods_row', [
                                 'index' => 'id-' . $item->id,
                                 'field' => $item
                             ])
@@ -133,8 +165,15 @@
 @section('javascript')
     @parent
 
-    <script type="text/html" id="deliverables-template">
-        @include('admin.projects.deliverables_row',
+    <script type="text/html" id="work-packages-template">
+        @include('admin.projects.workpackages_row',
+                [
+                    'index' => '_INDEX_',
+                ])
+               </script > 
+
+    <script type="text/html" id="reporting-periods-template">
+        @include('admin.projects.project_periods_row',
                 [
                     'index' => '_INDEX_',
                 ])

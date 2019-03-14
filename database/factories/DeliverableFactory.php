@@ -2,6 +2,7 @@
 
 $factory->define(App\Deliverable::class, function (Faker\Generator $faker) {
     return [
+        "workpackage_id" => factory('App\Workpackage')->create(),
         "label_identification" => $faker->name,
         "title" => $faker->name,
         "short_title" => $faker->name,

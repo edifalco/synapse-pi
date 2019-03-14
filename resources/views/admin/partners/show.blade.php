@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <th>@lang('global.partners.fields.country')</th>
-                            <td field-key='country'>{{ $partner->country }}</td>
+                            <td field-key='country'>{{ $partner->country->title ?? '' }}</td>
                         </tr>
                     </table>
                 </div>

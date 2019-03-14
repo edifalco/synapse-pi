@@ -106,8 +106,11 @@ class ProjectsController extends Controller
         $project = Project::create($request->all());
         $project->partners()->sync(array_filter((array)$request->input('partners')));
 
-        foreach ($request->input('deliverables', []) as $data) {
-            $project->deliverables()->create($data);
+        foreach ($request->input('workpackages', []) as $data) {
+            $project->workpackages()->create($data);
+        }
+        foreach ($request->input('project_periods', []) as $data) {
+            $project->project_periods()->create($data);
         }
 
 
@@ -151,19 +154,36 @@ class ProjectsController extends Controller
         $project->update($request->all());
         $project->partners()->sync(array_filter((array)$request->input('partners')));
 
-        $deliverables           = $project->deliverables;
-        $currentDeliverableData = [];
-        foreach ($request->input('deliverables', []) as $index => $data) {
+        $workpackages           = $project->workpackages;
+        $currentWorkpackageData = [];
+        foreach ($request->input('workpackages', []) as $index => $data) {
             if (is_integer($index)) {
-                $project->deliverables()->create($data);
+                $project->workpackages()->create($data);
             } else {
                 $id                          = explode('-', $index)[1];
-                $currentDeliverableData[$id] = $data;
+                $currentWorkpackageData[$id] = $data;
             }
         }
-        foreach ($deliverables as $item) {
-            if (isset($currentDeliverableData[$item->id])) {
-                $item->update($currentDeliverableData[$item->id]);
+        foreach ($workpackages as $item) {
+            if (isset($currentWorkpackageData[$item->id])) {
+                $item->update($currentWorkpackageData[$item->id]);
+            } else {
+                $item->delete();
+            }
+        }
+        $projectPeriods           = $project->project_periods;
+        $currentProjectPeriodData = [];
+        foreach ($request->input('project_periods', []) as $index => $data) {
+            if (is_integer($index)) {
+                $project->project_periods()->create($data);
+            } else {
+                $id                          = explode('-', $index)[1];
+                $currentProjectPeriodData[$id] = $data;
+            }
+        }
+        foreach ($projectPeriods as $item) {
+            if (isset($currentProjectPeriodData[$item->id])) {
+                $item->update($currentProjectPeriodData[$item->id]);
             } else {
                 $item->delete();
             }

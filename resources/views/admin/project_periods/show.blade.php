@@ -20,10 +20,6 @@
                             <th>@lang('global.project-periods.fields.period-num')</th>
                             <td field-key='period_num'>{{ $project_period->period_num }}</td>
                         </tr>
-                        <tr>
-                            <th>@lang('global.project-periods.fields.project')</th>
-                            <td field-key='project'>{{ $project_period->project->name ?? '' }}</td>
-                        </tr>
                     </table>
                 </div>
             </div>
