@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="page-title">@lang('global.documents.title')</h3>
     
-    {!! Form::model($document, ['method' => 'PUT', 'route' => ['admin.documents.update', $document->id]]) !!}
+    {!! Form::model($document, ['method' => 'PUT', 'route' => ['admin.documents.update', $document->id], 'files' => true,]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -37,18 +37,6 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('document', trans('global.documents.fields.document').'', ['class' => 'control-label']) !!}
-                    {!! Form::textarea('document', old('document'), ['class' => 'form-control ', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('document'))
-                        <p class="help-block">
-                            {{ $errors->first('document') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('project_id', trans('global.documents.fields.project').'', ['class' => 'control-label']) !!}
                     {!! Form::select('project_id', $projects, old('project_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
@@ -67,6 +55,23 @@
                     @if($errors->has('deliverable_id'))
                         <p class="help-block">
                             {{ $errors->first('deliverable_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('document', trans('global.documents.fields.document').'', ['class' => 'control-label']) !!}
+                    {!! Form::hidden('document', old('document')) !!}
+                    @if ($document->document)
+                        <a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>
+                    @endif
+                    {!! Form::file('document', ['class' => 'form-control']) !!}
+                    {!! Form::hidden('document_max_size', 2) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('document'))
+                        <p class="help-block">
+                            {{ $errors->first('document') }}
                         </p>
                     @endif
                 </div>

@@ -35,9 +35,9 @@
 
                         <th>@lang('global.documents.fields.title')</th>
                         <th>@lang('global.documents.fields.folder')</th>
-                        <th>@lang('global.documents.fields.document')</th>
                         <th>@lang('global.documents.fields.project')</th>
                         <th>@lang('global.documents.fields.deliverable')</th>
+                        <th>@lang('global.documents.fields.document')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -63,9 +63,9 @@
                 @endif
                 @endcan{data: 'title', name: 'title'},
                 {data: 'folder', name: 'folder'},
-                {data: 'document', name: 'document'},
                 {data: 'project.name', name: 'project.name'},
                 {data: 'deliverable.label_identification', name: 'deliverable.label_identification'},
+                {data: 'document', name: 'document'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

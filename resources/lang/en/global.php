@@ -24,7 +24,7 @@ return [
 		'deliverable-workpackages' => [		'title' => 'Deliverable workpackages',		'fields' => [			'deliverable' => 'Deliverable',			'workpackage' => 'Workpackage',		],	],
 		'deliverables' => [		'title' => 'Deliverables',		'fields' => [			'workpackage' => 'Workpackage',			'label-identification' => 'Label identification',			'title' => 'Title',			'short-title' => 'Short title',			'date' => 'Date',			'status' => 'Status',			'notes' => 'Notes',			'project' => 'Project',			'confidentiality' => 'Confidentiality',			'submission-date' => 'Submission date',			'due-date-months' => 'Due date months',			'responsible' => 'Responsible',		],	],
 		'document-favorites' => [		'title' => 'Document favorites',		'fields' => [			'document' => 'Document',			'project' => 'Project',		],	],
-		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'folder' => 'Folder',			'document' => 'Document',			'project' => 'Project',			'deliverable' => 'Deliverable',		],	],
+		'documents' => [		'title' => 'Documents',		'fields' => [			'title' => 'Title',			'folder' => 'Folder',			'project' => 'Project',			'deliverable' => 'Deliverable',			'document' => 'Document',		],	],
 		'efforts' => [		'title' => 'Efforts',		'fields' => [			'project' => 'Project',			'workpackage' => 'Workpackage',			'partner' => 'Partner',			'value' => 'Value',			'period' => 'Period',		],	],
 		'financials' => [		'title' => 'Financials',		'fields' => [			'document' => 'Document',			'project' => 'Project',			'title' => 'Title',		],	],
 		'financialvisibilities' => [		'title' => 'Financialvisibilities',		'fields' => [			'type' => 'Type',			'status' => 'Status',			'id-project' => 'Id project',		],	],

@@ -22,16 +22,16 @@ class DocumentTest extends DuskTestCase
                 ->clickLink('Add new')
                 ->type("title", $document->title)
                 ->type("folder", $document->folder)
-                ->type("document", $document->document)
                 ->select("project_id", $document->project_id)
                 ->select("deliverable_id", $document->deliverable_id)
+                ->attach("document", base_path("tests/_resources/test.jpg"))
                 ->press('Save')
                 ->assertRouteIs('admin.documents.index')
                 ->assertSeeIn("tr:last-child td[field-key='title']", $document->title)
                 ->assertSeeIn("tr:last-child td[field-key='folder']", $document->folder)
-                ->assertSeeIn("tr:last-child td[field-key='document']", $document->document)
                 ->assertSeeIn("tr:last-child td[field-key='project']", $document->project->name)
                 ->assertSeeIn("tr:last-child td[field-key='deliverable']", $document->deliverable->label_identification)
+                ->assertVisible("a[href='" . env("APP_URL") . "/" . env("UPLOAD_PATH") . "/" . \App\Document::first()->document . "']")
                 ->logout();
         });
     }
@@ -50,16 +50,16 @@ class DocumentTest extends DuskTestCase
                 ->click('tr[data-entry-id="' . $document->id . '"] .btn-info')
                 ->type("title", $document2->title)
                 ->type("folder", $document2->folder)
-                ->type("document", $document2->document)
                 ->select("project_id", $document2->project_id)
                 ->select("deliverable_id", $document2->deliverable_id)
+                ->attach("document", base_path("tests/_resources/test.jpg"))
                 ->press('Update')
                 ->assertRouteIs('admin.documents.index')
                 ->assertSeeIn("tr:last-child td[field-key='title']", $document2->title)
                 ->assertSeeIn("tr:last-child td[field-key='folder']", $document2->folder)
-                ->assertSeeIn("tr:last-child td[field-key='document']", $document2->document)
                 ->assertSeeIn("tr:last-child td[field-key='project']", $document2->project->name)
                 ->assertSeeIn("tr:last-child td[field-key='deliverable']", $document2->deliverable->label_identification)
+                ->assertVisible("a[href='" . env("APP_URL") . "/" . env("UPLOAD_PATH") . "/" . \App\Document::first()->document . "']")
                 ->logout();
         });
     }
@@ -78,7 +78,6 @@ class DocumentTest extends DuskTestCase
                 ->click('tr[data-entry-id="' . $document->id . '"] .btn-primary')
                 ->assertSeeIn("td[field-key='title']", $document->title)
                 ->assertSeeIn("td[field-key='folder']", $document->folder)
-                ->assertSeeIn("td[field-key='document']", $document->document)
                 ->assertSeeIn("td[field-key='project']", $document->project->name)
                 ->assertSeeIn("td[field-key='deliverable']", $document->deliverable->label_identification)
                 ->logout();

@@ -80,19 +80,19 @@
                 </a>
             </li>@endcan
             
-            @can('budget_access')
-            <li>
-                <a href="{{ route('admin.budgets.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.budgets.title')</span>
-                </a>
-            </li>@endcan
-            
             @can('document_access')
             <li>
                 <a href="{{ route('admin.documents.index') }}">
                     <i class="fa fa-tags"></i>
                     <span>@lang('global.documents.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('budget_access')
+            <li>
+                <a href="{{ route('admin.budgets.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.budgets.title')</span>
                 </a>
             </li>@endcan
             

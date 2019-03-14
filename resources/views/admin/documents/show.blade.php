@@ -21,16 +21,16 @@
                             <td field-key='folder'>{{ $document->folder }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.documents.fields.document')</th>
-                            <td field-key='document'>{!! $document->document !!}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.documents.fields.project')</th>
                             <td field-key='project'>{{ $document->project->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.documents.fields.deliverable')</th>
                             <td field-key='deliverable'>{{ $document->deliverable->label_identification ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.documents.fields.document')</th>
+                            <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>
                         </tr>
                     </table>
                 </div>
