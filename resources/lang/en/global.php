@@ -72,7 +72,7 @@ return [
 		'risk-impacts' => [		'title' => 'Risk impacts',		'fields' => [			'name' => 'Name',		],	],
 		'risk-probabilities' => [		'title' => 'Risk probabilities',		'fields' => [			'name' => 'Name',		],	],
 		'risk-proximities' => [		'title' => 'Risk proximities',		'fields' => [			'name' => 'Name',		],	],
-		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'project' => 'Project',			'role' => 'Role',			'partner' => 'Partner',		],	],
+		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'partner' => 'Partner',			'project' => 'Project',			'role' => 'Role',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

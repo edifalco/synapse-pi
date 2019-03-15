@@ -17,16 +17,16 @@
                             <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
                         </tr>
                         <tr>
+                            <th>@lang('global.team.fields.partner')</th>
+                            <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
+                        </tr>
+                        <tr>
                             <th>@lang('global.team.fields.project')</th>
                             <td field-key='project'>{{ $team->project->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.team.fields.role')</th>
                             <td field-key='role'>{{ $team->role }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.team.fields.partner')</th>
-                            <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
                         </tr>
                     </table>
                 </div>

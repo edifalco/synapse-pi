@@ -23,9 +23,9 @@ class MegaSearchController extends Controller
         'Risk' => 'global.risks.title',
         'Deliverable' => 'global.deliverables.title',
         'ProjectPeriod' => 'global.project-periods.title',
-        'Team' => 'global.team.title',
         'Post' => 'global.posts.title',
         'Agenda' => 'global.agenda.title',
+        'Team' => 'global.team.title',
     ];
 
     public function search(Request $request)
