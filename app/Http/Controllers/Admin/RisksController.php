@@ -231,11 +231,11 @@ class RisksController extends Controller
         $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $owners = \App\Member::get()->pluck('surname', 'id');
-$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mowners = \App\RiskMowner::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
+$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
 
         $risk = Risk::findOrFail($id);
 
-        return view('admin.risks.show', compact('risk', 'risk_highlights', 'risk_mowners', 'risk_mreporters', 'risk_powners', 'risk_preporters'));
+        return view('admin.risks.show', compact('risk', 'risk_highlights', 'risk_mreporters', 'risk_powners', 'risk_preporters'));
     }
 
 

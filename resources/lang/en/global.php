@@ -45,7 +45,7 @@ return [
 		'projects' => [		'title' => 'Projects',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'date' => 'Date',			'duration' => 'Duration',			'image' => 'Image',			'partners' => 'Partners',		],	],
 		'publications' => [		'title' => 'Publications',		'fields' => [			'title' => 'Title',			'year' => 'Year',			'month' => 'Month',			'abbr' => 'Abbr',			'link' => 'Link',			'project' => 'Project',			'authors' => 'Authors',		],	],
 		'risk-highlights' => [		'title' => 'Risk highlights',		'fields' => [			'risk' => 'Risk',			'project' => 'Project',		],	],
-		'risk-mowners' => [		'title' => 'Risk mowners',		'fields' => [			'member' => 'Member',			'risk' => 'Risk',		],	],
+		'risk-mowners' => [		'title' => 'Risk mowners',		'fields' => [		],	],
 		'risk-mreporters' => [		'title' => 'Risk mreporters',		'fields' => [			'member' => 'Member',			'risk' => 'Risk',		],	],
 		'risk-powners' => [		'title' => 'Risk powners',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],
 		'risk-preporters' => [		'title' => 'Risk preporters',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],

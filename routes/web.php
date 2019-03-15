@@ -207,10 +207,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('risk_highlights_mass_destroy', ['uses' => 'Admin\RiskHighlightsController@massDestroy', 'as' => 'risk_highlights.mass_destroy']);
     Route::post('risk_highlights_restore/{id}', ['uses' => 'Admin\RiskHighlightsController@restore', 'as' => 'risk_highlights.restore']);
     Route::delete('risk_highlights_perma_del/{id}', ['uses' => 'Admin\RiskHighlightsController@perma_del', 'as' => 'risk_highlights.perma_del']);
-    Route::resource('risk_mowners', 'Admin\RiskMownersController');
-    Route::post('risk_mowners_mass_destroy', ['uses' => 'Admin\RiskMownersController@massDestroy', 'as' => 'risk_mowners.mass_destroy']);
-    Route::post('risk_mowners_restore/{id}', ['uses' => 'Admin\RiskMownersController@restore', 'as' => 'risk_mowners.restore']);
-    Route::delete('risk_mowners_perma_del/{id}', ['uses' => 'Admin\RiskMownersController@perma_del', 'as' => 'risk_mowners.perma_del']);
     Route::resource('risk_mreporters', 'Admin\RiskMreportersController');
     Route::post('risk_mreporters_mass_destroy', ['uses' => 'Admin\RiskMreportersController@massDestroy', 'as' => 'risk_mreporters.mass_destroy']);
     Route::post('risk_mreporters_restore/{id}', ['uses' => 'Admin\RiskMreportersController@restore', 'as' => 'risk_mreporters.restore']);

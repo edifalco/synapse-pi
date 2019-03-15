@@ -431,14 +431,6 @@
                         </a>
                     </li>@endcan
                     
-                    @can('risk_mowner_access')
-                    <li>
-                        <a href="{{ route('admin.risk_mowners.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.risk-mowners.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('risk_mreporter_access')
                     <li>
                         <a href="{{ route('admin.risk_mreporters.index') }}">
