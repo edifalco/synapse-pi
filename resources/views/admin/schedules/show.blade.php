@@ -13,24 +13,24 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th>@lang('global.schedules.fields.date')</th>
-                            <td field-key='date'>{{ $schedule->date }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.schedules.fields.description')</th>
                             <td field-key='description'>{{ $schedule->description }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.schedules.fields.status')</th>
-                            <td field-key='status'>{{ $schedule->status }}</td>
+                            <th>@lang('global.schedules.fields.date')</th>
+                            <td field-key='date'>{{ $schedule->date }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.schedules.fields.project')</th>
                             <td field-key='project'>{{ $schedule->project->name ?? '' }}</td>
                         </tr>
                         <tr>
+                            <th>@lang('global.schedules.fields.status')</th>
+                            <td field-key='status'>{{ $schedule->status->name ?? '' }}</td>
+                        </tr>
+                        <tr>
                             <th>@lang('global.schedules.fields.highlight')</th>
-                            <td field-key='highlight'>{{ $schedule->highlight }}</td>
+                            <td field-key='highlight'>{{ $schedule->highlight->name ?? '' }}</td>
                         </tr>
                     </table>
                 </div>

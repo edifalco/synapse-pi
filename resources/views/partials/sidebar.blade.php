@@ -168,6 +168,22 @@
                 </a>
             </li>@endcan
             
+            @can('schedule_status_access')
+            <li>
+                <a href="{{ route('admin.schedule_statuses.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.schedule-statuses.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('schedule_highlight_access')
+            <li>
+                <a href="{{ route('admin.schedule_highlights.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.schedule-highlights.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('project_management_access')
             <li class="treeview">
                 <a href="#">

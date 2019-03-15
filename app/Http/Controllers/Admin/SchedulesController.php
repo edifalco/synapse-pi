@@ -28,6 +28,8 @@ class SchedulesController extends Controller
         if (request()->ajax()) {
             $query = Schedule::query();
             $query->with("project");
+            $query->with("status");
+            $query->with("highlight");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -39,11 +41,11 @@ class SchedulesController extends Controller
             }
             $query->select([
                 'schedules.id',
-                'schedules.date',
                 'schedules.description',
-                'schedules.status',
+                'schedules.date',
                 'schedules.project_id',
-                'schedules.highlight',
+                'schedules.status_id',
+                'schedules.highlight_id',
             ]);
             $table = Datatables::of($query);
 
@@ -60,6 +62,12 @@ class SchedulesController extends Controller
             });
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
+            });
+            $table->editColumn('status.name', function ($row) {
+                return $row->status ? $row->status->name : '';
+            });
+            $table->editColumn('highlight.name', function ($row) {
+                return $row->highlight ? $row->highlight->name : '';
             });
 
             $table->rawColumns(['actions','massDelete']);
@@ -82,8 +90,10 @@ class SchedulesController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $statuses = \App\ScheduleStatus::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $highlights = \App\ScheduleHighlight::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.schedules.create', compact('projects'));
+        return view('admin.schedules.create', compact('projects', 'statuses', 'highlights'));
     }
 
     /**
@@ -118,10 +128,12 @@ class SchedulesController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $statuses = \App\ScheduleStatus::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $highlights = \App\ScheduleHighlight::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
         $schedule = Schedule::findOrFail($id);
 
-        return view('admin.schedules.edit', compact('schedule', 'projects'));
+        return view('admin.schedules.edit', compact('schedule', 'projects', 'statuses', 'highlights'));
     }
 
     /**

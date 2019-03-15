@@ -25,7 +25,6 @@ class UpdateSchedulesRequest extends FormRequest
         return [
             
             'date' => 'nullable|date_format:'.config('app.date_format'),
-            'highlight' => 'max:2147483647|nullable|numeric',
         ];
     }
 }
