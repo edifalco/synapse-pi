@@ -26,6 +26,7 @@ class StoreRisksRequest extends FormRequest
             'version' => 'max:2147483647|nullable|numeric',
             'date' => 'nullable|date_format:'.config('app.date_format'),
             'score' => 'max:2147483647|nullable|numeric',
+            'owner.*' => 'exists:members,id',
             'version_date' => 'nullable|date_format:H:i:s',
             'parent_id' => 'max:2147483647|nullable|numeric',
         ];

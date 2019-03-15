@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $proximity
  * @property integer $score
  * @property text $mitigation
- * @property string $owner
  * @property text $notes
  * @property text $contingency
  * @property time $version_date
@@ -34,7 +33,7 @@ class Risk extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['code', 'version', 'flag', 'resolved', 'date', 'title', 'description', 'trigger_events', 'score', 'mitigation', 'notes', 'contingency', 'version_date', 'parent_id', 'project_id', 'type_id', 'impact_id', 'probability_id', 'proximity_id', 'owner_id'];
+    protected $fillable = ['code', 'version', 'flag', 'resolved', 'date', 'title', 'description', 'trigger_events', 'score', 'mitigation', 'notes', 'contingency', 'version_date', 'parent_id', 'project_id', 'type_id', 'impact_id', 'probability_id', 'proximity_id'];
     protected $hidden = [];
     public static $searchable = [
         'code',
@@ -147,15 +146,6 @@ class Risk extends Model
     }
 
     /**
-     * Set to null if empty
-     * @param $input
-     */
-    public function setOwnerIdAttribute($input)
-    {
-        $this->attributes['owner_id'] = $input ? $input : null;
-    }
-
-    /**
      * Set attribute to date format
      * @param $input
      */
@@ -219,7 +209,7 @@ class Risk extends Model
     
     public function owner()
     {
-        return $this->belongsTo(Member::class, 'owner_id')->withTrashed();
+        return $this->belongsToMany(Member::class, 'member_risk')->withTrashed();
     }
     
 }

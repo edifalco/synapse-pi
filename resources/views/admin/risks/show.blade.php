@@ -74,7 +74,11 @@
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.owner')</th>
-                            <td field-key='owner'>{{ $risk->owner->surname ?? '' }}</td>
+                            <td field-key='owner'>
+                                @foreach ($risk->owner as $singleOwner)
+                                    <span class="label label-info label-many">{{ $singleOwner->surname }}</span>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.notes')</th>

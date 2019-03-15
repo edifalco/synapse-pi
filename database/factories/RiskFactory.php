@@ -17,7 +17,6 @@ $factory->define(App\Risk::class, function (Faker\Generator $faker) {
         "proximity_id" => factory('App\RiskProximity')->create(),
         "score" => $faker->randomNumber(2),
         "mitigation" => $faker->name,
-        "owner_id" => factory('App\Member')->create(),
         "notes" => $faker->name,
         "contingency" => $faker->name,
         "version_date" => $faker->date("H:i:s", $max = 'now'),
