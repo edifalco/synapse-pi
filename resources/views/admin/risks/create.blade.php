@@ -99,7 +99,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('title', trans('global.risks.fields.title').'', ['class' => 'control-label']) !!}
-                    {!! Form::textarea('title', old('title'), ['class' => 'form-control ', 'placeholder' => '']) !!}
+                    {!! Form::text('title', old('title'), ['class' => 'form-control', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('title'))
                         <p class="help-block">
@@ -230,30 +230,6 @@
                     @if($errors->has('contingency'))
                         <p class="help-block">
                             {{ $errors->first('contingency') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('version_date', trans('global.risks.fields.version-date').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('version_date', old('version_date'), ['class' => 'form-control timepicker', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('version_date'))
-                        <p class="help-block">
-                            {{ $errors->first('version_date') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('parent_id', trans('global.risks.fields.parent-id').'', ['class' => 'control-label']) !!}
-                    {!! Form::number('parent_id', old('parent_id'), ['class' => 'form-control', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('parent_id'))
-                        <p class="help-block">
-                            {{ $errors->first('parent_id') }}
                         </p>
                     @endif
                 </div>

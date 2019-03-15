@@ -42,8 +42,6 @@ class RiskTest extends DuskTestCase
                 ->select('select[name="owner[]"]', $relations[1]->id)
                 ->type("notes", $risk->notes)
                 ->type("contingency", $risk->contingency)
-                ->type("version_date", $risk->version_date)
-                ->type("parent_id", $risk->parent_id)
                 ->press('Save')
                 ->assertRouteIs('admin.risks.index')
                 ->assertSeeIn("tr:last-child td[field-key='project']", $risk->project->name)
@@ -65,8 +63,6 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk->contingency)
-                ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk->version_date)
-                ->assertSeeIn("tr:last-child td[field-key='parent_id']", $risk->parent_id)
                 ->logout();
         });
     }
@@ -105,8 +101,6 @@ class RiskTest extends DuskTestCase
                 ->select('select[name="owner[]"]', $relations[1]->id)
                 ->type("notes", $risk2->notes)
                 ->type("contingency", $risk2->contingency)
-                ->type("version_date", $risk2->version_date)
-                ->type("parent_id", $risk2->parent_id)
                 ->press('Update')
                 ->assertRouteIs('admin.risks.index')
                 ->assertSeeIn("tr:last-child td[field-key='project']", $risk2->project->name)
@@ -128,8 +122,6 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk2->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk2->contingency)
-                ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk2->version_date)
-                ->assertSeeIn("tr:last-child td[field-key='parent_id']", $risk2->parent_id)
                 ->logout();
         });
     }
@@ -169,8 +161,6 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("td[field-key='contingency']", $risk->contingency)
-                ->assertSeeIn("td[field-key='version_date']", $risk->version_date)
-                ->assertSeeIn("td[field-key='parent_id']", $risk->parent_id)
                 ->logout();
         });
     }

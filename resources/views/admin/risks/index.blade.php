@@ -51,8 +51,6 @@
                         <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
                         <th>@lang('global.risks.fields.contingency')</th>
-                        <th>@lang('global.risks.fields.version-date')</th>
-                        <th>@lang('global.risks.fields.parent-id')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -94,8 +92,6 @@
                 {data: 'owner.surname', name: 'owner.surname'},
                 {data: 'notes', name: 'notes'},
                 {data: 'contingency', name: 'contingency'},
-                {data: 'version_date', name: 'version_date'},
-                {data: 'parent_id', name: 'parent_id'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

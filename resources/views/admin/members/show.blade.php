@@ -566,8 +566,6 @@
                         <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
                         <th>@lang('global.risks.fields.contingency')</th>
-                        <th>@lang('global.risks.fields.version-date')</th>
-                        <th>@lang('global.risks.fields.parent-id')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -587,7 +585,7 @@
                                 <td field-key='resolved'>{{ Form::checkbox("resolved", 1, $risk->resolved == 1 ? true : false, ["disabled"]) }}</td>
                                 <td field-key='type'>{{ $risk->type->name ?? '' }}</td>
                                 <td field-key='date'>{{ $risk->date }}</td>
-                                <td field-key='title'>{!! $risk->title !!}</td>
+                                <td field-key='title'>{{ $risk->title }}</td>
                                 <td field-key='description'>{!! $risk->description !!}</td>
                                 <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
                                 <td field-key='impact'>{{ $risk->impact->name ?? '' }}</td>
@@ -602,8 +600,6 @@
                                 </td>
                                 <td field-key='notes'>{!! $risk->notes !!}</td>
                                 <td field-key='contingency'>{!! $risk->contingency !!}</td>
-                                <td field-key='version_date'>{{ $risk->version_date }}</td>
-                                <td field-key='parent_id'>{{ $risk->parent_id }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
