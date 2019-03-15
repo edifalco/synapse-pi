@@ -61,12 +61,12 @@
                             <td field-key='probability'>{{ $risk->probability->name ?? '' }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.proximity')</th>
-                            <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.risks.fields.score')</th>
                             <td field-key='score'>{{ $risk->score }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.proximity')</th>
+                            <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.mitigation')</th>

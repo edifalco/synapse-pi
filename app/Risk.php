@@ -21,8 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property text $trigger_events
  * @property string $impact
  * @property string $probability
- * @property string $proximity
  * @property integer $score
+ * @property string $proximity
  * @property text $mitigation
  * @property text $notes
  * @property text $contingency
@@ -127,21 +127,21 @@ class Risk extends Model
     }
 
     /**
-     * Set to null if empty
-     * @param $input
-     */
-    public function setProximityIdAttribute($input)
-    {
-        $this->attributes['proximity_id'] = $input ? $input : null;
-    }
-
-    /**
      * Set attribute to money format
      * @param $input
      */
     public function setScoreAttribute($input)
     {
         $this->attributes['score'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setProximityIdAttribute($input)
+    {
+        $this->attributes['proximity_id'] = $input ? $input : null;
     }
 
     /**
