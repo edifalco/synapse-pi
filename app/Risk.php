@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property tinyInteger $resolved
  * @property string $type
  * @property string $date
- * @property text $title
+ * @property string $title
  * @property text $description
  * @property text $trigger_events
  * @property string $impact

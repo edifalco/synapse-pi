@@ -42,7 +42,7 @@
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.title')</th>
-                            <td field-key='title'>{!! $risk->title !!}</td>
+                            <td field-key='title'>{{ $risk->title }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.description')</th>
@@ -87,14 +87,6 @@
                         <tr>
                             <th>@lang('global.risks.fields.contingency')</th>
                             <td field-key='contingency'>{!! $risk->contingency !!}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.version-date')</th>
-                            <td field-key='version_date'>{{ $risk->version_date }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.parent-id')</th>
-                            <td field-key='parent_id'>{{ $risk->parent_id }}</td>
                         </tr>
                     </table>
                 </div>

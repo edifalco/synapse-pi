@@ -92,6 +92,9 @@ class RisksController extends Controller
             $table->editColumn('date', function ($row) {
                 return $row->date ? $row->date : '';
             });
+            $table->editColumn('title', function ($row) {
+                return $row->title ? $row->title : '';
+            });
             $table->editColumn('trigger_events', function ($row) {
                 return $row->trigger_events ? $row->trigger_events : '';
             });
