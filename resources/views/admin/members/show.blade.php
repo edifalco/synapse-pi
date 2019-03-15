@@ -595,7 +595,11 @@
                                 <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                                 <td field-key='score'>{{ $risk->score }}</td>
                                 <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
-                                <td field-key='owner'>{{ $risk->owner->surname ?? '' }}</td>
+                                <td field-key='owner'>
+                                    @foreach ($risk->owner as $singleOwner)
+                                        <span class="label label-info label-many">{{ $singleOwner->surname }}</span>
+                                    @endforeach
+                                </td>
                                 <td field-key='notes'>{!! $risk->notes !!}</td>
                                 <td field-key='contingency'>{!! $risk->contingency !!}</td>
                                 <td field-key='version_date'>{{ $risk->version_date }}</td>

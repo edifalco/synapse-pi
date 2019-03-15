@@ -59,7 +59,6 @@ class RisksController extends Controller
                 'risks.proximity_id',
                 'risks.score',
                 'risks.mitigation',
-                'risks.owner_id',
                 'risks.notes',
                 'risks.contingency',
                 'risks.version_date',
@@ -106,10 +105,15 @@ class RisksController extends Controller
                 return $row->proximity ? $row->proximity->name : '';
             });
             $table->editColumn('owner.surname', function ($row) {
-                return $row->owner ? $row->owner->surname : '';
+                if(count($row->owner) == 0) {
+                    return '';
+                }
+
+                return '<span class="label label-info label-many">' . implode('</span><span class="label label-info label-many"> ',
+                        $row->owner->pluck('surname')->toArray()) . '</span>';
             });
 
-            $table->rawColumns(['actions','massDelete','flag','resolved']);
+            $table->rawColumns(['actions','massDelete','flag','resolved','owner.surname']);
 
             return $table->make(true);
         }
@@ -133,7 +137,8 @@ class RisksController extends Controller
         $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
+        $owners = \App\Member::get()->pluck('surname', 'id');
+
 
         return view('admin.risks.create', compact('projects', 'types', 'impacts', 'probabilities', 'proximities', 'owners'));
     }
@@ -150,6 +155,7 @@ class RisksController extends Controller
             return abort(401);
         }
         $risk = Risk::create($request->all());
+        $risk->owner()->sync(array_filter((array)$request->input('owner')));
 
 
 
@@ -174,7 +180,8 @@ class RisksController extends Controller
         $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
+        $owners = \App\Member::get()->pluck('surname', 'id');
+
 
         $risk = Risk::findOrFail($id);
 
@@ -195,6 +202,7 @@ class RisksController extends Controller
         }
         $risk = Risk::findOrFail($id);
         $risk->update($request->all());
+        $risk->owner()->sync(array_filter((array)$request->input('owner')));
 
 
 
@@ -219,7 +227,8 @@ class RisksController extends Controller
         $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
         $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mowners = \App\RiskMowner::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
+        $owners = \App\Member::get()->pluck('surname', 'id');
+$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mowners = \App\RiskMowner::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
 
         $risk = Risk::findOrFail($id);
 

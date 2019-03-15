@@ -195,12 +195,18 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('owner_id', trans('global.risks.fields.owner').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('owner_id', $owners, old('owner_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('owner', trans('global.risks.fields.owner').'', ['class' => 'control-label']) !!}
+                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-owner">
+                        {{ trans('global.app_select_all') }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-owner">
+                        {{ trans('global.app_deselect_all') }}
+                    </button>
+                    {!! Form::select('owner[]', $owners, old('owner') ? old('owner') : $risk->owner->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-owner' ]) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('owner_id'))
+                    @if($errors->has('owner'))
                         <p class="help-block">
-                            {{ $errors->first('owner_id') }}
+                            {{ $errors->first('owner') }}
                         </p>
                     @endif
                 </div>
@@ -284,4 +290,14 @@
         });
     </script>
             
+    <script>
+        $("#selectbtn-owner").click(function(){
+            $("#selectall-owner > option").prop("selected","selected");
+            $("#selectall-owner").trigger("change");
+        });
+        $("#deselectbtn-owner").click(function(){
+            $("#selectall-owner > option").prop("selected","");
+            $("#selectall-owner").trigger("change");
+        });
+    </script>
 @stop

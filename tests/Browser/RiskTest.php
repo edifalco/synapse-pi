@@ -14,9 +14,12 @@ class RiskTest extends DuskTestCase
         $admin = \App\User::find(1);
         $risk = factory('App\Risk')->make();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
-        $this->browse(function (Browser $browser) use ($admin, $risk) {
+        $this->browse(function (Browser $browser) use ($admin, $risk, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->clickLink('Add new')
@@ -35,7 +38,8 @@ class RiskTest extends DuskTestCase
                 ->select("proximity_id", $risk->proximity_id)
                 ->type("score", $risk->score)
                 ->type("mitigation", $risk->mitigation)
-                ->select("owner_id", $risk->owner_id)
+                ->select('select[name="owner[]"]', $relations[0]->id)
+                ->select('select[name="owner[]"]', $relations[1]->id)
                 ->type("notes", $risk->notes)
                 ->type("contingency", $risk->contingency)
                 ->type("version_date", $risk->version_date)
@@ -57,7 +61,8 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='proximity']", $risk->proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='score']", $risk->score)
                 ->assertSeeIn("tr:last-child td[field-key='mitigation']", $risk->mitigation)
-                ->assertSeeIn("tr:last-child td[field-key='owner']", $risk->owner->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk->contingency)
                 ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk->version_date)
@@ -72,9 +77,12 @@ class RiskTest extends DuskTestCase
         $risk = factory('App\Risk')->create();
         $risk2 = factory('App\Risk')->make();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
-        $this->browse(function (Browser $browser) use ($admin, $risk, $risk2) {
+        $this->browse(function (Browser $browser) use ($admin, $risk, $risk2, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->click('tr[data-entry-id="' . $risk->id . '"] .btn-info')
@@ -93,7 +101,8 @@ class RiskTest extends DuskTestCase
                 ->select("proximity_id", $risk2->proximity_id)
                 ->type("score", $risk2->score)
                 ->type("mitigation", $risk2->mitigation)
-                ->select("owner_id", $risk2->owner_id)
+                ->select('select[name="owner[]"]', $relations[0]->id)
+                ->select('select[name="owner[]"]', $relations[1]->id)
                 ->type("notes", $risk2->notes)
                 ->type("contingency", $risk2->contingency)
                 ->type("version_date", $risk2->version_date)
@@ -115,7 +124,8 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='proximity']", $risk2->proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='score']", $risk2->score)
                 ->assertSeeIn("tr:last-child td[field-key='mitigation']", $risk2->mitigation)
-                ->assertSeeIn("tr:last-child td[field-key='owner']", $risk2->owner->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk2->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk2->contingency)
                 ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk2->version_date)
@@ -129,10 +139,14 @@ class RiskTest extends DuskTestCase
         $admin = \App\User::find(1);
         $risk = factory('App\Risk')->create();
 
-        
+        $relations = [
+            factory('App\Member')->create(), 
+            factory('App\Member')->create(), 
+        ];
 
+        $risk->owner()->attach([$relations[0]->id, $relations[1]->id]);
 
-        $this->browse(function (Browser $browser) use ($admin, $risk) {
+        $this->browse(function (Browser $browser) use ($admin, $risk, $relations) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->click('tr[data-entry-id="' . $risk->id . '"] .btn-primary')
@@ -151,7 +165,8 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='proximity']", $risk->proximity->name)
                 ->assertSeeIn("td[field-key='score']", $risk->score)
                 ->assertSeeIn("td[field-key='mitigation']", $risk->mitigation)
-                ->assertSeeIn("td[field-key='owner']", $risk->owner->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:first-child", $relations[0]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner'] span:last-child", $relations[1]->surname)
                 ->assertSeeIn("td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("td[field-key='contingency']", $risk->contingency)
                 ->assertSeeIn("td[field-key='version_date']", $risk->version_date)
