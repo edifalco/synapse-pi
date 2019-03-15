@@ -84,10 +84,6 @@
                             <th>@lang('global.risks.fields.notes')</th>
                             <td field-key='notes'>{!! $risk->notes !!}</td>
                         </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.contingency')</th>
-                            <td field-key='contingency'>{!! $risk->contingency !!}</td>
-                        </tr>
                     </table>
                 </div>
             </div><!-- Nav tabs -->

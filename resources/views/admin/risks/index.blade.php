@@ -50,7 +50,6 @@
                         <th>@lang('global.risks.fields.mitigation')</th>
                         <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
-                        <th>@lang('global.risks.fields.contingency')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -91,7 +90,6 @@
                 {data: 'mitigation', name: 'mitigation'},
                 {data: 'owner.surname', name: 'owner.surname'},
                 {data: 'notes', name: 'notes'},
-                {data: 'contingency', name: 'contingency'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

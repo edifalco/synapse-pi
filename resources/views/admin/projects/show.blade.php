@@ -172,7 +172,6 @@
                         <th>@lang('global.risks.fields.mitigation')</th>
                         <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
-                        <th>@lang('global.risks.fields.contingency')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -206,7 +205,6 @@
                                     @endforeach
                                 </td>
                                 <td field-key='notes'>{!! $risk->notes !!}</td>
-                                <td field-key='contingency'>{!! $risk->contingency !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
