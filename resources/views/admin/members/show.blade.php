@@ -42,7 +42,6 @@
 <ul class="nav nav-tabs" role="tablist">
     
 <li role="presentation" class="active"><a href="#member_partners" aria-controls="member_partners" role="tab" data-toggle="tab">Member partners</a></li>
-<li role="presentation" class=""><a href="#memberroles" aria-controls="memberroles" role="tab" data-toggle="tab">Memberroles</a></li>
 <li role="presentation" class=""><a href="#team" aria-controls="team" role="tab" data-toggle="tab">Team</a></li>
 <li role="presentation" class=""><a href="#risk_mreporters" aria-controls="risk_mreporters" role="tab" data-toggle="tab">Risk mreporters</a></li>
 <li role="presentation" class=""><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
@@ -120,76 +119,6 @@
     </tbody>
 </table>
 </div>
-<div role="tabpanel" class="tab-pane " id="memberroles">
-<table class="table table-bordered table-striped {{ count($memberroles) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.memberroles.fields.member')</th>
-                        <th>@lang('global.memberroles.fields.role')</th>
-                        <th>@lang('global.memberroles.fields.project')</th>
-                        <th>@lang('global.memberroles.fields.partner')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($memberroles) > 0)
-            @foreach ($memberroles as $memberrole)
-                <tr data-entry-id="{{ $memberrole->id }}">
-                    <td field-key='member'>{{ $memberrole->member->name ?? '' }}</td>
-                                <td field-key='role'>{{ $memberrole->role }}</td>
-                                <td field-key='project'>{{ $memberrole->project->name ?? '' }}</td>
-                                <td field-key='partner'>{{ $memberrole->partner->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.memberroles.restore', $memberrole->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.memberroles.perma_del', $memberrole->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('memberrole_view')
-                                    <a href="{{ route('admin.memberroles.show',[$memberrole->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('memberrole_edit')
-                                    <a href="{{ route('admin.memberroles.edit',[$memberrole->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('memberrole_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.memberroles.destroy', $memberrole->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
 <div role="tabpanel" class="tab-pane " id="team">
 <table class="table table-bordered table-striped {{ count($teams) > 0 ? 'datatable' : '' }}">
     <thead>
@@ -197,6 +126,7 @@
             <th>@lang('global.team.fields.member')</th>
                         <th>@lang('global.team.fields.project')</th>
                         <th>@lang('global.team.fields.role')</th>
+                        <th>@lang('global.team.fields.partner')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -212,6 +142,7 @@
                     <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
                                 <td field-key='project'>{{ $team->project->name ?? '' }}</td>
                                 <td field-key='role'>{{ $team->role }}</td>
+                                <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -252,7 +183,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="8">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

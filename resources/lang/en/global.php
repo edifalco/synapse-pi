@@ -30,7 +30,7 @@ return [
 		'financialvisibilities' => [		'title' => 'Financialvisibilities',		'fields' => [			'type' => 'Type',			'status' => 'Status',			'id-project' => 'Id project',		],	],
 		'keywords' => [		'title' => 'Keywords',		'fields' => [			'word' => 'Word',		],	],
 		'member-partners' => [		'title' => 'Member partners',		'fields' => [			'member' => 'Member',			'partner' => 'Partner',		],	],
-		'memberroles' => [		'title' => 'Memberroles',		'fields' => [			'member' => 'Member',			'role' => 'Role',			'project' => 'Project',			'partner' => 'Partner',		],	],
+		'memberroles' => [		'title' => 'Memberroles',		'fields' => [		],	],
 		'members' => [		'title' => 'Members',		'fields' => [			'name' => 'Name',			'surname' => 'Surname',			'partner' => 'Partner',			'email' => 'Email',			'phone' => 'Phone',			'notes' => 'Notes',		],	],
 		'metricicons' => [		'title' => 'Metricicons',		'fields' => [			'metric-id' => 'Metric',			'icon-id' => 'Icon',			'project' => 'Project',		],	],
 		'metriclabels' => [		'title' => 'Metriclabels',		'fields' => [			'label' => 'Label',			'project' => 'Project',			'metric-id' => 'Metric',		],	],
@@ -72,7 +72,7 @@ return [
 		'risk-impacts' => [		'title' => 'Risk impacts',		'fields' => [			'name' => 'Name',		],	],
 		'risk-probabilities' => [		'title' => 'Risk probabilities',		'fields' => [			'name' => 'Name',		],	],
 		'risk-proximities' => [		'title' => 'Risk proximities',		'fields' => [			'name' => 'Name',		],	],
-		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'project' => 'Project',			'role' => 'Role',		],	],
+		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'project' => 'Project',			'role' => 'Role',			'partner' => 'Partner',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

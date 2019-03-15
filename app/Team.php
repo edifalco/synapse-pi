@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $member
  * @property string $project
  * @property string $role
+ * @property string $partner
 */
 class Team extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['role', 'member_id', 'project_id'];
+    protected $fillable = ['role', 'member_id', 'project_id', 'partner_id'];
     protected $hidden = [];
     public static $searchable = [
         'role',
@@ -46,6 +47,15 @@ class Team extends Model
     {
         $this->attributes['project_id'] = $input ? $input : null;
     }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setPartnerIdAttribute($input)
+    {
+        $this->attributes['partner_id'] = $input ? $input : null;
+    }
     
     public function member()
     {
@@ -55,6 +65,11 @@ class Team extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
+    }
+    
+    public function partner()
+    {
+        return $this->belongsTo(Partner::class, 'partner_id')->withTrashed();
     }
     
 }

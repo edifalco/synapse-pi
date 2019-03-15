@@ -375,14 +375,6 @@
                         </a>
                     </li>@endcan
                     
-                    @can('memberrole_access')
-                    <li>
-                        <a href="{{ route('admin.memberroles.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.memberroles.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('metriclabel_access')
                     <li>
                         <a href="{{ route('admin.metriclabels.index') }}">
