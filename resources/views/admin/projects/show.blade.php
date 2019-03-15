@@ -163,15 +163,9 @@
                         <th>@lang('global.risks.fields.type')</th>
                         <th>@lang('global.risks.fields.date')</th>
                         <th>@lang('global.risks.fields.title')</th>
-                        <th>@lang('global.risks.fields.description')</th>
-                        <th>@lang('global.risks.fields.trigger-events')</th>
-                        <th>@lang('global.risks.fields.impact')</th>
-                        <th>@lang('global.risks.fields.probability')</th>
-                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.score')</th>
-                        <th>@lang('global.risks.fields.mitigation')</th>
+                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.owner')</th>
-                        <th>@lang('global.risks.fields.notes')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -192,19 +186,13 @@
                                 <td field-key='type'>{{ $risk->type->name ?? '' }}</td>
                                 <td field-key='date'>{{ $risk->date }}</td>
                                 <td field-key='title'>{{ $risk->title }}</td>
-                                <td field-key='description'>{!! $risk->description !!}</td>
-                                <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
-                                <td field-key='impact'>{{ $risk->impact->name ?? '' }}</td>
-                                <td field-key='probability'>{{ $risk->probability->name ?? '' }}</td>
-                                <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                                 <td field-key='score'>{{ $risk->score }}</td>
-                                <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
+                                <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                                 <td field-key='owner'>
                                     @foreach ($risk->owner as $singleOwner)
                                         <span class="label label-info label-many">{{ $singleOwner->surname }}</span>
                                     @endforeach
                                 </td>
-                                <td field-key='notes'>{!! $risk->notes !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

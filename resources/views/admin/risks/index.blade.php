@@ -41,15 +41,9 @@
                         <th>@lang('global.risks.fields.type')</th>
                         <th>@lang('global.risks.fields.date')</th>
                         <th>@lang('global.risks.fields.title')</th>
-                        <th>@lang('global.risks.fields.description')</th>
-                        <th>@lang('global.risks.fields.trigger-events')</th>
-                        <th>@lang('global.risks.fields.impact')</th>
-                        <th>@lang('global.risks.fields.probability')</th>
-                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.score')</th>
-                        <th>@lang('global.risks.fields.mitigation')</th>
+                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.owner')</th>
-                        <th>@lang('global.risks.fields.notes')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -81,15 +75,9 @@
                 {data: 'type.name', name: 'type.name'},
                 {data: 'date', name: 'date'},
                 {data: 'title', name: 'title'},
-                {data: 'description', name: 'description'},
-                {data: 'trigger_events', name: 'trigger_events'},
-                {data: 'impact.name', name: 'impact.name'},
-                {data: 'probability.name', name: 'probability.name'},
-                {data: 'proximity.name', name: 'proximity.name'},
                 {data: 'score', name: 'score'},
-                {data: 'mitigation', name: 'mitigation'},
+                {data: 'proximity.name', name: 'proximity.name'},
                 {data: 'owner.surname', name: 'owner.surname'},
-                {data: 'notes', name: 'notes'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

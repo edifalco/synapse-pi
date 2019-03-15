@@ -159,24 +159,24 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('proximity_id', trans('global.risks.fields.proximity').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('proximity_id', $proximities, old('proximity_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('proximity_id'))
-                        <p class="help-block">
-                            {{ $errors->first('proximity_id') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('score', trans('global.risks.fields.score').'', ['class' => 'control-label']) !!}
                     {!! Form::number('score', old('score'), ['class' => 'form-control', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('score'))
                         <p class="help-block">
                             {{ $errors->first('score') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('proximity_id', trans('global.risks.fields.proximity').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('proximity_id', $proximities, old('proximity_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('proximity_id'))
+                        <p class="help-block">
+                            {{ $errors->first('proximity_id') }}
                         </p>
                     @endif
                 </div>
