@@ -145,7 +145,7 @@ class RiskProximitiesController extends Controller
         if (! Gate::allows('risk_proximity_view')) {
             return abort(401);
         }
-        $risks = \App\Risk::where('risk_proximity_id', $id)->get();
+        $risks = \App\Risk::where('proximity_id', $id)->get();
 
         $risk_proximity = RiskProximity::findOrFail($id);
 

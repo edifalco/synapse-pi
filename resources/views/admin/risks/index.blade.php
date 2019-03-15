@@ -38,17 +38,17 @@
                         <th>@lang('global.risks.fields.version')</th>
                         <th>@lang('global.risks.fields.flag')</th>
                         <th>@lang('global.risks.fields.resolved')</th>
-                        <th>@lang('global.risks.fields.risks-type')</th>
-                        <th>@lang('global.risks.fields.risk-date')</th>
+                        <th>@lang('global.risks.fields.type')</th>
+                        <th>@lang('global.risks.fields.date')</th>
                         <th>@lang('global.risks.fields.title')</th>
                         <th>@lang('global.risks.fields.description')</th>
                         <th>@lang('global.risks.fields.trigger-events')</th>
-                        <th>@lang('global.risks.fields.risk-impact')</th>
-                        <th>@lang('global.risks.fields.risk-probabilities')</th>
+                        <th>@lang('global.risks.fields.impact')</th>
+                        <th>@lang('global.risks.fields.probability')</th>
+                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.score')</th>
-                        <th>@lang('global.risks.fields.risk-proximity')</th>
                         <th>@lang('global.risks.fields.mitigation')</th>
-                        <th>@lang('global.risks.fields.risk-owner')</th>
+                        <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
                         <th>@lang('global.risks.fields.contingency')</th>
                         <th>@lang('global.risks.fields.version-date')</th>
@@ -81,17 +81,17 @@
                 {data: 'version', name: 'version'},
                 {data: 'flag', name: 'flag'},
                 {data: 'resolved', name: 'resolved'},
-                {data: 'risks_type.name', name: 'risks_type.name'},
-                {data: 'risk_date', name: 'risk_date'},
+                {data: 'type.name', name: 'type.name'},
+                {data: 'date', name: 'date'},
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},
                 {data: 'trigger_events', name: 'trigger_events'},
-                {data: 'risk_impact.name', name: 'risk_impact.name'},
-                {data: 'risk_probabilities.name', name: 'risk_probabilities.name'},
+                {data: 'impact.name', name: 'impact.name'},
+                {data: 'probability.name', name: 'probability.name'},
+                {data: 'proximity.name', name: 'proximity.name'},
                 {data: 'score', name: 'score'},
-                {data: 'risk_proximity.name', name: 'risk_proximity.name'},
                 {data: 'mitigation', name: 'mitigation'},
-                {data: 'risk_owner.surname', name: 'risk_owner.surname'},
+                {data: 'owner.surname', name: 'owner.surname'},
                 {data: 'notes', name: 'notes'},
                 {data: 'contingency', name: 'contingency'},
                 {data: 'version_date', name: 'version_date'},

@@ -145,7 +145,7 @@ class RiskTypesController extends Controller
         if (! Gate::allows('risk_type_view')) {
             return abort(401);
         }
-        $risks = \App\Risk::where('risks_type_id', $id)->get();
+        $risks = \App\Risk::where('type_id', $id)->get();
 
         $risk_type = RiskType::findOrFail($id);
 

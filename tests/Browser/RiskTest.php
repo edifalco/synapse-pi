@@ -14,12 +14,9 @@ class RiskTest extends DuskTestCase
         $admin = \App\User::find(1);
         $risk = factory('App\Risk')->make();
 
-        $relations = [
-            factory('App\Member')->create(), 
-            factory('App\Member')->create(), 
-        ];
+        
 
-        $this->browse(function (Browser $browser) use ($admin, $risk, $relations) {
+        $this->browse(function (Browser $browser) use ($admin, $risk) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->clickLink('Add new')
@@ -28,18 +25,17 @@ class RiskTest extends DuskTestCase
                 ->type("version", $risk->version)
                 ->check("flag")
                 ->check("resolved")
-                ->select("risks_type_id", $risk->risks_type_id)
-                ->type("risk_date", $risk->risk_date)
+                ->select("type_id", $risk->type_id)
+                ->type("date", $risk->date)
                 ->type("title", $risk->title)
                 ->type("description", $risk->description)
                 ->type("trigger_events", $risk->trigger_events)
-                ->select("risk_impact_id", $risk->risk_impact_id)
-                ->select("risk_probabilities_id", $risk->risk_probabilities_id)
+                ->select("impact_id", $risk->impact_id)
+                ->select("probability_id", $risk->probability_id)
+                ->select("proximity_id", $risk->proximity_id)
                 ->type("score", $risk->score)
-                ->select("risk_proximity_id", $risk->risk_proximity_id)
                 ->type("mitigation", $risk->mitigation)
-                ->select('select[name="risk_owner[]"]', $relations[0]->id)
-                ->select('select[name="risk_owner[]"]', $relations[1]->id)
+                ->select("owner_id", $risk->owner_id)
                 ->type("notes", $risk->notes)
                 ->type("contingency", $risk->contingency)
                 ->type("version_date", $risk->version_date)
@@ -51,18 +47,17 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='version']", $risk->version)
                 ->assertChecked("flag")
                 ->assertChecked("resolved")
-                ->assertSeeIn("tr:last-child td[field-key='risks_type']", $risk->risks_type->name)
-                ->assertSeeIn("tr:last-child td[field-key='risk_date']", $risk->risk_date)
+                ->assertSeeIn("tr:last-child td[field-key='type']", $risk->type->name)
+                ->assertSeeIn("tr:last-child td[field-key='date']", $risk->date)
                 ->assertSeeIn("tr:last-child td[field-key='title']", $risk->title)
                 ->assertSeeIn("tr:last-child td[field-key='description']", $risk->description)
                 ->assertSeeIn("tr:last-child td[field-key='trigger_events']", $risk->trigger_events)
-                ->assertSeeIn("tr:last-child td[field-key='risk_impact']", $risk->risk_impact->name)
-                ->assertSeeIn("tr:last-child td[field-key='risk_probabilities']", $risk->risk_probabilities->name)
+                ->assertSeeIn("tr:last-child td[field-key='impact']", $risk->impact->name)
+                ->assertSeeIn("tr:last-child td[field-key='probability']", $risk->probability->name)
+                ->assertSeeIn("tr:last-child td[field-key='proximity']", $risk->proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='score']", $risk->score)
-                ->assertSeeIn("tr:last-child td[field-key='risk_proximity']", $risk->risk_proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='mitigation']", $risk->mitigation)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner']", $risk->owner->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk->contingency)
                 ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk->version_date)
@@ -77,12 +72,9 @@ class RiskTest extends DuskTestCase
         $risk = factory('App\Risk')->create();
         $risk2 = factory('App\Risk')->make();
 
-        $relations = [
-            factory('App\Member')->create(), 
-            factory('App\Member')->create(), 
-        ];
+        
 
-        $this->browse(function (Browser $browser) use ($admin, $risk, $risk2, $relations) {
+        $this->browse(function (Browser $browser) use ($admin, $risk, $risk2) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->click('tr[data-entry-id="' . $risk->id . '"] .btn-info')
@@ -91,18 +83,17 @@ class RiskTest extends DuskTestCase
                 ->type("version", $risk2->version)
                 ->check("flag")
                 ->check("resolved")
-                ->select("risks_type_id", $risk2->risks_type_id)
-                ->type("risk_date", $risk2->risk_date)
+                ->select("type_id", $risk2->type_id)
+                ->type("date", $risk2->date)
                 ->type("title", $risk2->title)
                 ->type("description", $risk2->description)
                 ->type("trigger_events", $risk2->trigger_events)
-                ->select("risk_impact_id", $risk2->risk_impact_id)
-                ->select("risk_probabilities_id", $risk2->risk_probabilities_id)
+                ->select("impact_id", $risk2->impact_id)
+                ->select("probability_id", $risk2->probability_id)
+                ->select("proximity_id", $risk2->proximity_id)
                 ->type("score", $risk2->score)
-                ->select("risk_proximity_id", $risk2->risk_proximity_id)
                 ->type("mitigation", $risk2->mitigation)
-                ->select('select[name="risk_owner[]"]', $relations[0]->id)
-                ->select('select[name="risk_owner[]"]', $relations[1]->id)
+                ->select("owner_id", $risk2->owner_id)
                 ->type("notes", $risk2->notes)
                 ->type("contingency", $risk2->contingency)
                 ->type("version_date", $risk2->version_date)
@@ -114,18 +105,17 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("tr:last-child td[field-key='version']", $risk2->version)
                 ->assertChecked("flag")
                 ->assertChecked("resolved")
-                ->assertSeeIn("tr:last-child td[field-key='risks_type']", $risk2->risks_type->name)
-                ->assertSeeIn("tr:last-child td[field-key='risk_date']", $risk2->risk_date)
+                ->assertSeeIn("tr:last-child td[field-key='type']", $risk2->type->name)
+                ->assertSeeIn("tr:last-child td[field-key='date']", $risk2->date)
                 ->assertSeeIn("tr:last-child td[field-key='title']", $risk2->title)
                 ->assertSeeIn("tr:last-child td[field-key='description']", $risk2->description)
                 ->assertSeeIn("tr:last-child td[field-key='trigger_events']", $risk2->trigger_events)
-                ->assertSeeIn("tr:last-child td[field-key='risk_impact']", $risk2->risk_impact->name)
-                ->assertSeeIn("tr:last-child td[field-key='risk_probabilities']", $risk2->risk_probabilities->name)
+                ->assertSeeIn("tr:last-child td[field-key='impact']", $risk2->impact->name)
+                ->assertSeeIn("tr:last-child td[field-key='probability']", $risk2->probability->name)
+                ->assertSeeIn("tr:last-child td[field-key='proximity']", $risk2->proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='score']", $risk2->score)
-                ->assertSeeIn("tr:last-child td[field-key='risk_proximity']", $risk2->risk_proximity->name)
                 ->assertSeeIn("tr:last-child td[field-key='mitigation']", $risk2->mitigation)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("tr:last-child td[field-key='owner']", $risk2->owner->surname)
                 ->assertSeeIn("tr:last-child td[field-key='notes']", $risk2->notes)
                 ->assertSeeIn("tr:last-child td[field-key='contingency']", $risk2->contingency)
                 ->assertSeeIn("tr:last-child td[field-key='version_date']", $risk2->version_date)
@@ -139,14 +129,10 @@ class RiskTest extends DuskTestCase
         $admin = \App\User::find(1);
         $risk = factory('App\Risk')->create();
 
-        $relations = [
-            factory('App\Member')->create(), 
-            factory('App\Member')->create(), 
-        ];
+        
 
-        $risk->risk_owner()->attach([$relations[0]->id, $relations[1]->id]);
 
-        $this->browse(function (Browser $browser) use ($admin, $risk, $relations) {
+        $this->browse(function (Browser $browser) use ($admin, $risk) {
             $browser->loginAs($admin)
                 ->visit(route('admin.risks.index'))
                 ->click('tr[data-entry-id="' . $risk->id . '"] .btn-primary')
@@ -155,18 +141,17 @@ class RiskTest extends DuskTestCase
                 ->assertSeeIn("td[field-key='version']", $risk->version)
                 ->assertNotChecked("flag")
                 ->assertNotChecked("resolved")
-                ->assertSeeIn("td[field-key='risks_type']", $risk->risks_type->name)
-                ->assertSeeIn("td[field-key='risk_date']", $risk->risk_date)
+                ->assertSeeIn("td[field-key='type']", $risk->type->name)
+                ->assertSeeIn("td[field-key='date']", $risk->date)
                 ->assertSeeIn("td[field-key='title']", $risk->title)
                 ->assertSeeIn("td[field-key='description']", $risk->description)
                 ->assertSeeIn("td[field-key='trigger_events']", $risk->trigger_events)
-                ->assertSeeIn("td[field-key='risk_impact']", $risk->risk_impact->name)
-                ->assertSeeIn("td[field-key='risk_probabilities']", $risk->risk_probabilities->name)
+                ->assertSeeIn("td[field-key='impact']", $risk->impact->name)
+                ->assertSeeIn("td[field-key='probability']", $risk->probability->name)
+                ->assertSeeIn("td[field-key='proximity']", $risk->proximity->name)
                 ->assertSeeIn("td[field-key='score']", $risk->score)
-                ->assertSeeIn("td[field-key='risk_proximity']", $risk->risk_proximity->name)
                 ->assertSeeIn("td[field-key='mitigation']", $risk->mitigation)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:first-child", $relations[0]->surname)
-                ->assertSeeIn("tr:last-child td[field-key='risk_owner'] span:last-child", $relations[1]->surname)
+                ->assertSeeIn("td[field-key='owner']", $risk->owner->surname)
                 ->assertSeeIn("td[field-key='notes']", $risk->notes)
                 ->assertSeeIn("td[field-key='contingency']", $risk->contingency)
                 ->assertSeeIn("td[field-key='version_date']", $risk->version_date)

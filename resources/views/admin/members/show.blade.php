@@ -553,17 +553,17 @@
                         <th>@lang('global.risks.fields.version')</th>
                         <th>@lang('global.risks.fields.flag')</th>
                         <th>@lang('global.risks.fields.resolved')</th>
-                        <th>@lang('global.risks.fields.risks-type')</th>
-                        <th>@lang('global.risks.fields.risk-date')</th>
+                        <th>@lang('global.risks.fields.type')</th>
+                        <th>@lang('global.risks.fields.date')</th>
                         <th>@lang('global.risks.fields.title')</th>
                         <th>@lang('global.risks.fields.description')</th>
                         <th>@lang('global.risks.fields.trigger-events')</th>
-                        <th>@lang('global.risks.fields.risk-impact')</th>
-                        <th>@lang('global.risks.fields.risk-probabilities')</th>
+                        <th>@lang('global.risks.fields.impact')</th>
+                        <th>@lang('global.risks.fields.probability')</th>
+                        <th>@lang('global.risks.fields.proximity')</th>
                         <th>@lang('global.risks.fields.score')</th>
-                        <th>@lang('global.risks.fields.risk-proximity')</th>
                         <th>@lang('global.risks.fields.mitigation')</th>
-                        <th>@lang('global.risks.fields.risk-owner')</th>
+                        <th>@lang('global.risks.fields.owner')</th>
                         <th>@lang('global.risks.fields.notes')</th>
                         <th>@lang('global.risks.fields.contingency')</th>
                         <th>@lang('global.risks.fields.version-date')</th>
@@ -585,21 +585,17 @@
                                 <td field-key='version'>{{ $risk->version }}</td>
                                 <td field-key='flag'>{{ Form::checkbox("flag", 1, $risk->flag == 1 ? true : false, ["disabled"]) }}</td>
                                 <td field-key='resolved'>{{ Form::checkbox("resolved", 1, $risk->resolved == 1 ? true : false, ["disabled"]) }}</td>
-                                <td field-key='risks_type'>{{ $risk->risks_type->name ?? '' }}</td>
-                                <td field-key='risk_date'>{{ $risk->risk_date }}</td>
+                                <td field-key='type'>{{ $risk->type->name ?? '' }}</td>
+                                <td field-key='date'>{{ $risk->date }}</td>
                                 <td field-key='title'>{!! $risk->title !!}</td>
                                 <td field-key='description'>{!! $risk->description !!}</td>
                                 <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
-                                <td field-key='risk_impact'>{{ $risk->risk_impact->name ?? '' }}</td>
-                                <td field-key='risk_probabilities'>{{ $risk->risk_probabilities->name ?? '' }}</td>
+                                <td field-key='impact'>{{ $risk->impact->name ?? '' }}</td>
+                                <td field-key='probability'>{{ $risk->probability->name ?? '' }}</td>
+                                <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                                 <td field-key='score'>{{ $risk->score }}</td>
-                                <td field-key='risk_proximity'>{{ $risk->risk_proximity->name ?? '' }}</td>
                                 <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
-                                <td field-key='risk_owner'>
-                                    @foreach ($risk->risk_owner as $singleRiskOwner)
-                                        <span class="label label-info label-many">{{ $singleRiskOwner->surname }}</span>
-                                    @endforeach
-                                </td>
+                                <td field-key='owner'>{{ $risk->owner->surname ?? '' }}</td>
                                 <td field-key='notes'>{!! $risk->notes !!}</td>
                                 <td field-key='contingency'>{!! $risk->contingency !!}</td>
                                 <td field-key='version_date'>{{ $risk->version_date }}</td>

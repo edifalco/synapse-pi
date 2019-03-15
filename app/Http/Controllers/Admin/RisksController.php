@@ -28,11 +28,11 @@ class RisksController extends Controller
         if (request()->ajax()) {
             $query = Risk::query();
             $query->with("project");
-            $query->with("risks_type");
-            $query->with("risk_impact");
-            $query->with("risk_probabilities");
-            $query->with("risk_proximity");
-            $query->with("risk_owner");
+            $query->with("type");
+            $query->with("impact");
+            $query->with("probability");
+            $query->with("proximity");
+            $query->with("owner");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -49,16 +49,17 @@ class RisksController extends Controller
                 'risks.version',
                 'risks.flag',
                 'risks.resolved',
-                'risks.risks_type_id',
-                'risks.risk_date',
+                'risks.type_id',
+                'risks.date',
                 'risks.title',
                 'risks.description',
                 'risks.trigger_events',
-                'risks.risk_impact_id',
-                'risks.risk_probabilities_id',
+                'risks.impact_id',
+                'risks.probability_id',
+                'risks.proximity_id',
                 'risks.score',
-                'risks.risk_proximity_id',
                 'risks.mitigation',
+                'risks.owner_id',
                 'risks.notes',
                 'risks.contingency',
                 'risks.version_date',
@@ -86,31 +87,29 @@ class RisksController extends Controller
             $table->editColumn('resolved', function ($row) {
                 return \Form::checkbox("resolved", 1, $row->resolved == 1, ["disabled"]);
             });
-            $table->editColumn('risks_type.name', function ($row) {
-                return $row->risks_type ? $row->risks_type->name : '';
+            $table->editColumn('type.name', function ($row) {
+                return $row->type ? $row->type->name : '';
+            });
+            $table->editColumn('date', function ($row) {
+                return $row->date ? $row->date : '';
             });
             $table->editColumn('trigger_events', function ($row) {
                 return $row->trigger_events ? $row->trigger_events : '';
             });
-            $table->editColumn('risk_impact.name', function ($row) {
-                return $row->risk_impact ? $row->risk_impact->name : '';
+            $table->editColumn('impact.name', function ($row) {
+                return $row->impact ? $row->impact->name : '';
             });
-            $table->editColumn('risk_probabilities.name', function ($row) {
-                return $row->risk_probabilities ? $row->risk_probabilities->name : '';
+            $table->editColumn('probability.name', function ($row) {
+                return $row->probability ? $row->probability->name : '';
             });
-            $table->editColumn('risk_proximity.name', function ($row) {
-                return $row->risk_proximity ? $row->risk_proximity->name : '';
+            $table->editColumn('proximity.name', function ($row) {
+                return $row->proximity ? $row->proximity->name : '';
             });
-            $table->editColumn('risk_owner.surname', function ($row) {
-                if(count($row->risk_owner) == 0) {
-                    return '';
-                }
-
-                return '<span class="label label-info label-many">' . implode('</span><span class="label label-info label-many"> ',
-                        $row->risk_owner->pluck('surname')->toArray()) . '</span>';
+            $table->editColumn('owner.surname', function ($row) {
+                return $row->owner ? $row->owner->surname : '';
             });
 
-            $table->rawColumns(['actions','massDelete','flag','resolved','risk_owner.surname']);
+            $table->rawColumns(['actions','massDelete','flag','resolved']);
 
             return $table->make(true);
         }
@@ -130,14 +129,13 @@ class RisksController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risks_types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_owners = \App\Member::get()->pluck('surname', 'id');
+        $types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
 
-
-        return view('admin.risks.create', compact('projects', 'risks_types', 'risk_impacts', 'risk_probabilities', 'risk_proximities', 'risk_owners'));
+        return view('admin.risks.create', compact('projects', 'types', 'impacts', 'probabilities', 'proximities', 'owners'));
     }
 
     /**
@@ -152,7 +150,6 @@ class RisksController extends Controller
             return abort(401);
         }
         $risk = Risk::create($request->all());
-        $risk->risk_owner()->sync(array_filter((array)$request->input('risk_owner')));
 
 
 
@@ -173,16 +170,15 @@ class RisksController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risks_types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_owners = \App\Member::get()->pluck('surname', 'id');
-
+        $types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
 
         $risk = Risk::findOrFail($id);
 
-        return view('admin.risks.edit', compact('risk', 'projects', 'risks_types', 'risk_impacts', 'risk_probabilities', 'risk_proximities', 'risk_owners'));
+        return view('admin.risks.edit', compact('risk', 'projects', 'types', 'impacts', 'probabilities', 'proximities', 'owners'));
     }
 
     /**
@@ -199,7 +195,6 @@ class RisksController extends Controller
         }
         $risk = Risk::findOrFail($id);
         $risk->update($request->all());
-        $risk->risk_owner()->sync(array_filter((array)$request->input('risk_owner')));
 
 
 
@@ -220,12 +215,11 @@ class RisksController extends Controller
         }
         
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risks_types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
-        $risk_owners = \App\Member::get()->pluck('surname', 'id');
-$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mowners = \App\RiskMowner::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
+        $types = \App\RiskType::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $impacts = \App\RiskImpact::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $probabilities = \App\RiskProbability::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $proximities = \App\RiskProximity::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $owners = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');$risk_highlights = \App\RiskHighlight::where('risk_id', $id)->get();$risk_mowners = \App\RiskMowner::where('risk_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('risk_id', $id)->get();$risk_powners = \App\RiskPowner::where('risk_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('risk_id', $id)->get();
 
         $risk = Risk::findOrFail($id);
 
