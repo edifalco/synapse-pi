@@ -69,6 +69,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('risks_mass_destroy', ['uses' => 'Admin\RisksController@massDestroy', 'as' => 'risks.mass_destroy']);
     Route::post('risks_restore/{id}', ['uses' => 'Admin\RisksController@restore', 'as' => 'risks.restore']);
     Route::delete('risks_perma_del/{id}', ['uses' => 'Admin\RisksController@perma_del', 'as' => 'risks.perma_del']);
+    Route::resource('teams', 'Admin\TeamsController');
+    Route::post('teams_mass_destroy', ['uses' => 'Admin\TeamsController@massDestroy', 'as' => 'teams.mass_destroy']);
+    Route::post('teams_restore/{id}', ['uses' => 'Admin\TeamsController@restore', 'as' => 'teams.restore']);
+    Route::delete('teams_perma_del/{id}', ['uses' => 'Admin\TeamsController@perma_del', 'as' => 'teams.perma_del']);
     Route::resource('workpackages', 'Admin\WorkpackagesController');
     Route::post('workpackages_mass_destroy', ['uses' => 'Admin\WorkpackagesController@massDestroy', 'as' => 'workpackages.mass_destroy']);
     Route::post('workpackages_restore/{id}', ['uses' => 'Admin\WorkpackagesController@restore', 'as' => 'workpackages.restore']);
@@ -175,10 +179,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('member_partners_mass_destroy', ['uses' => 'Admin\MemberPartnersController@massDestroy', 'as' => 'member_partners.mass_destroy']);
     Route::post('member_partners_restore/{id}', ['uses' => 'Admin\MemberPartnersController@restore', 'as' => 'member_partners.restore']);
     Route::delete('member_partners_perma_del/{id}', ['uses' => 'Admin\MemberPartnersController@perma_del', 'as' => 'member_partners.perma_del']);
-    Route::resource('memberroles', 'Admin\MemberrolesController');
-    Route::post('memberroles_mass_destroy', ['uses' => 'Admin\MemberrolesController@massDestroy', 'as' => 'memberroles.mass_destroy']);
-    Route::post('memberroles_restore/{id}', ['uses' => 'Admin\MemberrolesController@restore', 'as' => 'memberroles.restore']);
-    Route::delete('memberroles_perma_del/{id}', ['uses' => 'Admin\MemberrolesController@perma_del', 'as' => 'memberroles.perma_del']);
     Route::resource('metriclabels', 'Admin\MetriclabelsController');
     Route::post('metriclabels_mass_destroy', ['uses' => 'Admin\MetriclabelsController@massDestroy', 'as' => 'metriclabels.mass_destroy']);
     Route::post('metriclabels_restore/{id}', ['uses' => 'Admin\MetriclabelsController@restore', 'as' => 'metriclabels.restore']);
@@ -242,10 +242,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('faq_categories_mass_destroy', ['uses' => 'Admin\FaqCategoriesController@massDestroy', 'as' => 'faq_categories.mass_destroy']);
     Route::resource('faq_questions', 'Admin\FaqQuestionsController');
     Route::post('faq_questions_mass_destroy', ['uses' => 'Admin\FaqQuestionsController@massDestroy', 'as' => 'faq_questions.mass_destroy']);
-    Route::resource('teams', 'Admin\TeamsController');
-    Route::post('teams_mass_destroy', ['uses' => 'Admin\TeamsController@massDestroy', 'as' => 'teams.mass_destroy']);
-    Route::post('teams_restore/{id}', ['uses' => 'Admin\TeamsController@restore', 'as' => 'teams.restore']);
-    Route::delete('teams_perma_del/{id}', ['uses' => 'Admin\TeamsController@perma_del', 'as' => 'teams.perma_del']);
 
 
     Route::post('csv_parse', 'Admin\CsvImportController@parse')->name('csv_parse');

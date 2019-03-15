@@ -24,6 +24,10 @@
                             <th>@lang('global.team.fields.role')</th>
                             <td field-key='role'>{{ $team->role }}</td>
                         </tr>
+                        <tr>
+                            <th>@lang('global.team.fields.partner')</th>
+                            <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
+                        </tr>
                     </table>
                 </div>
             </div>

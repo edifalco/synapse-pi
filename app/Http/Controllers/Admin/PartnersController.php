@@ -156,14 +156,14 @@ class PartnersController extends Controller
             return abort(401);
         }
         
-        $countries = \App\Country::get()->pluck('title', 'id')->prepend(trans('global.app_please_select'), '');$budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$memberroles = \App\Memberrole::where('partner_id', $id)->get();$projects = \App\Project::whereHas('partners',
+        $countries = \App\Country::get()->pluck('title', 'id')->prepend(trans('global.app_please_select'), '');$budgets = \App\Budget::where('partner_id', $id)->get();$partnerroles = \App\Partnerrole::where('partner_id', $id)->get();$risk_powners = \App\RiskPowner::where('partner_id', $id)->get();$risk_preporters = \App\RiskPreporter::where('partner_id', $id)->get();$deliverable_partners = \App\DeliverablePartner::where('partner_id', $id)->get();$acronyms = \App\Acronym::where('partner_id', $id)->get();$member_partners = \App\MemberPartner::where('partner_id', $id)->get();$acronym_projects = \App\AcronymProject::where('partner_id', $id)->get();$partnernums = \App\Partnernum::where('partner_id', $id)->get();$project_members = \App\ProjectMember::where('partner_id', $id)->get();$members = \App\Member::where('partner_id', $id)->get();$efforts = \App\Effort::where('partner_id', $id)->get();$teams = \App\Team::where('partner_id', $id)->get();$projects = \App\Project::whereHas('partners',
                     function ($query) use ($id) {
                         $query->where('id', $id);
                     })->get();
 
         $partner = Partner::findOrFail($id);
 
-        return view('admin.partners.show', compact('partner', 'budgets', 'partnerroles', 'risk_powners', 'risk_preporters', 'deliverable_partners', 'acronyms', 'member_partners', 'acronym_projects', 'partnernums', 'project_members', 'members', 'efforts', 'memberroles', 'projects'));
+        return view('admin.partners.show', compact('partner', 'budgets', 'partnerroles', 'risk_powners', 'risk_preporters', 'deliverable_partners', 'acronyms', 'member_partners', 'acronym_projects', 'partnernums', 'project_members', 'members', 'efforts', 'teams', 'projects'));
     }
 
 

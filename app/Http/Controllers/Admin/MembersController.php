@@ -158,7 +158,7 @@ class MembersController extends Controller
             return abort(401);
         }
         
-        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$member_partners = \App\MemberPartner::where('member_id', $id)->get();$memberroles = \App\Memberrole::where('member_id', $id)->get();$teams = \App\Team::where('member_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('member_id', $id)->get();$project_members = \App\ProjectMember::where('member_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('member_id', $id)->get();$deliverables = \App\Deliverable::whereHas('responsible',
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');$member_partners = \App\MemberPartner::where('member_id', $id)->get();$teams = \App\Team::where('member_id', $id)->get();$risk_mreporters = \App\RiskMreporter::where('member_id', $id)->get();$project_members = \App\ProjectMember::where('member_id', $id)->get();$deliverable_reviewers = \App\DeliverableReviewer::where('member_id', $id)->get();$deliverables = \App\Deliverable::whereHas('responsible',
                     function ($query) use ($id) {
                         $query->where('id', $id);
                     })->get();$risks = \App\Risk::whereHas('owner',
@@ -168,7 +168,7 @@ class MembersController extends Controller
 
         $member = Member::findOrFail($id);
 
-        return view('admin.members.show', compact('member', 'member_partners', 'memberroles', 'teams', 'risk_mreporters', 'project_members', 'deliverable_reviewers', 'deliverables', 'risks'));
+        return view('admin.members.show', compact('member', 'member_partners', 'teams', 'risk_mreporters', 'project_members', 'deliverable_reviewers', 'deliverables', 'risks'));
     }
 
 
