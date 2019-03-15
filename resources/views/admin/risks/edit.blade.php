@@ -75,24 +75,24 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risks_type_id', trans('global.risks.fields.risks-type').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('risks_type_id', $risks_types, old('risks_type_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('type_id', trans('global.risks.fields.type').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('type_id', $types, old('type_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('risks_type_id'))
+                    @if($errors->has('type_id'))
                         <p class="help-block">
-                            {{ $errors->first('risks_type_id') }}
+                            {{ $errors->first('type_id') }}
                         </p>
                     @endif
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risk_date', trans('global.risks.fields.risk-date').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('risk_date', old('risk_date'), ['class' => 'form-control date', 'placeholder' => '']) !!}
+                    {!! Form::label('date', trans('global.risks.fields.date').'', ['class' => 'control-label']) !!}
+                    {!! Form::text('date', old('date'), ['class' => 'form-control date', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('risk_date'))
+                    @if($errors->has('date'))
                         <p class="help-block">
-                            {{ $errors->first('risk_date') }}
+                            {{ $errors->first('date') }}
                         </p>
                     @endif
                 </div>
@@ -135,24 +135,36 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risk_impact_id', trans('global.risks.fields.risk-impact').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('risk_impact_id', $risk_impacts, old('risk_impact_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('impact_id', trans('global.risks.fields.impact').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('impact_id', $impacts, old('impact_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('risk_impact_id'))
+                    @if($errors->has('impact_id'))
                         <p class="help-block">
-                            {{ $errors->first('risk_impact_id') }}
+                            {{ $errors->first('impact_id') }}
                         </p>
                     @endif
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risk_probabilities_id', trans('global.risks.fields.risk-probabilities').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('risk_probabilities_id', $risk_probabilities, old('risk_probabilities_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('probability_id', trans('global.risks.fields.probability').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('probability_id', $probabilities, old('probability_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('risk_probabilities_id'))
+                    @if($errors->has('probability_id'))
                         <p class="help-block">
-                            {{ $errors->first('risk_probabilities_id') }}
+                            {{ $errors->first('probability_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('proximity_id', trans('global.risks.fields.proximity').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('proximity_id', $proximities, old('proximity_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('proximity_id'))
+                        <p class="help-block">
+                            {{ $errors->first('proximity_id') }}
                         </p>
                     @endif
                 </div>
@@ -171,18 +183,6 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risk_proximity_id', trans('global.risks.fields.risk-proximity').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('risk_proximity_id', $risk_proximities, old('risk_proximity_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('risk_proximity_id'))
-                        <p class="help-block">
-                            {{ $errors->first('risk_proximity_id') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('mitigation', trans('global.risks.fields.mitigation').'', ['class' => 'control-label']) !!}
                     {!! Form::textarea('mitigation', old('mitigation'), ['class' => 'form-control ', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
@@ -195,18 +195,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('risk_owner', trans('global.risks.fields.risk-owner').'', ['class' => 'control-label']) !!}
-                    <button type="button" class="btn btn-primary btn-xs" id="selectbtn-risk_owner">
-                        {{ trans('global.app_select_all') }}
-                    </button>
-                    <button type="button" class="btn btn-primary btn-xs" id="deselectbtn-risk_owner">
-                        {{ trans('global.app_deselect_all') }}
-                    </button>
-                    {!! Form::select('risk_owner[]', $risk_owners, old('risk_owner') ? old('risk_owner') : $risk->risk_owner->pluck('id')->toArray(), ['class' => 'form-control select2', 'multiple' => 'multiple', 'id' => 'selectall-risk_owner' ]) !!}
+                    {!! Form::label('owner_id', trans('global.risks.fields.owner').'', ['class' => 'control-label']) !!}
+                    {!! Form::select('owner_id', $owners, old('owner_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('risk_owner'))
+                    @if($errors->has('owner_id'))
                         <p class="help-block">
-                            {{ $errors->first('risk_owner') }}
+                            {{ $errors->first('owner_id') }}
                         </p>
                     @endif
                 </div>
@@ -290,14 +284,4 @@
         });
     </script>
             
-    <script>
-        $("#selectbtn-risk_owner").click(function(){
-            $("#selectall-risk_owner > option").prop("selected","selected");
-            $("#selectall-risk_owner").trigger("change");
-        });
-        $("#deselectbtn-risk_owner").click(function(){
-            $("#selectall-risk_owner > option").prop("selected","");
-            $("#selectall-risk_owner").trigger("change");
-        });
-    </script>
 @stop

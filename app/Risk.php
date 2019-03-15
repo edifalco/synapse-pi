@@ -14,16 +14,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $version
  * @property tinyInteger $flag
  * @property tinyInteger $resolved
- * @property string $risks_type
- * @property string $risk_date
+ * @property string $type
+ * @property string $date
  * @property text $title
  * @property text $description
  * @property text $trigger_events
- * @property string $risk_impact
- * @property string $risk_probabilities
+ * @property string $impact
+ * @property string $probability
+ * @property string $proximity
  * @property integer $score
- * @property string $risk_proximity
  * @property text $mitigation
+ * @property string $owner
  * @property text $notes
  * @property text $contingency
  * @property time $version_date
@@ -33,7 +34,7 @@ class Risk extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['code', 'version', 'flag', 'resolved', 'risk_date', 'title', 'description', 'trigger_events', 'score', 'mitigation', 'notes', 'contingency', 'version_date', 'parent_id', 'project_id', 'risks_type_id', 'risk_impact_id', 'risk_probabilities_id', 'risk_proximity_id'];
+    protected $fillable = ['code', 'version', 'flag', 'resolved', 'date', 'title', 'description', 'trigger_events', 'score', 'mitigation', 'notes', 'contingency', 'version_date', 'parent_id', 'project_id', 'type_id', 'impact_id', 'probability_id', 'proximity_id', 'owner_id'];
     protected $hidden = [];
     public static $searchable = [
         'code',
@@ -74,21 +75,21 @@ class Risk extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setRisksTypeIdAttribute($input)
+    public function setTypeIdAttribute($input)
     {
-        $this->attributes['risks_type_id'] = $input ? $input : null;
+        $this->attributes['type_id'] = $input ? $input : null;
     }
 
     /**
      * Set attribute to date format
      * @param $input
      */
-    public function setRiskDateAttribute($input)
+    public function setDateAttribute($input)
     {
         if ($input != null && $input != '') {
-            $this->attributes['risk_date'] = Carbon::createFromFormat(config('app.date_format'), $input)->format('Y-m-d');
+            $this->attributes['date'] = Carbon::createFromFormat(config('app.date_format'), $input)->format('Y-m-d');
         } else {
-            $this->attributes['risk_date'] = null;
+            $this->attributes['date'] = null;
         }
     }
 
@@ -98,7 +99,7 @@ class Risk extends Model
      *
      * @return string
      */
-    public function getRiskDateAttribute($input)
+    public function getDateAttribute($input)
     {
         $zeroDate = str_replace(['Y', 'm', 'd'], ['0000', '00', '00'], config('app.date_format'));
 
@@ -113,18 +114,27 @@ class Risk extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setRiskImpactIdAttribute($input)
+    public function setImpactIdAttribute($input)
     {
-        $this->attributes['risk_impact_id'] = $input ? $input : null;
+        $this->attributes['impact_id'] = $input ? $input : null;
     }
 
     /**
      * Set to null if empty
      * @param $input
      */
-    public function setRiskProbabilitiesIdAttribute($input)
+    public function setProbabilityIdAttribute($input)
     {
-        $this->attributes['risk_probabilities_id'] = $input ? $input : null;
+        $this->attributes['probability_id'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setProximityIdAttribute($input)
+    {
+        $this->attributes['proximity_id'] = $input ? $input : null;
     }
 
     /**
@@ -140,9 +150,9 @@ class Risk extends Model
      * Set to null if empty
      * @param $input
      */
-    public function setRiskProximityIdAttribute($input)
+    public function setOwnerIdAttribute($input)
     {
-        $this->attributes['risk_proximity_id'] = $input ? $input : null;
+        $this->attributes['owner_id'] = $input ? $input : null;
     }
 
     /**
@@ -187,29 +197,29 @@ class Risk extends Model
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
     }
     
-    public function risks_type()
+    public function type()
     {
-        return $this->belongsTo(RiskType::class, 'risks_type_id')->withTrashed();
+        return $this->belongsTo(RiskType::class, 'type_id')->withTrashed();
     }
     
-    public function risk_impact()
+    public function impact()
     {
-        return $this->belongsTo(RiskImpact::class, 'risk_impact_id')->withTrashed();
+        return $this->belongsTo(RiskImpact::class, 'impact_id')->withTrashed();
     }
     
-    public function risk_probabilities()
+    public function probability()
     {
-        return $this->belongsTo(RiskProbability::class, 'risk_probabilities_id')->withTrashed();
+        return $this->belongsTo(RiskProbability::class, 'probability_id')->withTrashed();
     }
     
-    public function risk_proximity()
+    public function proximity()
     {
-        return $this->belongsTo(RiskProximity::class, 'risk_proximity_id')->withTrashed();
+        return $this->belongsTo(RiskProximity::class, 'proximity_id')->withTrashed();
     }
     
-    public function risk_owner()
+    public function owner()
     {
-        return $this->belongsToMany(Member::class, 'member_risk')->withTrashed();
+        return $this->belongsTo(Member::class, 'owner_id')->withTrashed();
     }
     
 }

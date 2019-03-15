@@ -33,12 +33,12 @@
                             <td field-key='resolved'>{{ Form::checkbox("resolved", 1, $risk->resolved == 1 ? true : false, ["disabled"]) }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risks-type')</th>
-                            <td field-key='risks_type'>{{ $risk->risks_type->name ?? '' }}</td>
+                            <th>@lang('global.risks.fields.type')</th>
+                            <td field-key='type'>{{ $risk->type->name ?? '' }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risk-date')</th>
-                            <td field-key='risk_date'>{{ $risk->risk_date }}</td>
+                            <th>@lang('global.risks.fields.date')</th>
+                            <td field-key='date'>{{ $risk->date }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.title')</th>
@@ -53,32 +53,28 @@
                             <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risk-impact')</th>
-                            <td field-key='risk_impact'>{{ $risk->risk_impact->name ?? '' }}</td>
+                            <th>@lang('global.risks.fields.impact')</th>
+                            <td field-key='impact'>{{ $risk->impact->name ?? '' }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risk-probabilities')</th>
-                            <td field-key='risk_probabilities'>{{ $risk->risk_probabilities->name ?? '' }}</td>
+                            <th>@lang('global.risks.fields.probability')</th>
+                            <td field-key='probability'>{{ $risk->probability->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.proximity')</th>
+                            <td field-key='proximity'>{{ $risk->proximity->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.score')</th>
                             <td field-key='score'>{{ $risk->score }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risk-proximity')</th>
-                            <td field-key='risk_proximity'>{{ $risk->risk_proximity->name ?? '' }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.risks.fields.mitigation')</th>
                             <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.risk-owner')</th>
-                            <td field-key='risk_owner'>
-                                @foreach ($risk->risk_owner as $singleRiskOwner)
-                                    <span class="label label-info label-many">{{ $singleRiskOwner->surname }}</span>
-                                @endforeach
-                            </td>
+                            <th>@lang('global.risks.fields.owner')</th>
+                            <td field-key='owner'>{{ $risk->owner->surname ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.notes')</th>

@@ -145,7 +145,7 @@ class RiskProbabilitiesController extends Controller
         if (! Gate::allows('risk_probability_view')) {
             return abort(401);
         }
-        $risks = \App\Risk::where('risk_probabilities_id', $id)->get();
+        $risks = \App\Risk::where('probability_id', $id)->get();
 
         $risk_probability = RiskProbability::findOrFail($id);
 
