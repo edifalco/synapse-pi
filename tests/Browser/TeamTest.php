@@ -21,15 +21,15 @@ class TeamTest extends DuskTestCase
                 ->visit(route('admin.teams.index'))
                 ->clickLink('Add new')
                 ->select("member_id", $team->member_id)
+                ->select("partner_id", $team->partner_id)
                 ->select("project_id", $team->project_id)
                 ->type("role", $team->role)
-                ->select("partner_id", $team->partner_id)
                 ->press('Save')
                 ->assertRouteIs('admin.teams.index')
                 ->assertSeeIn("tr:last-child td[field-key='member']", $team->member->surname)
+                ->assertSeeIn("tr:last-child td[field-key='partner']", $team->partner->name)
                 ->assertSeeIn("tr:last-child td[field-key='project']", $team->project->name)
                 ->assertSeeIn("tr:last-child td[field-key='role']", $team->role)
-                ->assertSeeIn("tr:last-child td[field-key='partner']", $team->partner->name)
                 ->logout();
         });
     }
@@ -47,15 +47,15 @@ class TeamTest extends DuskTestCase
                 ->visit(route('admin.teams.index'))
                 ->click('tr[data-entry-id="' . $team->id . '"] .btn-info')
                 ->select("member_id", $team2->member_id)
+                ->select("partner_id", $team2->partner_id)
                 ->select("project_id", $team2->project_id)
                 ->type("role", $team2->role)
-                ->select("partner_id", $team2->partner_id)
                 ->press('Update')
                 ->assertRouteIs('admin.teams.index')
                 ->assertSeeIn("tr:last-child td[field-key='member']", $team2->member->surname)
+                ->assertSeeIn("tr:last-child td[field-key='partner']", $team2->partner->name)
                 ->assertSeeIn("tr:last-child td[field-key='project']", $team2->project->name)
                 ->assertSeeIn("tr:last-child td[field-key='role']", $team2->role)
-                ->assertSeeIn("tr:last-child td[field-key='partner']", $team2->partner->name)
                 ->logout();
         });
     }
@@ -73,9 +73,9 @@ class TeamTest extends DuskTestCase
                 ->visit(route('admin.teams.index'))
                 ->click('tr[data-entry-id="' . $team->id . '"] .btn-primary')
                 ->assertSeeIn("td[field-key='member']", $team->member->surname)
+                ->assertSeeIn("td[field-key='partner']", $team->partner->name)
                 ->assertSeeIn("td[field-key='project']", $team->project->name)
                 ->assertSeeIn("td[field-key='role']", $team->role)
-                ->assertSeeIn("td[field-key='partner']", $team->partner->name)
                 ->logout();
         });
     }

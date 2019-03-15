@@ -48,7 +48,6 @@
 <li role="presentation" class="active"><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
 <li role="presentation" class=""><a href="#risks" aria-controls="risks" role="tab" data-toggle="tab">Risks</a></li>
 <li role="presentation" class=""><a href="#efforts" aria-controls="efforts" role="tab" data-toggle="tab">Efforts</a></li>
-<li role="presentation" class=""><a href="#team" aria-controls="team" role="tab" data-toggle="tab">Team</a></li>
 <li role="presentation" class=""><a href="#alternativescores" aria-controls="alternativescores" role="tab" data-toggle="tab">Alternativescores</a></li>
 <li role="presentation" class=""><a href="#metriclabels" aria-controls="metriclabels" role="tab" data-toggle="tab">Metriclabels</a></li>
 <li role="presentation" class=""><a href="#project_users" aria-controls="project_users" role="tab" data-toggle="tab">Project users</a></li>
@@ -61,6 +60,7 @@
 <li role="presentation" class=""><a href="#financials" aria-controls="financials" role="tab" data-toggle="tab">Financials</a></li>
 <li role="presentation" class=""><a href="#financialvisibilities" aria-controls="financialvisibilities" role="tab" data-toggle="tab">Financialvisibilities</a></li>
 <li role="presentation" class=""><a href="#acronym_projects" aria-controls="acronym_projects" role="tab" data-toggle="tab">Acronym projects</a></li>
+<li role="presentation" class=""><a href="#team" aria-controls="team" role="tab" data-toggle="tab">Team</a></li>
 <li role="presentation" class=""><a href="#cd_disseminations" aria-controls="cd_disseminations" role="tab" data-toggle="tab">Cd disseminations</a></li>
 <li role="presentation" class=""><a href="#metricicons" aria-controls="metricicons" role="tab" data-toggle="tab">Metricicons</a></li>
 <li role="presentation" class=""><a href="#cd_emails" aria-controls="cd_emails" role="tab" data-toggle="tab">Cd emails</a></li>
@@ -306,76 +306,6 @@
         @else
             <tr>
                 <td colspan="10">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
-<div role="tabpanel" class="tab-pane " id="team">
-<table class="table table-bordered table-striped {{ count($teams) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.team.fields.member')</th>
-                        <th>@lang('global.team.fields.project')</th>
-                        <th>@lang('global.team.fields.role')</th>
-                        <th>@lang('global.team.fields.partner')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($teams) > 0)
-            @foreach ($teams as $team)
-                <tr data-entry-id="{{ $team->id }}">
-                    <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
-                                <td field-key='project'>{{ $team->project->name ?? '' }}</td>
-                                <td field-key='role'>{{ $team->role }}</td>
-                                <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.teams.restore', $team->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.teams.perma_del', $team->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('team_view')
-                                    <a href="{{ route('admin.teams.show',[$team->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('team_edit')
-                                    <a href="{{ route('admin.teams.edit',[$team->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('team_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.teams.destroy', $team->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
@@ -1182,6 +1112,76 @@
         @else
             <tr>
                 <td colspan="8">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="team">
+<table class="table table-bordered table-striped {{ count($teams) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.team.fields.member')</th>
+                        <th>@lang('global.team.fields.partner')</th>
+                        <th>@lang('global.team.fields.project')</th>
+                        <th>@lang('global.team.fields.role')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($teams) > 0)
+            @foreach ($teams as $team)
+                <tr data-entry-id="{{ $team->id }}">
+                    <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
+                                <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
+                                <td field-key='project'>{{ $team->project->name ?? '' }}</td>
+                                <td field-key='role'>{{ $team->role }}</td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.teams.restore', $team->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.teams.perma_del', $team->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('team_view')
+                                    <a href="{{ route('admin.teams.show',[$team->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('team_edit')
+                                    <a href="{{ route('admin.teams.edit',[$team->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('team_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.teams.destroy', $team->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
