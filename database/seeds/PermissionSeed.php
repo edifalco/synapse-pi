@@ -326,6 +326,11 @@ class PermissionSeed extends Seeder
             ['id' => 337, 'title' => 'risk_proximity_edit',],
             ['id' => 338, 'title' => 'risk_proximity_view',],
             ['id' => 339, 'title' => 'risk_proximity_delete',],
+            ['id' => 340, 'title' => 'team_access',],
+            ['id' => 341, 'title' => 'team_create',],
+            ['id' => 342, 'title' => 'team_edit',],
+            ['id' => 343, 'title' => 'team_view',],
+            ['id' => 344, 'title' => 'team_delete',],
 
         ];
 

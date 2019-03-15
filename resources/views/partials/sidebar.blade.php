@@ -120,6 +120,14 @@
                 </a>
             </li>@endcan
             
+            @can('team_access')
+            <li>
+                <a href="{{ route('admin.teams.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.team.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('workpackage_access')
             <li>
                 <a href="{{ route('admin.workpackages.index') }}">
