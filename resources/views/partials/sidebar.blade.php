@@ -184,6 +184,38 @@
                 </a>
             </li>@endcan
             
+            @can('risk_type_access')
+            <li>
+                <a href="{{ route('admin.risk_types.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.risk-types.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('risk_impact_access')
+            <li>
+                <a href="{{ route('admin.risk_impacts.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.risk-impacts.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('risk_probability_access')
+            <li>
+                <a href="{{ route('admin.risk_probabilities.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.risk-probabilities.title')</span>
+                </a>
+            </li>@endcan
+            
+            @can('risk_proximity_access')
+            <li>
+                <a href="{{ route('admin.risk_proximities.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>@lang('global.risk-proximities.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('project_management_access')
             <li class="treeview">
                 <a href="#">

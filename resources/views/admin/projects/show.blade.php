@@ -46,6 +46,7 @@
 <ul class="nav nav-tabs" role="tablist">
     
 <li role="presentation" class="active"><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
+<li role="presentation" class=""><a href="#risks" aria-controls="risks" role="tab" data-toggle="tab">Risks</a></li>
 <li role="presentation" class=""><a href="#efforts" aria-controls="efforts" role="tab" data-toggle="tab">Efforts</a></li>
 <li role="presentation" class=""><a href="#alternativescores" aria-controls="alternativescores" role="tab" data-toggle="tab">Alternativescores</a></li>
 <li role="presentation" class=""><a href="#metriclabels" aria-controls="metriclabels" role="tab" data-toggle="tab">Metriclabels</a></li>
@@ -76,7 +77,6 @@
 <li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
 <li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>
 <li role="presentation" class=""><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
-<li role="presentation" class=""><a href="#risks" aria-controls="risks" role="tab" data-toggle="tab">Risks</a></li>
 <li role="presentation" class=""><a href="#deliverables" aria-controls="deliverables" role="tab" data-toggle="tab">Deliverables</a></li>
 </ul>
 
@@ -146,6 +146,112 @@
         @else
             <tr>
                 <td colspan="8">@lang('global.app_no_entries_in_table')</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+<div role="tabpanel" class="tab-pane " id="risks">
+<table class="table table-bordered table-striped {{ count($risks) > 0 ? 'datatable' : '' }}">
+    <thead>
+        <tr>
+            <th>@lang('global.risks.fields.project')</th>
+                        <th>@lang('global.risks.fields.code')</th>
+                        <th>@lang('global.risks.fields.version')</th>
+                        <th>@lang('global.risks.fields.flag')</th>
+                        <th>@lang('global.risks.fields.resolved')</th>
+                        <th>@lang('global.risks.fields.risks-type')</th>
+                        <th>@lang('global.risks.fields.risk-date')</th>
+                        <th>@lang('global.risks.fields.title')</th>
+                        <th>@lang('global.risks.fields.description')</th>
+                        <th>@lang('global.risks.fields.trigger-events')</th>
+                        <th>@lang('global.risks.fields.risk-impact')</th>
+                        <th>@lang('global.risks.fields.risk-probabilities')</th>
+                        <th>@lang('global.risks.fields.score')</th>
+                        <th>@lang('global.risks.fields.risk-proximity')</th>
+                        <th>@lang('global.risks.fields.mitigation')</th>
+                        <th>@lang('global.risks.fields.risk-owner')</th>
+                        <th>@lang('global.risks.fields.notes')</th>
+                        <th>@lang('global.risks.fields.contingency')</th>
+                        <th>@lang('global.risks.fields.version-date')</th>
+                        <th>@lang('global.risks.fields.parent-id')</th>
+                        @if( request('show_deleted') == 1 )
+                        <th>&nbsp;</th>
+                        @else
+                        <th>&nbsp;</th>
+                        @endif
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (count($risks) > 0)
+            @foreach ($risks as $risk)
+                <tr data-entry-id="{{ $risk->id }}">
+                    <td field-key='project'>{{ $risk->project->name ?? '' }}</td>
+                                <td field-key='code'>{{ $risk->code }}</td>
+                                <td field-key='version'>{{ $risk->version }}</td>
+                                <td field-key='flag'>{{ Form::checkbox("flag", 1, $risk->flag == 1 ? true : false, ["disabled"]) }}</td>
+                                <td field-key='resolved'>{{ Form::checkbox("resolved", 1, $risk->resolved == 1 ? true : false, ["disabled"]) }}</td>
+                                <td field-key='risks_type'>{{ $risk->risks_type->name ?? '' }}</td>
+                                <td field-key='risk_date'>{{ $risk->risk_date }}</td>
+                                <td field-key='title'>{!! $risk->title !!}</td>
+                                <td field-key='description'>{!! $risk->description !!}</td>
+                                <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
+                                <td field-key='risk_impact'>{{ $risk->risk_impact->name ?? '' }}</td>
+                                <td field-key='risk_probabilities'>{{ $risk->risk_probabilities->name ?? '' }}</td>
+                                <td field-key='score'>{{ $risk->score }}</td>
+                                <td field-key='risk_proximity'>{{ $risk->risk_proximity->name ?? '' }}</td>
+                                <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
+                                <td field-key='risk_owner'>
+                                    @foreach ($risk->risk_owner as $singleRiskOwner)
+                                        <span class="label label-info label-many">{{ $singleRiskOwner->surname }}</span>
+                                    @endforeach
+                                </td>
+                                <td field-key='notes'>{!! $risk->notes !!}</td>
+                                <td field-key='contingency'>{!! $risk->contingency !!}</td>
+                                <td field-key='version_date'>{{ $risk->version_date }}</td>
+                                <td field-key='parent_id'>{{ $risk->parent_id }}</td>
+                                @if( request('show_deleted') == 1 )
+                                <td>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.risks.restore', $risk->id])) !!}
+                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
+                                    {!! Form::close() !!}
+                                                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.risks.perma_del', $risk->id])) !!}
+                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                                                </td>
+                                @else
+                                <td>
+                                    @can('risk_view')
+                                    <a href="{{ route('admin.risks.show',[$risk->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
+                                    @endcan
+                                    @can('risk_edit')
+                                    <a href="{{ route('admin.risks.edit',[$risk->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    @endcan
+                                    @can('risk_delete')
+{!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
+                                        'route' => ['admin.risks.destroy', $risk->id])) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                                @endif
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="25">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
@@ -2147,106 +2253,6 @@
         @else
             <tr>
                 <td colspan="12">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
-<div role="tabpanel" class="tab-pane " id="risks">
-<table class="table table-bordered table-striped {{ count($risks) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.risks.fields.code')</th>
-                        <th>@lang('global.risks.fields.version')</th>
-                        <th>@lang('global.risks.fields.parent-id')</th>
-                        <th>@lang('global.risks.fields.description')</th>
-                        <th>@lang('global.risks.fields.score')</th>
-                        <th>@lang('global.risks.fields.flag')</th>
-                        <th>@lang('global.risks.fields.project')</th>
-                        <th>@lang('global.risks.fields.impact')</th>
-                        <th>@lang('global.risks.fields.probability')</th>
-                        <th>@lang('global.risks.fields.proximity')</th>
-                        <th>@lang('global.risks.fields.title')</th>
-                        <th>@lang('global.risks.fields.contingency')</th>
-                        <th>@lang('global.risks.fields.mitigation')</th>
-                        <th>@lang('global.risks.fields.triggerevents')</th>
-                        <th>@lang('global.risks.fields.resolved')</th>
-                        <th>@lang('global.risks.fields.risk-date')</th>
-                        <th>@lang('global.risks.fields.version-date')</th>
-                        <th>@lang('global.risks.fields.type')</th>
-                        <th>@lang('global.risks.fields.notes')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($risks) > 0)
-            @foreach ($risks as $risk)
-                <tr data-entry-id="{{ $risk->id }}">
-                    <td field-key='code'>{{ $risk->code }}</td>
-                                <td field-key='version'>{{ $risk->version }}</td>
-                                <td field-key='parent_id'>{{ $risk->parent_id }}</td>
-                                <td field-key='description'>{!! $risk->description !!}</td>
-                                <td field-key='score'>{{ $risk->score }}</td>
-                                <td field-key='flag'>{{ $risk->flag }}</td>
-                                <td field-key='project'>{{ $risk->project->name ?? '' }}</td>
-                                <td field-key='impact'>{{ $risk->impact }}</td>
-                                <td field-key='probability'>{{ $risk->probability }}</td>
-                                <td field-key='proximity'>{{ $risk->proximity }}</td>
-                                <td field-key='title'>{!! $risk->title !!}</td>
-                                <td field-key='contingency'>{!! $risk->contingency !!}</td>
-                                <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
-                                <td field-key='triggerevents'>{!! $risk->triggerevents !!}</td>
-                                <td field-key='resolved'>{{ $risk->resolved }}</td>
-                                <td field-key='risk_date'>{{ $risk->risk_date }}</td>
-                                <td field-key='version_date'>{{ $risk->version_date }}</td>
-                                <td field-key='type'>{{ $risk->type }}</td>
-                                <td field-key='notes'>{!! $risk->notes !!}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risks.restore', $risk->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risks.perma_del', $risk->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('risk_view')
-                                    <a href="{{ route('admin.risks.show',[$risk->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('risk_edit')
-                                    <a href="{{ route('admin.risks.edit',[$risk->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('risk_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risks.destroy', $risk->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="24">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>

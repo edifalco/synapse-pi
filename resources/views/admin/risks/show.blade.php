@@ -13,6 +13,10 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
+                            <th>@lang('global.risks.fields.project')</th>
+                            <td field-key='project'>{{ $risk->project->name ?? '' }}</td>
+                        </tr>
+                        <tr>
                             <th>@lang('global.risks.fields.code')</th>
                             <td field-key='code'>{{ $risk->code }}</td>
                         </tr>
@@ -21,72 +25,76 @@
                             <td field-key='version'>{{ $risk->version }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.parent-id')</th>
-                            <td field-key='parent_id'>{{ $risk->parent_id }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.description')</th>
-                            <td field-key='description'>{!! $risk->description !!}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.score')</th>
-                            <td field-key='score'>{{ $risk->score }}</td>
-                        </tr>
-                        <tr>
                             <th>@lang('global.risks.fields.flag')</th>
-                            <td field-key='flag'>{{ $risk->flag }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.project')</th>
-                            <td field-key='project'>{{ $risk->project->name ?? '' }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.impact')</th>
-                            <td field-key='impact'>{{ $risk->impact }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.probability')</th>
-                            <td field-key='probability'>{{ $risk->probability }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.proximity')</th>
-                            <td field-key='proximity'>{{ $risk->proximity }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.title')</th>
-                            <td field-key='title'>{!! $risk->title !!}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.contingency')</th>
-                            <td field-key='contingency'>{!! $risk->contingency !!}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.mitigation')</th>
-                            <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('global.risks.fields.triggerevents')</th>
-                            <td field-key='triggerevents'>{!! $risk->triggerevents !!}</td>
+                            <td field-key='flag'>{{ Form::checkbox("flag", 1, $risk->flag == 1 ? true : false, ["disabled"]) }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.resolved')</th>
-                            <td field-key='resolved'>{{ $risk->resolved }}</td>
+                            <td field-key='resolved'>{{ Form::checkbox("resolved", 1, $risk->resolved == 1 ? true : false, ["disabled"]) }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.risks-type')</th>
+                            <td field-key='risks_type'>{{ $risk->risks_type->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.risk-date')</th>
                             <td field-key='risk_date'>{{ $risk->risk_date }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.version-date')</th>
-                            <td field-key='version_date'>{{ $risk->version_date }}</td>
+                            <th>@lang('global.risks.fields.title')</th>
+                            <td field-key='title'>{!! $risk->title !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('global.risks.fields.type')</th>
-                            <td field-key='type'>{{ $risk->type }}</td>
+                            <th>@lang('global.risks.fields.description')</th>
+                            <td field-key='description'>{!! $risk->description !!}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.trigger-events')</th>
+                            <td field-key='trigger_events'>{!! $risk->trigger_events !!}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.risk-impact')</th>
+                            <td field-key='risk_impact'>{{ $risk->risk_impact->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.risk-probabilities')</th>
+                            <td field-key='risk_probabilities'>{{ $risk->risk_probabilities->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.score')</th>
+                            <td field-key='score'>{{ $risk->score }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.risk-proximity')</th>
+                            <td field-key='risk_proximity'>{{ $risk->risk_proximity->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.mitigation')</th>
+                            <td field-key='mitigation'>{!! $risk->mitigation !!}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.risk-owner')</th>
+                            <td field-key='risk_owner'>
+                                @foreach ($risk->risk_owner as $singleRiskOwner)
+                                    <span class="label label-info label-many">{{ $singleRiskOwner->surname }}</span>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr>
                             <th>@lang('global.risks.fields.notes')</th>
                             <td field-key='notes'>{!! $risk->notes !!}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.contingency')</th>
+                            <td field-key='contingency'>{!! $risk->contingency !!}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.version-date')</th>
+                            <td field-key='version_date'>{{ $risk->version_date }}</td>
+                        </tr>
+                        <tr>
+                            <th>@lang('global.risks.fields.parent-id')</th>
+                            <td field-key='parent_id'>{{ $risk->parent_id }}</td>
                         </tr>
                     </table>
                 </div>
