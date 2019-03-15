@@ -93,6 +93,14 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('countries_mass_destroy', ['uses' => 'Admin\CountriesController@massDestroy', 'as' => 'countries.mass_destroy']);
     Route::post('countries_restore/{id}', ['uses' => 'Admin\CountriesController@restore', 'as' => 'countries.restore']);
     Route::delete('countries_perma_del/{id}', ['uses' => 'Admin\CountriesController@perma_del', 'as' => 'countries.perma_del']);
+    Route::resource('schedule_statuses', 'Admin\ScheduleStatusesController');
+    Route::post('schedule_statuses_mass_destroy', ['uses' => 'Admin\ScheduleStatusesController@massDestroy', 'as' => 'schedule_statuses.mass_destroy']);
+    Route::post('schedule_statuses_restore/{id}', ['uses' => 'Admin\ScheduleStatusesController@restore', 'as' => 'schedule_statuses.restore']);
+    Route::delete('schedule_statuses_perma_del/{id}', ['uses' => 'Admin\ScheduleStatusesController@perma_del', 'as' => 'schedule_statuses.perma_del']);
+    Route::resource('schedule_highlights', 'Admin\ScheduleHighlightsController');
+    Route::post('schedule_highlights_mass_destroy', ['uses' => 'Admin\ScheduleHighlightsController@massDestroy', 'as' => 'schedule_highlights.mass_destroy']);
+    Route::post('schedule_highlights_restore/{id}', ['uses' => 'Admin\ScheduleHighlightsController@restore', 'as' => 'schedule_highlights.restore']);
+    Route::delete('schedule_highlights_perma_del/{id}', ['uses' => 'Admin\ScheduleHighlightsController@perma_del', 'as' => 'schedule_highlights.perma_del']);
     Route::resource('alternativescores', 'Admin\AlternativescoresController');
     Route::post('alternativescores_mass_destroy', ['uses' => 'Admin\AlternativescoresController@massDestroy', 'as' => 'alternativescores.mass_destroy']);
     Route::post('alternativescores_restore/{id}', ['uses' => 'Admin\AlternativescoresController@restore', 'as' => 'alternativescores.restore']);

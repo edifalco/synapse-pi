@@ -127,7 +127,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            Reporting Periods
+            Project Periods
         </div>
         <div class="panel-body">
             <table class="table table-bordered table-striped">
@@ -139,7 +139,7 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="reporting-periods">
+                <tbody id="project-periods">
                     @forelse(old('project_periods', []) as $index => $data)
                         @include('admin.projects.project_periods_row', [
                             'index' => $index
@@ -172,7 +172,7 @@
                 ])
                </script > 
 
-    <script type="text/html" id="reporting-periods-template">
+    <script type="text/html" id="project-periods-template">
         @include('admin.projects.project_periods_row',
                 [
                     'index' => '_INDEX_',

@@ -301,6 +301,16 @@ class PermissionSeed extends Seeder
             ['id' => 302, 'title' => 'country_edit',],
             ['id' => 303, 'title' => 'country_view',],
             ['id' => 304, 'title' => 'country_delete',],
+            ['id' => 305, 'title' => 'schedule_status_access',],
+            ['id' => 306, 'title' => 'schedule_status_create',],
+            ['id' => 307, 'title' => 'schedule_status_edit',],
+            ['id' => 308, 'title' => 'schedule_status_view',],
+            ['id' => 309, 'title' => 'schedule_status_delete',],
+            ['id' => 310, 'title' => 'schedule_highlight_access',],
+            ['id' => 311, 'title' => 'schedule_highlight_create',],
+            ['id' => 312, 'title' => 'schedule_highlight_edit',],
+            ['id' => 313, 'title' => 'schedule_highlight_view',],
+            ['id' => 314, 'title' => 'schedule_highlight_delete',],
 
         ];
 

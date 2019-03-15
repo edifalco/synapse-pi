@@ -9,21 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Schedule
  *
  * @package App
- * @property string $date
  * @property string $description
- * @property string $status
+ * @property string $date
  * @property string $project
- * @property integer $highlight
+ * @property string $status
+ * @property string $highlight
 */
 class Schedule extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['date', 'description', 'status', 'highlight', 'project_id'];
+    protected $fillable = ['description', 'date', 'project_id', 'status_id', 'highlight_id'];
     protected $hidden = [];
     public static $searchable = [
         'description',
-        'status',
     ];
     
     public static function boot()
@@ -73,17 +72,36 @@ class Schedule extends Model
     }
 
     /**
-     * Set attribute to money format
+     * Set to null if empty
      * @param $input
      */
-    public function setHighlightAttribute($input)
+    public function setStatusIdAttribute($input)
     {
-        $this->attributes['highlight'] = $input ? $input : null;
+        $this->attributes['status_id'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setHighlightIdAttribute($input)
+    {
+        $this->attributes['highlight_id'] = $input ? $input : null;
     }
     
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id')->withTrashed();
+    }
+    
+    public function status()
+    {
+        return $this->belongsTo(ScheduleStatus::class, 'status_id')->withTrashed();
+    }
+    
+    public function highlight()
+    {
+        return $this->belongsTo(ScheduleHighlight::class, 'highlight_id')->withTrashed();
     }
     
 }

@@ -50,7 +50,7 @@ return [
 		'risk-powners' => [		'title' => 'Risk powners',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],
 		'risk-preporters' => [		'title' => 'Risk preporters',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],
 		'risks' => [		'title' => 'Risks',		'fields' => [			'code' => 'Code',			'version' => 'Version',			'parent-id' => 'Parent',			'description' => 'Description',			'score' => 'Score',			'flag' => 'Flag',			'project' => 'Project',			'impact' => 'Impact',			'probability' => 'Probability',			'proximity' => 'Proximity',			'title' => 'Title',			'contingency' => 'Contingency',			'mitigation' => 'Mitigation',			'triggerevents' => 'Triggerevents',			'resolved' => 'Resolved',			'risk-date' => 'Risk date',			'version-date' => 'Version date',			'type' => 'Type',			'notes' => 'Notes',		],	],
-		'schedules' => [		'title' => 'Schedules',		'fields' => [			'date' => 'Date',			'description' => 'Description',			'status' => 'Status',			'project' => 'Project',			'highlight' => 'Highlight',		],	],
+		'schedules' => [		'title' => 'Schedules',		'fields' => [			'description' => 'Description',			'date' => 'Date',			'project' => 'Project',			'status' => 'Status',			'highlight' => 'Highlight Color',		],	],
 		'scoredescriptions' => [		'title' => 'Scoredescriptions',		'fields' => [			'description' => 'Description',			'project' => 'Project',			'score-id' => 'Score',		],	],
 		'threshold-deliverables' => [		'title' => 'Threshold deliverables',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
 		'threshold-risks' => [		'title' => 'Threshold risks',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
@@ -65,6 +65,8 @@ return [
 		'document-folders' => [		'title' => 'Document folders',		'fields' => [		],	],
 		'document-folders' => [		'title' => 'Document folders',		'fields' => [			'name' => 'Name',		],	],
 		'countries' => [		'title' => 'Countries',		'fields' => [			'shortcode' => 'Shortcode',			'title' => 'Title',		],	],
+		'schedule-statuses' => [		'title' => 'Schedule statuses',		'fields' => [			'name' => 'Name',		],	],
+		'schedule-highlights' => [		'title' => 'Schedule highlights',		'fields' => [			'name' => 'Name',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',
