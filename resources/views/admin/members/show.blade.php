@@ -43,7 +43,6 @@
     
 <li role="presentation" class="active"><a href="#member_partners" aria-controls="member_partners" role="tab" data-toggle="tab">Member partners</a></li>
 <li role="presentation" class=""><a href="#memberroles" aria-controls="memberroles" role="tab" data-toggle="tab">Memberroles</a></li>
-<li role="presentation" class=""><a href="#risk_mowners" aria-controls="risk_mowners" role="tab" data-toggle="tab">Risk mowners</a></li>
 <li role="presentation" class=""><a href="#risk_mreporters" aria-controls="risk_mreporters" role="tab" data-toggle="tab">Risk mreporters</a></li>
 <li role="presentation" class=""><a href="#project_members" aria-controls="project_members" role="tab" data-toggle="tab">Project members</a></li>
 <li role="presentation" class=""><a href="#deliverable_reviewers" aria-controls="deliverable_reviewers" role="tab" data-toggle="tab">Deliverable reviewers</a></li>
@@ -185,72 +184,6 @@
         @else
             <tr>
                 <td colspan="9">@lang('global.app_no_entries_in_table')</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-</div>
-<div role="tabpanel" class="tab-pane " id="risk_mowners">
-<table class="table table-bordered table-striped {{ count($risk_mowners) > 0 ? 'datatable' : '' }}">
-    <thead>
-        <tr>
-            <th>@lang('global.risk-mowners.fields.member')</th>
-                        <th>@lang('global.risk-mowners.fields.risk')</th>
-                        @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
-                        @else
-                        <th>&nbsp;</th>
-                        @endif
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (count($risk_mowners) > 0)
-            @foreach ($risk_mowners as $risk_mowner)
-                <tr data-entry-id="{{ $risk_mowner->id }}">
-                    <td field-key='member'>{{ $risk_mowner->member->name ?? '' }}</td>
-                                <td field-key='risk'>{{ $risk_mowner->risk->code ?? '' }}</td>
-                                @if( request('show_deleted') == 1 )
-                                <td>
-                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'POST',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risk_mowners.restore', $risk_mowner->id])) !!}
-                                    {!! Form::submit(trans('global.app_restore'), array('class' => 'btn btn-xs btn-success')) !!}
-                                    {!! Form::close() !!}
-                                                                    {!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risk_mowners.perma_del', $risk_mowner->id])) !!}
-                                    {!! Form::submit(trans('global.app_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                                                </td>
-                                @else
-                                <td>
-                                    @can('risk_mowner_view')
-                                    <a href="{{ route('admin.risk_mowners.show',[$risk_mowner->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
-                                    @endcan
-                                    @can('risk_mowner_edit')
-                                    <a href="{{ route('admin.risk_mowners.edit',[$risk_mowner->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    @endcan
-                                    @can('risk_mowner_delete')
-{!! Form::open(array(
-                                        'style' => 'display: inline-block;',
-                                        'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
-                                        'route' => ['admin.risk_mowners.destroy', $risk_mowner->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                                @endif
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="7">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
