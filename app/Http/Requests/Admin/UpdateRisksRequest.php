@@ -25,14 +25,11 @@ class UpdateRisksRequest extends FormRequest
         return [
             
             'version' => 'max:2147483647|nullable|numeric',
-            'parent_id' => 'max:2147483647|nullable|numeric',
-            'score' => 'max:2147483647|nullable|numeric',
-            'impact' => 'max:2147483647|nullable|numeric',
-            'probability' => 'max:2147483647|nullable|numeric',
-            'resolved' => 'max:2147483647|nullable|numeric',
             'risk_date' => 'nullable|date_format:'.config('app.date_format'),
+            'score' => 'max:2147483647|nullable|numeric',
+            'risk_owner.*' => 'exists:members,id',
             'version_date' => 'nullable|date_format:H:i:s',
-            'type' => 'max:2147483647|nullable|numeric',
+            'parent_id' => 'max:2147483647|nullable|numeric',
         ];
     }
 }

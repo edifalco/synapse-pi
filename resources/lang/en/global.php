@@ -49,7 +49,7 @@ return [
 		'risk-mreporters' => [		'title' => 'Risk mreporters',		'fields' => [			'member' => 'Member',			'risk' => 'Risk',		],	],
 		'risk-powners' => [		'title' => 'Risk powners',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],
 		'risk-preporters' => [		'title' => 'Risk preporters',		'fields' => [			'partner' => 'Partner',			'risk' => 'Risk',		],	],
-		'risks' => [		'title' => 'Risks',		'fields' => [			'code' => 'Code',			'version' => 'Version',			'parent-id' => 'Parent',			'description' => 'Description',			'score' => 'Score',			'flag' => 'Flag',			'project' => 'Project',			'impact' => 'Impact',			'probability' => 'Probability',			'proximity' => 'Proximity',			'title' => 'Title',			'contingency' => 'Contingency',			'mitigation' => 'Mitigation',			'triggerevents' => 'Triggerevents',			'resolved' => 'Resolved',			'risk-date' => 'Risk date',			'version-date' => 'Version date',			'type' => 'Type',			'notes' => 'Notes',		],	],
+		'risks' => [		'title' => 'Risks',		'fields' => [			'project' => 'Project',			'code' => 'Code',			'version' => 'Version',			'flag' => 'Flag',			'resolved' => 'Resolved',			'risks-type' => 'Risks type',			'risk-date' => 'Risk date',			'title' => 'Title',			'description' => 'Description',			'trigger-events' => 'Trigger events',			'risk-impact' => 'Risk impact',			'risk-probabilities' => 'Risk probabilities',			'score' => 'Score',			'risk-proximity' => 'Risk proximity',			'mitigation' => 'Mitigation',			'risk-owner' => 'Risk owner',			'notes' => 'Notes',			'contingency' => 'Contingency',			'version-date' => 'Version date',			'parent-id' => 'Parent',		],	],
 		'schedules' => [		'title' => 'Schedules',		'fields' => [			'description' => 'Description',			'date' => 'Date',			'project' => 'Project',			'status' => 'Status',			'highlight' => 'Highlight Color',		],	],
 		'scoredescriptions' => [		'title' => 'Scoredescriptions',		'fields' => [			'description' => 'Description',			'project' => 'Project',			'score-id' => 'Score',		],	],
 		'threshold-deliverables' => [		'title' => 'Threshold deliverables',		'fields' => [			'value' => 'Value',			'project' => 'Project',		],	],
@@ -67,6 +67,11 @@ return [
 		'countries' => [		'title' => 'Countries',		'fields' => [			'shortcode' => 'Shortcode',			'title' => 'Title',		],	],
 		'schedule-statuses' => [		'title' => 'Schedule statuses',		'fields' => [			'name' => 'Name',		],	],
 		'schedule-highlights' => [		'title' => 'Schedule highlights',		'fields' => [			'name' => 'Name',		],	],
+		'risk-types' => [		'title' => 'Risk types',		'fields' => [			'name' => 'Name',		],	],
+		'risk-impact' => [		'title' => 'Risk impact',		'fields' => [		],	],
+		'risk-impacts' => [		'title' => 'Risk impacts',		'fields' => [			'name' => 'Name',		],	],
+		'risk-probabilities' => [		'title' => 'Risk probabilities',		'fields' => [			'name' => 'Name',		],	],
+		'risk-proximities' => [		'title' => 'Risk proximities',		'fields' => [			'name' => 'Name',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',
