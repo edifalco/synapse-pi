@@ -222,18 +222,6 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('contingency', trans('global.risks.fields.contingency').'', ['class' => 'control-label']) !!}
-                    {!! Form::textarea('contingency', old('contingency'), ['class' => 'form-control ', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('contingency'))
-                        <p class="help-block">
-                            {{ $errors->first('contingency') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
             
         </div>
     </div>

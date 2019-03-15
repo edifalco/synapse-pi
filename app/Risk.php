@@ -42,7 +42,6 @@ class Risk extends Model
         'trigger_events',
         'mitigation',
         'notes',
-        'contingency',
     ];
     
     public static function boot()
