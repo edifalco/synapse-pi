@@ -347,6 +347,7 @@
                         <th>@lang('global.documents.fields.project')</th>
                         <th>@lang('global.documents.fields.deliverable')</th>
                         <th>@lang('global.documents.fields.document')</th>
+                        <th>@lang('global.documents.fields.folder')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -363,6 +364,7 @@
                                 <td field-key='project'>{{ $document->project->name ?? '' }}</td>
                                 <td field-key='deliverable'>{{ $document->deliverable->label_identification ?? '' }}</td>
                                 <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>
+                                <td field-key='folder'>{{ $document->folder->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(

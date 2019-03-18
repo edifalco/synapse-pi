@@ -56,19 +56,19 @@
                 </a>
             </li>@endcan
             
-            @can('schedule_access')
+            @can('metricicon_access')
             <li>
-                <a href="{{ route('admin.schedules.index') }}">
+                <a href="{{ route('admin.metricicons.index') }}">
                     <i class="fa fa-tags"></i>
-                    <span>@lang('global.schedules.title')</span>
+                    <span>@lang('global.metricicons.title')</span>
                 </a>
             </li>@endcan
             
-            @can('agenda_access')
+            @can('metriclabel_access')
             <li>
-                <a href="{{ route('admin.agendas.index') }}">
+                <a href="{{ route('admin.metriclabels.index') }}">
                     <i class="fa fa-tags"></i>
-                    <span>@lang('global.agenda.title')</span>
+                    <span>@lang('global.metriclabels.title')</span>
                 </a>
             </li>@endcan
             
@@ -88,27 +88,11 @@
                 </a>
             </li>@endcan
             
-            @can('budget_access')
+            @can('schedule_access')
             <li>
-                <a href="{{ route('admin.budgets.index') }}">
+                <a href="{{ route('admin.schedules.index') }}">
                     <i class="fa fa-tags"></i>
-                    <span>@lang('global.budgets.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('financial_access')
-            <li>
-                <a href="{{ route('admin.financials.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.financials.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('publication_access')
-            <li>
-                <a href="{{ route('admin.publications.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.publications.title')</span>
+                    <span>@lang('global.schedules.title')</span>
                 </a>
             </li>@endcan
             
@@ -120,6 +104,14 @@
                 </a>
             </li>@endcan
             
+            @can('agenda_access')
+            <li>
+                <a href="{{ route('admin.agendas.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.agenda.title')</span>
+                </a>
+            </li>@endcan
+            
             @can('team_access')
             <li>
                 <a href="{{ route('admin.teams.index') }}">
@@ -128,19 +120,11 @@
                 </a>
             </li>@endcan
             
-            @can('workpackage_access')
+            @can('budget_access')
             <li>
-                <a href="{{ route('admin.workpackages.index') }}">
+                <a href="{{ route('admin.budgets.index') }}">
                     <i class="fa fa-tags"></i>
-                    <span>@lang('global.workpackages.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('acronym_access')
-            <li>
-                <a href="{{ route('admin.acronyms.index') }}">
-                    <i class="fa fa-tags"></i>
-                    <span>@lang('global.acronyms.title')</span>
+                    <span>@lang('global.budgets.title')</span>
                 </a>
             </li>@endcan
             
@@ -152,75 +136,11 @@
                 </a>
             </li>@endcan
             
-            @can('project_period_access')
+            @can('publication_access')
             <li>
-                <a href="{{ route('admin.project_periods.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.project-periods.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('document_folder_access')
-            <li>
-                <a href="{{ route('admin.document_folders.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.document-folders.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('country_access')
-            <li>
-                <a href="{{ route('admin.countries.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.countries.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('schedule_status_access')
-            <li>
-                <a href="{{ route('admin.schedule_statuses.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.schedule-statuses.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('schedule_highlight_access')
-            <li>
-                <a href="{{ route('admin.schedule_highlights.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.schedule-highlights.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_type_access')
-            <li>
-                <a href="{{ route('admin.risk_types.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.risk-types.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_impact_access')
-            <li>
-                <a href="{{ route('admin.risk_impacts.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.risk-impacts.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_probability_access')
-            <li>
-                <a href="{{ route('admin.risk_probabilities.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.risk-probabilities.title')</span>
-                </a>
-            </li>@endcan
-            
-            @can('risk_proximity_access')
-            <li>
-                <a href="{{ route('admin.risk_proximities.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('global.risk-proximities.title')</span>
+                <a href="{{ route('admin.publications.index') }}">
+                    <i class="fa fa-tags"></i>
+                    <span>@lang('global.publications.title')</span>
                 </a>
             </li>@endcan
             
@@ -234,6 +154,86 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    @can('financial_access')
+                    <li>
+                        <a href="{{ route('admin.financials.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.financials.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('workpackage_access')
+                    <li>
+                        <a href="{{ route('admin.workpackages.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.workpackages.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('document_folder_access')
+                    <li>
+                        <a href="{{ route('admin.document_folders.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.document-folders.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('country_access')
+                    <li>
+                        <a href="{{ route('admin.countries.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.countries.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('schedule_status_access')
+                    <li>
+                        <a href="{{ route('admin.schedule_statuses.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.schedule-statuses.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('schedule_highlight_access')
+                    <li>
+                        <a href="{{ route('admin.schedule_highlights.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.schedule-highlights.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_type_access')
+                    <li>
+                        <a href="{{ route('admin.risk_types.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.risk-types.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_impact_access')
+                    <li>
+                        <a href="{{ route('admin.risk_impacts.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.risk-impacts.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_probability_access')
+                    <li>
+                        <a href="{{ route('admin.risk_probabilities.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.risk-probabilities.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('risk_proximity_access')
+                    <li>
+                        <a href="{{ route('admin.risk_proximities.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.risk-proximities.title')</span>
+                        </a>
+                    </li>@endcan
+                    
                     @can('alternativescore_access')
                     <li>
                         <a href="{{ route('admin.alternativescores.index') }}">
@@ -255,6 +255,22 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    @can('acronym_access')
+                    <li>
+                        <a href="{{ route('admin.acronyms.index') }}">
+                            <i class="fa fa-tags"></i>
+                            <span>@lang('global.acronyms.title')</span>
+                        </a>
+                    </li>@endcan
+                    
+                    @can('project_period_access')
+                    <li>
+                        <a href="{{ route('admin.project_periods.index') }}">
+                            <i class="fa fa-gears"></i>
+                            <span>@lang('global.project-periods.title')</span>
+                        </a>
+                    </li>@endcan
+                    
                     @can('acronym_project_access')
                     <li>
                         <a href="{{ route('admin.acronym_projects.index') }}">
@@ -375,27 +391,11 @@
                         </a>
                     </li>@endcan
                     
-                    @can('metriclabel_access')
-                    <li>
-                        <a href="{{ route('admin.metriclabels.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.metriclabels.title')</span>
-                        </a>
-                    </li>@endcan
-                    
                     @can('partnernum_access')
                     <li>
                         <a href="{{ route('admin.partnernums.index') }}">
                             <i class="fa fa-tags"></i>
                             <span>@lang('global.partnernums.title')</span>
-                        </a>
-                    </li>@endcan
-                    
-                    @can('metricicon_access')
-                    <li>
-                        <a href="{{ route('admin.metricicons.index') }}">
-                            <i class="fa fa-tags"></i>
-                            <span>@lang('global.metricicons.title')</span>
                         </a>
                     </li>@endcan
                     

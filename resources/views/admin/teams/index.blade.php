@@ -35,8 +35,8 @@
 
                         <th>@lang('global.team.fields.member')</th>
                         <th>@lang('global.team.fields.project')</th>
-                        <th>@lang('global.team.fields.role')</th>
                         <th>@lang('global.team.fields.partner')</th>
+                        <th>@lang('global.team.fields.role')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -62,8 +62,8 @@
                 @endif
                 @endcan{data: 'member.surname', name: 'member.surname'},
                 {data: 'project.name', name: 'project.name'},
-                {data: 'role', name: 'role'},
                 {data: 'partner.name', name: 'partner.name'},
+                {data: 'role', name: 'role'},
                 
                 {data: 'actions', name: 'actions', searchable: false, sortable: false}
             ];

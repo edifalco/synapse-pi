@@ -7,7 +7,7 @@ return [
 		'users' => [		'title' => 'Users',		'fields' => [			'name' => 'Name',			'email' => 'Email',			'password' => 'Password',			'role' => 'Role',			'remember-token' => 'Remember token',		],	],
 		'acronym-projects' => [		'title' => 'Acronym projects',		'fields' => [			'acronyms' => 'Acronyms',			'partner' => 'Partner',			'project' => 'Project',		],	],
 		'acronyms' => [		'title' => 'Acronyms',		'fields' => [			'acronym' => 'Acronym',			'partner' => 'Partner',		],	],
-		'agenda' => [		'title' => 'Agenda',		'fields' => [			'date' => 'Date',			'hour' => 'Hour',			'minute' => 'Minute',			'title' => 'Title',			'description' => 'Description',			'project' => 'Project',			'category' => 'Category',			'duration' => 'Duration',			'meeting-type' => 'Meeting type',			'date-creation' => 'Date creation',		],	],
+		'agenda' => [		'title' => 'Agendas',		'fields' => [			'date' => 'Date',			'hour' => 'Hour',			'minute' => 'Minute',			'title' => 'Title',			'description' => 'Description',			'project' => 'Project',			'category' => 'Category',			'duration' => 'Duration',			'meeting-type' => 'Meeting type',			'date-creation' => 'Date creation',		],	],
 		'alternativescores' => [		'title' => 'Alternativescores',		'fields' => [			'show' => 'Show',			'project' => 'Project',		],	],
 		'budgets' => [		'title' => 'Budgets',		'fields' => [			'partner' => 'Partner',			'value' => 'Value',			'period' => 'Period',			'project' => 'Project',		],	],
 		'cd-disseminations' => [		'title' => 'Cd disseminations',		'fields' => [			'month' => 'Month',			'value' => 'Value',			'project' => 'Project',		],	],
@@ -72,7 +72,7 @@ return [
 		'risk-impacts' => [		'title' => 'Risk impacts',		'fields' => [			'name' => 'Name',		],	],
 		'risk-probabilities' => [		'title' => 'Risk probabilities',		'fields' => [			'name' => 'Name',		],	],
 		'risk-proximities' => [		'title' => 'Risk proximities',		'fields' => [			'name' => 'Name',		],	],
-		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'project' => 'Project',			'role' => 'Role',			'partner' => 'Partner',		],	],
+		'team' => [		'title' => 'Team',		'fields' => [			'member' => 'Member',			'project' => 'Project',			'partner' => 'Partner',			'role' => 'Role',		],	],
 	'app_create' => 'Create',
 	'app_save' => 'Save',
 	'app_edit' => 'Edit',

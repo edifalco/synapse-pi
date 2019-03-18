@@ -36,24 +36,24 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('role', trans('global.team.fields.role').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('role', old('role'), ['class' => 'form-control', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('role'))
-                        <p class="help-block">
-                            {{ $errors->first('role') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('partner_id', trans('global.team.fields.partner').'', ['class' => 'control-label']) !!}
                     {!! Form::select('partner_id', $partners, old('partner_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('partner_id'))
                         <p class="help-block">
                             {{ $errors->first('partner_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('role', trans('global.team.fields.role').'', ['class' => 'control-label']) !!}
+                    {!! Form::text('role', old('role'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('role'))
+                        <p class="help-block">
+                            {{ $errors->first('role') }}
                         </p>
                     @endif
                 </div>

@@ -75,7 +75,7 @@
 <li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
 <li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
-<li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>
+<li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agendas</a></li>
 <li role="presentation" class=""><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
 <li role="presentation" class=""><a href="#deliverables" aria-controls="deliverables" role="tab" data-toggle="tab">Deliverables</a></li>
 </ul>
@@ -317,8 +317,8 @@
         <tr>
             <th>@lang('global.team.fields.member')</th>
                         <th>@lang('global.team.fields.project')</th>
-                        <th>@lang('global.team.fields.role')</th>
                         <th>@lang('global.team.fields.partner')</th>
+                        <th>@lang('global.team.fields.role')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -333,8 +333,8 @@
                 <tr data-entry-id="{{ $team->id }}">
                     <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
                                 <td field-key='project'>{{ $team->project->name ?? '' }}</td>
-                                <td field-key='role'>{{ $team->role }}</td>
                                 <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
+                                <td field-key='role'>{{ $team->role }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -855,6 +855,7 @@
                         <th>@lang('global.documents.fields.project')</th>
                         <th>@lang('global.documents.fields.deliverable')</th>
                         <th>@lang('global.documents.fields.document')</th>
+                        <th>@lang('global.documents.fields.folder')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -871,6 +872,7 @@
                                 <td field-key='project'>{{ $document->project->name ?? '' }}</td>
                                 <td field-key='deliverable'>{{ $document->deliverable->label_identification ?? '' }}</td>
                                 <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>
+                                <td field-key='folder'>{{ $document->folder->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
