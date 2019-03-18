@@ -126,6 +126,7 @@
             <th>@lang('global.team.fields.member')</th>
                         <th>@lang('global.team.fields.project')</th>
                         <th>@lang('global.team.fields.role')</th>
+                        <th>@lang('global.team.fields.partner')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -141,6 +142,7 @@
                     <td field-key='member'>{{ $team->member->surname ?? '' }}</td>
                                 <td field-key='project'>{{ $team->project->name ?? '' }}</td>
                                 <td field-key='role'>{{ $team->role }}</td>
+                                <td field-key='partner'>{{ $team->partner->name ?? '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     {!! Form::open(array(
@@ -181,7 +183,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="8">@lang('global.app_no_entries_in_table')</td>
+                <td colspan="9">@lang('global.app_no_entries_in_table')</td>
             </tr>
         @endif
     </tbody>
