@@ -25,18 +25,6 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('partner_id', trans('global.team.fields.partner').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('partner_id', $partners, old('partner_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('partner_id'))
-                        <p class="help-block">
-                            {{ $errors->first('partner_id') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
                     {!! Form::label('project_id', trans('global.team.fields.project').'', ['class' => 'control-label']) !!}
                     {!! Form::select('project_id', $projects, old('project_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
