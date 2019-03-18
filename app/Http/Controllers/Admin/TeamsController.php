@@ -29,6 +29,7 @@ class TeamsController extends Controller
             $query = Team::query();
             $query->with("member");
             $query->with("project");
+            $query->with("partner");
             $template = 'actionsTemplate';
             if(request('show_deleted') == 1) {
                 
@@ -43,6 +44,7 @@ class TeamsController extends Controller
                 'teams.member_id',
                 'teams.project_id',
                 'teams.role',
+                'teams.partner_id',
             ]);
             $table = Datatables::of($query);
 
@@ -66,6 +68,9 @@ class TeamsController extends Controller
             $table->editColumn('role', function ($row) {
                 return $row->role ? $row->role : '';
             });
+            $table->editColumn('partner.name', function ($row) {
+                return $row->partner ? $row->partner->name : '';
+            });
 
             $table->rawColumns(['actions','massDelete']);
 
@@ -88,8 +93,9 @@ class TeamsController extends Controller
         
         $members = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
-        return view('admin.teams.create', compact('members', 'projects'));
+        return view('admin.teams.create', compact('members', 'projects', 'partners'));
     }
 
     /**
@@ -125,10 +131,11 @@ class TeamsController extends Controller
         
         $members = \App\Member::get()->pluck('surname', 'id')->prepend(trans('global.app_please_select'), '');
         $projects = \App\Project::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
+        $partners = \App\Partner::get()->pluck('name', 'id')->prepend(trans('global.app_please_select'), '');
 
         $team = Team::findOrFail($id);
 
-        return view('admin.teams.edit', compact('team', 'members', 'projects'));
+        return view('admin.teams.edit', compact('team', 'members', 'projects', 'partners'));
     }
 
     /**
