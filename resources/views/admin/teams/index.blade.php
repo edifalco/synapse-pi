@@ -34,7 +34,6 @@
                         @endcan
 
                         <th>@lang('global.team.fields.member')</th>
-                        <th>@lang('global.team.fields.partner')</th>
                         <th>@lang('global.team.fields.project')</th>
                         <th>@lang('global.team.fields.role')</th>
                         @if( request('show_deleted') == 1 )
@@ -61,7 +60,6 @@
                     {data: 'massDelete', name: 'id', searchable: false, sortable: false},
                 @endif
                 @endcan{data: 'member.surname', name: 'member.surname'},
-                {data: 'partner.name', name: 'partner.name'},
                 {data: 'project.name', name: 'project.name'},
                 {data: 'role', name: 'role'},
                 
