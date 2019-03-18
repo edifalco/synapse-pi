@@ -74,7 +74,7 @@
 <li role="presentation" class=""><a href="#workpackages" aria-controls="workpackages" role="tab" data-toggle="tab">Work Packages</a></li>
 <li role="presentation" class=""><a href="#project_periods" aria-controls="project_periods" role="tab" data-toggle="tab">Project Periods</a></li>
 <li role="presentation" class=""><a href="#budgets" aria-controls="budgets" role="tab" data-toggle="tab">Budgets</a></li>
-<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Posts</a></li>
+<li role="presentation" class=""><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Activities</a></li>
 <li role="presentation" class=""><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agendas</a></li>
 <li role="presentation" class=""><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
 <li role="presentation" class=""><a href="#deliverables" aria-controls="deliverables" role="tab" data-toggle="tab">Deliverables</a></li>
