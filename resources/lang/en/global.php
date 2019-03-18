@@ -38,7 +38,7 @@ return [
 		'partnerroles' => [		'title' => 'Partnerroles',		'fields' => [			'partner' => 'Partner',			'role-id' => 'Role',			'project' => 'Project',		],	],
 		'partners' => [		'title' => 'Partners',		'fields' => [			'name' => 'Name',			'acronym' => 'Acronym',			'image' => 'Image',			'country' => 'Country',		],	],
 		'periods' => [		'title' => 'Periods',		'fields' => [		],	],
-		'posts' => [		'title' => 'Posts',		'fields' => [			'created' => 'Created',			'user' => 'User',			'description' => 'Description',			'project' => 'Project',		],	],
+		'posts' => [		'title' => 'Activities',		'fields' => [			'created' => 'Created',			'user' => 'User',			'description' => 'Description',			'project' => 'Project',		],	],
 		'project-members' => [		'title' => 'Project members',		'fields' => [			'project' => 'Project',			'member' => 'Member',			'partner' => 'Partner',		],	],
 		'project-partners' => [		'title' => 'Project partners',		'fields' => [		],	],
 		'project-users' => [		'title' => 'Project users',		'fields' => [			'userid' => 'UserID',			'projectid' => 'ProjectID',		],	],
