@@ -28,6 +28,10 @@
                             <th>@lang('global.documents.fields.document')</th>
                             <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>
                         </tr>
+                        <tr>
+                            <th>@lang('global.documents.fields.folder')</th>
+                            <td field-key='folder'>{{ $document->folder->name ?? '' }}</td>
+                        </tr>
                     </table>
                 </div>
             </div><!-- Nav tabs -->

@@ -27,7 +27,4 @@ class DocumentFolder extends Model
         DocumentFolder::observe(new \App\Observers\UserActionsObserver);
     }
     
-    public function documents() {
-        return $this->hasMany(Document::class, 'folder_id');
-    }
 }

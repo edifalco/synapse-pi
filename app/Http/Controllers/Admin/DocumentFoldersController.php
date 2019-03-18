@@ -91,9 +91,6 @@ class DocumentFoldersController extends Controller
         }
         $document_folder = DocumentFolder::create($request->all());
 
-        foreach ($request->input('documents', []) as $data) {
-            $document_folder->documents()->create($data);
-        }
 
 
         return redirect()->route('admin.document_folders.index');
@@ -131,23 +128,6 @@ class DocumentFoldersController extends Controller
         $document_folder = DocumentFolder::findOrFail($id);
         $document_folder->update($request->all());
 
-        $documents           = $document_folder->documents;
-        $currentDocumentData = [];
-        foreach ($request->input('documents', []) as $index => $data) {
-            if (is_integer($index)) {
-                $document_folder->documents()->create($data);
-            } else {
-                $id                          = explode('-', $index)[1];
-                $currentDocumentData[$id] = $data;
-            }
-        }
-        foreach ($documents as $item) {
-            if (isset($currentDocumentData[$item->id])) {
-                $item->update($currentDocumentData[$item->id]);
-            } else {
-                $item->delete();
-            }
-        }
 
 
         return redirect()->route('admin.document_folders.index');

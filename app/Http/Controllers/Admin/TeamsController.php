@@ -43,8 +43,8 @@ class TeamsController extends Controller
                 'teams.id',
                 'teams.member_id',
                 'teams.project_id',
-                'teams.role',
                 'teams.partner_id',
+                'teams.role',
             ]);
             $table = Datatables::of($query);
 
@@ -65,11 +65,11 @@ class TeamsController extends Controller
             $table->editColumn('project.name', function ($row) {
                 return $row->project ? $row->project->name : '';
             });
-            $table->editColumn('role', function ($row) {
-                return $row->role ? $row->role : '';
-            });
             $table->editColumn('partner.name', function ($row) {
                 return $row->partner ? $row->partner->name : '';
+            });
+            $table->editColumn('role', function ($row) {
+                return $row->role ? $row->role : '';
             });
 
             $table->rawColumns(['actions','massDelete']);

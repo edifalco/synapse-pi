@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property string $member
  * @property string $project
- * @property string $role
  * @property string $partner
+ * @property string $role
 */
 class Team extends Model
 {
